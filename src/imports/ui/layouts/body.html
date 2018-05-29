@@ -1,0 +1,188 @@
+<template name="app_body">
+	<nav>
+		<div class="nav-wrapper yellow darken-2">
+			<a href="#" class="brand-logo">Moments</a>
+  			<a href="#" class="right"><i class="material-icons">person</i></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="sass.html">Home</a></li>
+				<li><a href="badges.html">Profile</a></li>
+				<!-- <li><a href="collapsible.html">JavaScript</a></li> -->
+			</ul>
+		</div>
+	</nav>
+	<form id="newPost" class="newPost">
+		<div class="fixed-action-btn">
+			<a class="btn-floating btn-large red" onClick="selectPic.click()">
+				<i class="large material-icons">add_a_photo</i>
+				<input id="selectPic" type="file" accept="image/*" capture>
+		  	</a>
+		  <!-- <ul>
+		    <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+		    <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+		    <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+		    <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+		  </ul> -->
+		</div>
+	</form>
+	<div class="row">
+	{{#each moments}}
+		<div class="col s12 m6">
+		  <div class="card">
+	          <div class="valign-wrapper">
+	            <div class="col s2 m2">
+	              <img src="img/avatar5.png" alt="" width="50px" height="50px" class="circle responsive-img"> <!-- notice the "circle" class -->
+	            </div>
+	            <div class="col s10 m10">
+	              <span class="black-text">
+	                {{faceDetails}}
+	              </span>
+	            </div>
+	          </div>
+		    <div class="card-image">
+		      <img id="postImg" src="{{img}}" width="auto" height="auto" class="">
+		      <span class="card-title">{{#each tags}}<div class="chip" title="{{this.Confidence}}">{{this.Name}}</div> {{/each}}</span>
+		    </div>
+		    <!-- <div class="card-content">
+		      <p>I am a very simple card. I am good at containing small bits of information.
+		      I am convenient because I require little markup to use effectively.</p>
+		    </div> -->
+		    <div class="card-action">
+		      <a href="#">Like</a>
+		      <a href="#">Report</a>
+		    </div>
+		  </div>
+		</div>
+	{{/each}}
+	</div>
+	<h1>Welcome to Moments!</h1>
+	<p>Take or upload a picture and see an AI generated caption.</p>
+
+	<!-- {{> hello}}
+	{{> info}} -->
+</template>
+
+<template name="post">
+      
+	<div class="col s12 m6">
+	  <div class="card">
+          <div class="valign-wrapper">
+            <div class="col s4 m2">
+              <img src="img/avatar5.png" alt="" width="50px" height="50px" class="circle responsive-img"> <!-- notice the "circle" class -->
+            </div>
+            <div class="col s8 m10">
+              <span class="black-text">
+                USER - DATE
+              </span>
+            </div>
+          </div>
+	    <div class="card-image">
+	      <img id="postImg" src="img/sample-1.jpg" width="auto" height="auto" style="display: block;max-height:240px" class="">
+	      <span class="card-title">{{#each tags}}{{this}} {{/each}}tags</span>
+	    </div>
+	    <!-- <div class="card-content">
+	      <p>I am a very simple card. I am good at containing small bits of information.
+	      I am convenient because I require little markup to use effectively.</p>
+	    </div> -->
+	    <div class="card-action">
+	      <a href="#">Like</a>
+	      <a href="#">Report</a>
+	    </div>
+	  </div>
+	</div>
+	<div class="col s12 m6">
+	  <div class="card">
+          <div class="valign-wrapper">
+            <div class="col s4 m2">
+              <img src="img/avatar5.png" alt="" width="50px" height="50px" class="circle responsive-img"> <!-- notice the "circle" class -->
+            </div>
+            <div class="col s8 m10">
+              <span class="black-text">
+                USER tried to find <strong>a red car</strong>.
+              </span>
+            </div>
+          </div>
+	    <div class="card-image">
+	      <img id="postImg" src="img/sample-1.jpg" width="auto" height="auto" style="max-height:240px" class="">
+	      <span class="card-title"><div class="chip tooltipped" data-position="top" data-tooltip="97.84416%">Mountain</div> <div class="chip" title="97.84416%">lake</div> <div class="chip" title="97.84416%">forest</div> <div class="chip" title="97.84416%">stream</div></span>
+	    </div>
+	    <!-- <div class="card-content">
+	      <p>I am a very simple card. I am good at containing small bits of information.
+	      I am convenient because I require little markup to use effectively.</p>
+	    </div> -->
+	    <div class="card-action">
+	      <a href="#">Like</a>
+	      <a href="#">Report</a>
+	    </div>
+	  </div>
+	</div>
+	<div class="col s12 m6">
+	  <div class="card">
+          <div class="valign-wrapper">
+            <div class="col s4 m2">
+              <img src="img/avatar5.png" alt="" width="50px" height="50px" class="circle responsive-img"> <!-- notice the "circle" class -->
+            </div>
+            <div class="col s8 m10">
+              <span class="black-text">
+                USER found <strong>something that starts with a 'Q'</strong>.
+              </span>
+              <span class="green-text">
+              	+10 XP
+              </span>
+            </div>
+          </div>
+	    <!-- <div class="card-image">
+	      <img id="postImg" src="img/sample-1.jpg" width="auto" height="auto" style="max-height:240px" class="">
+	    </div> -->
+	    <div class="card-content">
+	      <span class="card-title">Mountain, lake, forest, stream, ball, festival, dancing, fireworks, cute puppies</span>
+	      
+	    </div>
+	    <div class="card-action">
+	      <a href="#">Like</a>
+	      <a href="#">Report</a>
+	    </div>
+	  </div>
+	</div>
+	<div class="col s12 m6">
+	  <div class="card">
+          <div class="valign-wrapper">
+            <div class="col s4 m2">
+              <img src="img/avatar5.png" alt="" width="50px" height="50px" class="circle responsive-img"> <!-- notice the "circle" class -->
+            </div>
+            <div class="col s8 m10">
+              <span class="black-text">
+                USER tried to find <strong>a red car</strong>.
+              </span>
+            </div>
+          </div>
+	    <div class="card-image">
+	      <img src="img/sample-1.jpg" width="auto" height="auto" style="max-height:240px" class="">
+	      <span class="card-title">Mountain, lake, <span title="97.84416%">forest,</span> stream, ball, festival, dancing, fireworks, cute puppies</span>
+	    </div>
+	    <!-- <div class="card-content">
+	      <p>I am a very simple card. I am good at containing small bits of information.
+	      I am convenient because I require little markup to use effectively.</p>
+	    </div> -->
+	    <div class="card-action">
+	      <a href="#">Like</a>
+	      <a href="#">Report</a>
+	    </div>
+	  </div>
+	</div>
+</template>
+
+<template name="hello">
+  <button id="default">Click Me</button>
+  <button id="getData">Get Data</button>
+  <p>You've pressed the button {{counter}} times.</p>
+</template>
+
+<template name="info">
+  <h2>Learn Meteor!</h2>
+  <ul>
+    <li><a href="https://www.meteor.com/try" target="_blank">Do the Tutorial</a></li>
+    <li><a href="http://guide.meteor.com" target="_blank">Follow the Guide</a></li>
+    <li><a href="https://docs.meteor.com" target="_blank">Read the Docs</a></li>
+    <li><a href="https://forums.meteor.com" target="_blank">Discussions</a></li>
+  </ul>
+</template>

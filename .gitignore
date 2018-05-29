@@ -1,0 +1,11 @@
+## Node & NPM
+**/node_modules
+**/npm-debug.log*
+**/*.lock
+**/package-lock.json
+
+## Meteor
+**/.meteor/local
+
+## build secrets
+credentials

@@ -1,0 +1,32 @@
+## Git
+**/.git*
+
+## Build tools
+**/.editorconfig
+**/.eslint*
+**/.prettier*
+**/*travis.yml
+**/Makefile*
+
+## Node & NPM
+**/.npmignore
+**/*.lock
+
+## Documentation
+**/doc
+**/LICENCE
+**/LICENSE*
+**/Licence
+**/License
+**/licence
+**/license
+**/*.md
+**/*.txt
+**/*.markdown
+**/README*
+**/*.log*
+
+## Vendor src files
+**/example
+**/examples
+**/test
