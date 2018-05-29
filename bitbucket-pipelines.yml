@@ -17,6 +17,7 @@ pipelines:
         script: # Modify the commands below to build your repository.
           # Set $DOCKER_HUB_USERNAME and $DOCKER_HUB_PASSWORD as environment variables in repository settings
           - export IMAGE_NAME="${DOCKER_HUB_USERNAME}/${BITBUCKET_REPO_SLUG}:${BITBUCKET_BUILD_NUMBER}"
+          - export AWS_IMAGE_NAME="166964003196.dkr.ecr.us-east-1.amazonaws.com/${BITBUCKET_REPO_SLUG}:${BITBUCKET_BUILD_NUMBER}"
           #- export IMAGE_NAME=antmounds/moments:$BITBUCKET_COMMIT
 
           # copy in creds from s3
@@ -28,6 +29,13 @@ pipelines:
           - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
           # push the new Docker image to the Docker registry
           - docker push $IMAGE_NAME
+          # authenticate with the AWS ECR registry
+          - $(aws ecr get-login --no-include-email --region us-east-1)
+          # tag Docker image for the AWS ECR registry
+          - docker tag $IMAGE_NAME $AWS_IMAGE_NAME
+          # push the new Docker image to the AWS ECR registry
+          - docker push $AWS_IMAGE_NAME
+          
     - step:
         # set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY as environment variables
         name: Deploy to ECS
@@ -47,6 +55,7 @@ pipelines:
           # set DOCKER_HUB_USERNAME and DOCKER_HUB_PASSWORD as environment variables
           # Docker variables
           - export IMAGE_NAME="${DOCKER_HUB_USERNAME}/${BITBUCKET_REPO_SLUG}:${BITBUCKET_BUILD_NUMBER}"
+          - export AWS_IMAGE_NAME="166964003196.dkr.ecr.us-east-1.amazonaws.com/${BITBUCKET_REPO_SLUG}:${BITBUCKET_BUILD_NUMBER}"
           # ECS variables
           - export ECS_CLUSTER_NAME="${BITBUCKET_REPO_OWNER}"
           - export ECS_SERVICE_NAME="${BITBUCKET_REPO_SLUG}"
@@ -61,7 +70,7 @@ pipelines:
             --network-mode "awsvpc"
             --requires-compatibilities "FARGATE"
             --container-definitions
-            '[{"name":"app","image":"${IMAGE_NAME}"}]'
+            '[{"name":"app","image":"${AWS_IMAGE_NAME}"}]'
             --cpu 256
             --memory 1024
             | jq --raw-output '.taskDefinition.revision')
