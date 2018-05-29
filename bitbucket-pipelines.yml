@@ -49,7 +49,8 @@ pipelines:
           - export ECS_CLUSTER_NAME="${BITBUCKET_REPO_OWNER}"
           - export ECS_SERVICE_NAME="${BITBUCKET_REPO_SLUG}"
           - export ECS_TASK_NAME="${BITBUCKET_REPO_SLUG}"
-          # Deploying an image built from pipelines
+          # authenticate with the Docker Hub registry so awscli can pull private images
+          - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
           # Create ECS cluster, task, service
           - aws ecs list-clusters | grep "${ECS_CLUSTER_NAME}" || aws ecs create-cluster --cluster-name "${ECS_CLUSTER_NAME}"
           # Updating the existing cluster, task, service
