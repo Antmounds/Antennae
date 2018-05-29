@@ -71,6 +71,7 @@ pipelines:
           - echo "AWS image name:" "${AWS_IMAGE_NAME}"
           - export TASK_VERSION=$(aws ecs register-task-definition
             --family "${ECS_TASK_NAME}"
+            --execution-role-arn "arn:aws:iam::166964003196:role/ecsExecutionRole"
             --network-mode "awsvpc"
             --requires-compatibilities "FARGATE"
             --container-definitions
