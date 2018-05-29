@@ -8,4 +8,4 @@
 **/.meteor/local
 
 ## build secrets
-credentials
+/credentials
