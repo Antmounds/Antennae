@@ -17,7 +17,7 @@ pipelines:
           - export IMAGE_NAME=antmounds/moments:$BITBUCKET_COMMIT
 
           # copy in creds from s3
-          - aws s3 cp s3://antmounds/creds .
+          #- aws s3 cp s3://antmounds/creds .
 
           # build the Docker image (this will use the Dockerfile in the root of the repo)
           - docker build -f Dockerfile-test -t $IMAGE_NAME --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY .
