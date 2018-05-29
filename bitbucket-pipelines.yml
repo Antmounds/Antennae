@@ -75,13 +75,13 @@ pipelines:
             --network-mode "awsvpc"
             --requires-compatibilities "FARGATE"
             --container-definitions
-            '[{"name":"app","image":"'"${AWS_IMAGE_NAME}"'"}]'
+            '[{"name":"app","image":"'"${AWS_IMAGE_NAME}"'","logDriver":"awslogs"}]'
             --cpu 256
             --memory 1024
             | jq --raw-output '.taskDefinition.revision')
           - echo "Registered ECS Task Definition:" "${TASK_VERSION}"
           # Create ECS Service
-          - aws ecs list-services --cluster "${ECS_CLUSTER_NAME}"  | grep "${ECS_SERVICE_NAME}" || aws ecs create-service --service-name "${ECS_SERVICE_NAME}" --cluster "${ECS_CLUSTER_NAME}" --task-definition "${ECS_TASK_NAME}" --desired-count 1 --launch-type "FARGATE" --network-configuration "awsvpcConfiguration={subnets=[subnet-915e4ccc],securityGroups=[sg-6c378a25],assignPublicIp='ENABLED'}"
+          - aws ecs list-services --cluster "${ECS_CLUSTER_NAME}"  | grep "${ECS_SERVICE_NAME}" || aws ecs create-service --service-name "${ECS_SERVICE_NAME}" --cluster "${ECS_CLUSTER_NAME}" --task-definition "${ECS_TASK_NAME}" --desired-count 1 --launch-type "FARGATE" --network-configuration "awsvpcConfiguration={subnets=[subnet-915e4ccc],securityGroups=[sg-6c378a25],assignPublicIp='ENABLED'}" --load-balancers "targetGroupArn=arn:aws:elasticloadbalancing:us-east-1:166964003196:loadbalancer/app/antmounds/41a764a8e454e93e,containerName=app,containerPort=3000"
           - aws ecs update-service --cluster "${ECS_CLUSTER_NAME}" --service "${ECS_SERVICE_NAME}" --task-definition "${ECS_TASK_NAME}:${TASK_VERSION}"
           # Follow https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_container_instance.html for instrunctions
           # needed to provide the compute resources (EC2 instances) that the tasks will run on.
