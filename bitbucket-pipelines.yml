@@ -12,6 +12,8 @@ pipelines:
         image: atlassian/pipelines-awscli
         services:
           - docker
+        caches:
+          - docker
         script: # Modify the commands below to build your repository.
           # Set $DOCKER_HUB_USERNAME and $DOCKER_HUB_PASSWORD as environment variables in repository settings
           - export IMAGE_NAME="${DOCKER_HUB_USERNAME}/${BITBUCKET_REPO_SLUG}:${BITBUCKET_BUILD_NUMBER}"
@@ -59,7 +61,7 @@ pipelines:
             --network-mode "awsvpc"
             --requires-compatibilities "FARGATE"
             --container-definitions
-            '[{"name":"app","image":"'"${IMAGE_NAME}"'"}]'
+            '[{"name":"app","image":"${IMAGE_NAME}"}]'
             --cpu 256
             --memory 1024
             | jq --raw-output '.taskDefinition.revision')
