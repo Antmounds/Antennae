@@ -59,9 +59,9 @@ pipelines:
             --requires-compatibilities "FARGATE"
             --container-definitions
             '[{"name":"app","image":"'"${IMAGE_NAME}"'"}]'
-            | jq --raw-output '.taskDefinition.revision'
-            --cpu: 256
-            --memory: 1024)
+            --cpu 256
+            --memory 1024
+            | jq --raw-output '.taskDefinition.revision')
           - echo "Registered ECS Task Definition:" "${TASK_VERSION}"
           # Create ECS Service
           - aws ecs list-services --cluster "${ECS_CLUSTER_NAME}"  | grep "${ECS_SERVICE_NAME}" || aws ecs create-service --service-name "${ECS_SERVICE_NAME}" --cluster "${ECS_CLUSTER_NAME}" --task-definition "${ECS_TASK_NAME}" --desired-count 1
