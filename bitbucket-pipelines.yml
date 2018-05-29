@@ -26,7 +26,7 @@ pipelines:
           # build the Docker image (this will use the Dockerfile in the root of the repo)
           - docker build -f Dockerfile-test -t $IMAGE_NAME --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY .
           # authenticate with the Docker Hub registry
-          - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
+          - docker login --username $DOCKER_HUB_USERNAME --password-stdin $DOCKER_HUB_PASSWORD
           # push the new Docker image to the Docker registry
           - docker push $IMAGE_NAME
           # authenticate with the AWS ECR registry
