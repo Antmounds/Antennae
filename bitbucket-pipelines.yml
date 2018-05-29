@@ -75,7 +75,7 @@ pipelines:
             --network-mode "awsvpc"
             --requires-compatibilities "FARGATE"
             --container-definitions
-            '[{"name":"app","image":"'"${AWS_IMAGE_NAME}"'","logDriver":"awslogs"}]'
+            '[{"name":"app","image":"'"${AWS_IMAGE_NAME}"'","logConfiguration":"awslogs"}]'
             --cpu 256
             --memory 1024
             | jq --raw-output '.taskDefinition.revision')
