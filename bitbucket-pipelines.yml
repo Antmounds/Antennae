@@ -14,7 +14,8 @@ pipelines:
           - docker
         script: # Modify the commands below to build your repository.
           # Set $DOCKER_HUB_USERNAME and $DOCKER_HUB_PASSWORD as environment variables in repository settings
-          - export IMAGE_NAME=antmounds/moments:$BITBUCKET_COMMIT
+          - export IMAGE_NAME="${DOCKER_HUB_USERNAME}/${BITBUCKET_REPO_SLUG}:${BITBUCKET_BUILD_NUMBER}"
+          #- export IMAGE_NAME=antmounds/moments:$BITBUCKET_COMMIT
 
           # copy in creds from s3
           #- aws s3 cp s3://antmounds/creds .
@@ -40,16 +41,11 @@ pipelines:
           - export AWS_DEFAULT_REGION="us-east-1"
           # Dockerhub Authentication variables
           # set DOCKER_HUB_USERNAME and DOCKER_HUB_PASSWORD as environment variables
-          # Docker variables
-          - export IMAGE_NAME="${DOCKER_HUB_USERNAME}/${BITBUCKET_REPO_SLUG}:${BITBUCKET_BUILD_NUMBER}"
           # ECS variables
           - export ECS_CLUSTER_NAME="${BITBUCKET_REPO_OWNER}"
           - export ECS_SERVICE_NAME="${BITBUCKET_REPO_SLUG}"
           - export ECS_TASK_NAME="${BITBUCKET_REPO_SLUG}"
           # Deploying an image built from pipelines
-          - docker build -t "${IMAGE_NAME}" .
-          - docker login --username "${DOCKER_HUB_USERNAME}" --password "${DOCKER_HUB_PASSWORD}"
-          - docker push "${IMAGE_NAME}"
           # Create ECS cluster, task, service
           - aws ecs list-clusters | grep "${ECS_CLUSTER_NAME}" || aws ecs create-cluster --cluster-name "${ECS_CLUSTER_NAME}"
           # Updating the existing cluster, task, service
