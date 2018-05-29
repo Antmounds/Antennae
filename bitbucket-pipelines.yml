@@ -75,7 +75,7 @@ pipelines:
             --network-mode "awsvpc"
             --requires-compatibilities "FARGATE"
             --container-definitions
-            '[{"name":"app","image":"'"${AWS_IMAGE_NAME}"'","logConfiguration":{"logDriver":"awslogs","options":{"awslogs-region":"us-east-1","awslogs-name":"moment-app-logs"}}}]'
+            '[{"name":"app","image":"'"${AWS_IMAGE_NAME}"'","logConfiguration":{"logDriver":"awslogs","options":{"awslogs-region":"us-east-1","awslogs-group":"moment-app-logs"}}}]'
             --cpu 256
             --memory 1024
             | jq --raw-output '.taskDefinition.revision')
