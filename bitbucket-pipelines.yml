@@ -67,12 +67,14 @@ pipelines:
           # Create ECS cluster, task, service
           - aws ecs list-clusters | grep "${ECS_CLUSTER_NAME}" || aws ecs create-cluster --cluster-name "${ECS_CLUSTER_NAME}"
           # Updating the existing cluster, task, service
+          - echo "Docker image name:" "${IMAGE_NAME}"
+          - echo "AWS image name:" "${AWS_IMAGE_NAME}"
           - export TASK_VERSION=$(aws ecs register-task-definition
             --family "${ECS_TASK_NAME}"
             --network-mode "awsvpc"
             --requires-compatibilities "FARGATE"
             --container-definitions
-            '[{"name":"app","image":"${AWS_IMAGE_NAME}"}]'
+            '[{"name":"app","image":"${IMAGE_NAME}"}]'
             --cpu 256
             --memory 1024
             | jq --raw-output '.taskDefinition.revision')
