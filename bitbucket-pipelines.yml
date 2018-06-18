@@ -22,7 +22,7 @@ pipelines:
           #- aws s3 cp s3://antmounds/creds .
 
           # build the Docker image (this will use the Dockerfile in the root of the repo)
-          - docker build -f Dockerfile-test -t $IMAGE_NAME --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY .
+          - docker build -f Dockerfile-test -t $IMAGE_NAME .
           # authenticate with the Docker Hub registry
           - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
           # push the new Docker image to the Docker registry
@@ -72,7 +72,7 @@ pipelines:
             --network-mode "awsvpc"
             --requires-compatibilities "FARGATE"
             --container-definitions
-            '[{"name":"app","image":"'"${AWS_IMAGE_URI}"'","portMappings":[{"containerPort":3000,"hostPort":3000}],"essential":true,"logConfiguration":{"logDriver":"awslogs","options":{"awslogs-region":"us-east-1","awslogs-group":"moment-app-logs","awslogs-stream-prefix":"moment-app"}}}]'
+            '[{"name":"app","image":"'"${AWS_IMAGE_URI}"'","portMappings":[{"containerPort":3000,"hostPort":3000}],"essential":true,"environment":[{"name":"AWS_ACCESS_KEY_ID","value":$AWS_ACCESS_KEY_ID},{"name":"AWS_SECRET_ACCESS_KEY","value":$AWS_SECRET_ACCESS_KEY},{"name":"MONGO_URL","value":$MONGO_URL}],"logConfiguration":{"logDriver":"awslogs","options":{"awslogs-region":"us-east-1","awslogs-group":"moment-app-logs","awslogs-stream-prefix":"moment-app"}}}]'
             --cpu 256
             --memory 1024
             | jq --raw-output '.taskDefinition.revision')
