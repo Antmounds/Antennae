@@ -19,7 +19,7 @@ pipelines:
           - export AWS_IMAGE_NAME="166964003196.dkr.ecr.us-east-1.amazonaws.com/${BITBUCKET_REPO_SLUG}:${BITBUCKET_BUILD_NUMBER}"
           #- export IMAGE_NAME=antmounds/moments:$BITBUCKET_COMMIT
 
-          envsubst < src/tools/settings.json > src/tools/settings.json
+          - envsubst < src/tools/settings.json > src/tools/settings.json
           # copy in creds from s3
           #- aws s3 cp s3://antmounds/creds .
 
