@@ -26,6 +26,8 @@ pipelines:
           - docker build -f Dockerfile-test -t $IMAGE_NAME .
           # authenticate with the Docker Hub registry
           - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
+          # tag Docker image for the Dockerhub registry
+          - docker tag $IMAGE_NAME $DOCKERHUB_IMAGE_NAME
           # push the new Docker image to the Docker registry
           - docker push $DOCKERHUB_IMAGE_NAME
           # authenticate with the AWS ECR registry
