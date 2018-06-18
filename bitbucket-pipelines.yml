@@ -77,7 +77,7 @@ pipelines:
             --network-mode "awsvpc"
             --requires-compatibilities "FARGATE"
             --container-definitions
-            '[{"name":"app","image":"${AWS_IMAGE_URI}","portMappings":[{"containerPort":3000,"hostPort":3000}],"essential":true,"environment":[{"name":"AWS_ACCESS_KEY_ID","value":$AWS_ACCESS_KEY_ID},{"name":"AWS_SECRET_ACCESS_KEY","value":$AWS_SECRET_ACCESS_KEY},{"name":"MONGO_URL","value":$MONGO_URL}],"logConfiguration":{"logDriver":"awslogs","options":{"awslogs-region":"us-east-1","awslogs-group":"moment-app-logs","awslogs-stream-prefix":"moment-app"}}}]'
+            '[{"name":"app","image":"${AWS_IMAGE_URI}","portMappings":[{"containerPort":3000,"hostPort":3000}],"essential":true,"environment":[{"name":"AWS_ACCESS_KEY_ID","value":"$AWS_ACCESS_KEY_ID"},{"name":"AWS_SECRET_ACCESS_KEY","value":"$AWS_SECRET_ACCESS_KEY"},{"name":"MONGO_URL","value":"$MONGO_URL"}],"logConfiguration":{"logDriver":"awslogs","options":{"awslogs-region":"us-east-1","awslogs-group":"moment-app-logs","awslogs-stream-prefix":"moment-app"}}}]'
             --cpu 256
             --memory 1024
             | jq --raw-output '.taskDefinition.revision')
