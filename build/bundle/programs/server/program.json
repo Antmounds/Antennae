@@ -28,6 +28,20 @@
       "path": "packages/modules.js"
     },
     {
+      "path": "packages/modern-browsers.js"
+    },
+    {
+      "node_modules": "npm/node_modules/meteor/es5-shim/node_modules",
+      "path": "packages/es5-shim.js"
+    },
+    {
+      "node_modules": "npm/node_modules/meteor/promise/node_modules",
+      "path": "packages/promise.js"
+    },
+    {
+      "path": "packages/ecmascript-runtime-client.js"
+    },
+    {
       "node_modules": "npm/node_modules/meteor/ecmascript-runtime-server/node_modules",
       "path": "packages/ecmascript-runtime-server.js"
     },
@@ -42,10 +56,6 @@
     {
       "node_modules": "npm/node_modules/meteor/babel-runtime/node_modules",
       "path": "packages/babel-runtime.js"
-    },
-    {
-      "node_modules": "npm/node_modules/meteor/promise/node_modules",
-      "path": "packages/promise.js"
     },
     {
       "path": "packages/url.js"
@@ -89,6 +99,7 @@
       "path": "packages/ordered-dict.js"
     },
     {
+      "sourceMap": "packages/tracker.js.map",
       "path": "packages/tracker.js"
     },
     {
@@ -133,9 +144,6 @@
     },
     {
       "path": "packages/ddp-rate-limiter.js"
-    },
-    {
-      "path": "packages/ecmascript-runtime-client.js"
     },
     {
       "node_modules": "npm/node_modules/meteor/logging/node_modules",
@@ -197,19 +205,6 @@
     },
     {
       "path": "packages/standard-minifier-js.js"
-    },
-    {
-      "node_modules": "npm/node_modules/meteor/server-render/node_modules",
-      "sourceMap": "packages/server-render.js.map",
-      "path": "packages/server-render.js"
-    },
-    {
-      "sourceMap": "packages/shim-common.js.map",
-      "path": "packages/shim-common.js"
-    },
-    {
-      "node_modules": "npm/node_modules/meteor/es5-shim/node_modules",
-      "path": "packages/es5-shim.js"
     },
     {
       "sourceMap": "packages/shell-server.js.map",

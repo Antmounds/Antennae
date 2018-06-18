@@ -2,22 +2,22 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "2756d6e962e8e8ed40cc9e233086574781dd31c3.js",
+      "path": "7105856172ee651d4f22cf7cc6b4cde376752ac4.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/2756d6e962e8e8ed40cc9e233086574781dd31c3.js?meteor_js_resource=true",
-      "size": 845980,
-      "hash": "2756d6e962e8e8ed40cc9e233086574781dd31c3"
+      "url": "/7105856172ee651d4f22cf7cc6b4cde376752ac4.js?meteor_js_resource=true",
+      "size": 735808,
+      "hash": "7105856172ee651d4f22cf7cc6b4cde376752ac4"
     },
     {
-      "path": "2756d6e962e8e8ed40cc9e233086574781dd31c3.stats.json",
+      "path": "7105856172ee651d4f22cf7cc6b4cde376752ac4.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/2756d6e962e8e8ed40cc9e233086574781dd31c3.stats.json?meteor_js_resource=true",
-      "size": 27768,
-      "hash": "f806441ecb5cbfba6ded335270276ca882ee4e21"
+      "url": "/7105856172ee651d4f22cf7cc6b4cde376752ac4.stats.json?meteor_js_resource=true",
+      "size": 15813,
+      "hash": "2e71c07c496c3449135afb350049dc13e26a909f"
     },
     {
       "path": "603c52af6e844350b51d2b4fdabc91c35872239b.css",
@@ -27,24 +27,6 @@
       "url": "/603c52af6e844350b51d2b4fdabc91c35872239b.css?meteor_css_resource=true",
       "size": 133452,
       "hash": "603c52af6e844350b51d2b4fdabc91c35872239b"
-    },
-    {
-      "path": "packages/es5-shim/es5-shim-sham.js",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/es5-shim/es5-shim-sham.js",
-      "size": 107174,
-      "hash": "c75e7bf8f84078ec1aac4edd37d060bb60ef8fc2"
-    },
-    {
-      "path": "packages/es5-shim/es5-shim-sham.min.js",
-      "where": "client",
-      "type": "asset",
-      "cacheable": false,
-      "url": "/packages/es5-shim/es5-shim-sham.min.js",
-      "size": 27347,
-      "hash": "f611834e690a71f04d03591a455670d90218faaa"
     },
     {
       "path": "packages/materialize_materialize/fonts/roboto/Roboto-Bold.woff",
@@ -167,7 +149,7 @@
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "b6cc81f54b410b6917fe84f589f7804ff8102008"
+      "hash": "ce7eec04da173cf560f06d099e476c1552751b69"
     }
   ]
 }

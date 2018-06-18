@@ -62,6 +62,8 @@ pipelines:
           - export ECS_CLUSTER_NAME="${BITBUCKET_REPO_OWNER}"
           - export ECS_SERVICE_NAME="${BITBUCKET_REPO_SLUG}"
           - export ECS_TASK_NAME="${BITBUCKET_REPO_SLUG}"
+
+          - export METEOR_SETTINGS="$(cat src/tools/settings.json)"
           # authenticate with the Docker Hub registry so awscli can pull private images
           #- docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
           # authenticate with the AWS ECR registry
@@ -77,7 +79,7 @@ pipelines:
             --network-mode "awsvpc"
             --requires-compatibilities "FARGATE"
             --container-definitions
-            '[{"name":"app","image":"${AWS_IMAGE_URI}","portMappings":[{"containerPort":3000,"hostPort":3000}],"essential":true,"environment":[{"name":"AWS_ACCESS_KEY_ID","value":"$AWS_ACCESS_KEY_ID"},{"name":"AWS_SECRET_ACCESS_KEY","value":"$AWS_SECRET_ACCESS_KEY"},{"name":"MONGO_URL","value":"$MONGO_URL"}],"logConfiguration":{"logDriver":"awslogs","options":{"awslogs-region":"us-east-1","awslogs-group":"moment-app-logs","awslogs-stream-prefix":"moment-app"}}}]'
+            '[{"name":"app","image":"${AWS_IMAGE_URI}","portMappings":[{"containerPort":3000,"hostPort":3000}],"essential":true,"environment":[{"name":"AWS_ACCESS_KEY_ID","value":"$AWS_ACCESS_KEY_ID"},{"name":"AWS_SECRET_ACCESS_KEY","value":"$AWS_SECRET_ACCESS_KEY"},{"name":"MONGO_URL","value":"$MONGO_URL"},{"name":"METEOR_SETTINGS","value":"$METEOR_SETTINGS"}],"logConfiguration":{"logDriver":"awslogs","options":{"awslogs-region":"us-east-1","awslogs-group":"moment-app-logs","awslogs-stream-prefix":"moment-app"}}}]'
             --cpu 256
             --memory 1024
             | jq --raw-output '.taskDefinition.revision')

@@ -45,7 +45,10 @@ Meteor = {
   isDevelopment: meteorEnv.NODE_ENV !== "production",
   isClient: false,
   isServer: true,
-  isCordova: false
+  isCordova: false,
+  // Server code runs in Node 8+, which is decidedly "modern" by any
+  // reasonable definition.
+  isModern: true
 };
 
 Meteor.settings = {};
@@ -54,7 +57,7 @@ if (process.env.METEOR_SETTINGS) {
   try {
     Meteor.settings = JSON.parse(process.env.METEOR_SETTINGS);
   } catch (e) {
-    throw new Error("METEOR_SETTINGS are not valid JSON: " + process.env.METEOR_SETTINGS);
+    throw new Error("METEOR_SETTINGS are not valid JSON.");
   }
 }
 
@@ -303,7 +306,7 @@ function logErr(err) {
   if (err) {
     return Meteor._debug(
       "Exception in callback of async function",
-      err.stack ? err.stack : err
+      err
     );
   }
 }
@@ -788,7 +791,7 @@ SQp.runTask = function (task) {
   var fut = new Future;
   var handle = {
     task: Meteor.bindEnvironment(task, function (e) {
-      Meteor._debug("Exception from task:", e && e.stack || e);
+      Meteor._debug("Exception from task", e);
       throw e;
     }),
     future: fut,
@@ -872,7 +875,7 @@ SQp._run = function () {
       // We'll throw this exception through runTask.
       exception = err;
     } else {
-      Meteor._debug("Exception in queued task: " + (err.stack || err));
+      Meteor._debug("Exception in queued task", err);
     }
   }
   self._currentTaskFiber = undefined;
@@ -1219,7 +1222,7 @@ Meteor.bindEnvironment = function (func, onException, _this) {
     onException = function (error) {
       Meteor._debug(
         "Exception in " + description + ":",
-        error && error.stack || error
+        error
       );
     };
   } else if (typeof(onException) !== 'function') {
@@ -1332,11 +1335,17 @@ Meteor.absoluteUrl = function (path, options) {
   if (!/^http[s]?:\/\//i.test(url)) // url starts with 'http://' or 'https://'
     url = 'http://' + url; // we will later fix to https if options.secure is set
 
-  if (!/\/$/.test(url)) // url ends with '/'
-    url += '/';
+  if (! url.endsWith("/")) {
+    url += "/";
+  }
 
-  if (path)
+  if (path) {
+    // join url and path with a / separator
+    while (path.startsWith("/")) {
+      path = path.slice(1);
+    }
     url += path;
+  }
 
   // turn http to https if secure option is set, and we're not talking
   // to localhost.
@@ -1353,11 +1362,27 @@ Meteor.absoluteUrl = function (path, options) {
 };
 
 // allow later packages to override default options
-Meteor.absoluteUrl.defaultOptions = { };
-if (typeof __meteor_runtime_config__ === "object" &&
-    __meteor_runtime_config__.ROOT_URL)
-  Meteor.absoluteUrl.defaultOptions.rootUrl = __meteor_runtime_config__.ROOT_URL;
+var defaultOptions = Meteor.absoluteUrl.defaultOptions = {};
 
+// available only in a browser environment
+var location = typeof window === "object" && window.location;
+
+if (typeof __meteor_runtime_config__ === "object" &&
+    __meteor_runtime_config__.ROOT_URL) {
+  defaultOptions.rootUrl = __meteor_runtime_config__.ROOT_URL;
+} else if (location &&
+           location.protocol &&
+           location.host) {
+  defaultOptions.rootUrl = location.protocol + "//" + location.host;
+}
+
+// Make absolute URLs use HTTPS by default if the current window.location
+// uses HTTPS. Since this is just a default, it can be overridden by
+// passing { secure: false } if necessary.
+if (location &&
+    location.protocol === "https:") {
+  defaultOptions.secure = true;
+}
 
 Meteor._relativeToSiteRootUrl = function (link) {
   if (typeof __meteor_runtime_config__ === "object" &&
