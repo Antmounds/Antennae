@@ -18,7 +18,7 @@ pipelines:
           - export DOCKERHUB_IMAGE_NAME="${DOCKER_HUB_USERNAME}/${IMAGE_NAME}"
           - export AWS_IMAGE_NAME="166964003196.dkr.ecr.us-east-1.amazonaws.com/${BITBUCKET_REPO_SLUG}:${BITBUCKET_BUILD_NUMBER}"
           #- export IMAGE_NAME=antmounds/moments:$BITBUCKET_COMMIT
-          - apt-get install install gettext -y
+          - apk add --no-cache --virtual gettext
 
           - envsubst < src/tools/settings.json.tmpl > src/tools/settings.json
           # copy in creds from s3
