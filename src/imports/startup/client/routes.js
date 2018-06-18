@@ -23,3 +23,9 @@ FlowRouter.route('/', {
     BlazeLayout.render('app_body');
   }
 });
+
+FlowRouter.notFound = {
+	action: function(){
+		FlowRouter.go('home');
+	}
+}

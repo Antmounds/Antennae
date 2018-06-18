@@ -1,6 +1,4 @@
-# This is a sample build configuration for Docker.
-# Check our guides at https://confluence.atlassian.com/x/O1toN for more examples.
-# Only use spaces to indent your .yml configuration.
+# This is a build pipeline for BitBucket
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
 # image: atlassian/default-image:latest
@@ -51,11 +49,10 @@ pipelines:
           - export AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}"
           - export AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}"
           - export AWS_DEFAULT_REGION="us-east-1"
-          # Dockerhub Authentication variables
-          # set DOCKER_HUB_USERNAME and DOCKER_HUB_PASSWORD as environment variables
-          # Docker variables
-          - export IMAGE_NAME="${DOCKER_HUB_USERNAME}/${BITBUCKET_REPO_SLUG}:${BITBUCKET_BUILD_NUMBER}"
-          - export AWS_IMAGE_NAME="166964003196.dkr.ecr.us-east-1.amazonaws.com/${BITBUCKET_REPO_SLUG}:${BITBUCKET_BUILD_NUMBER}"
+          # set image id variables
+          - export IMAGE_NAME="${BITBUCKET_REPO_SLUG}:${BITBUCKET_BUILD_NUMBER}"
+          - export DOCKER_IMAGE_URI="${DOCKER_HUB_USERNAME}/${IMAGE_NAME}"
+          - export AWS_IMAGE_URI="166964003196.dkr.ecr.us-east-1.amazonaws.com/${IMAGE_NAME}"
           # ECS variables
           - export ECS_CLUSTER_NAME="${BITBUCKET_REPO_OWNER}"
           - export ECS_SERVICE_NAME="${BITBUCKET_REPO_SLUG}"
@@ -67,21 +64,19 @@ pipelines:
           # Create ECS cluster, task, service
           - aws ecs list-clusters | grep "${ECS_CLUSTER_NAME}" || aws ecs create-cluster --cluster-name "${ECS_CLUSTER_NAME}"
           # Updating the existing cluster, task, service
-          - echo "Docker image name:" "${IMAGE_NAME}"
-          - echo "AWS image name:" "${AWS_IMAGE_NAME}"
+          - echo "Docker image uri:" "${DOCKER_IMAGE_URI}"
+          - echo "AWS image uri:" "${AWS_IMAGE_URI}"
           - export TASK_VERSION=$(aws ecs register-task-definition
             --family "${ECS_TASK_NAME}"
             --execution-role-arn "arn:aws:iam::166964003196:role/ecsExecutionRole"
             --network-mode "awsvpc"
             --requires-compatibilities "FARGATE"
             --container-definitions
-            '[{"name":"app","image":"'"${AWS_IMAGE_NAME}"'","portMappings":[{"containerPort":3000,"hostPort":3000}],"essential":true,"logConfiguration":{"logDriver":"awslogs","options":{"awslogs-region":"us-east-1","awslogs-group":"moment-app-logs","awslogs-stream-prefix":"moment-app"}}}]'
+            '[{"name":"app","image":"'"${AWS_IMAGE_URI}"'","portMappings":[{"containerPort":3000,"hostPort":3000}],"essential":true,"logConfiguration":{"logDriver":"awslogs","options":{"awslogs-region":"us-east-1","awslogs-group":"moment-app-logs","awslogs-stream-prefix":"moment-app"}}}]'
             --cpu 256
             --memory 1024
             | jq --raw-output '.taskDefinition.revision')
           - echo "Registered ECS Task Definition:" "${TASK_VERSION}"
           # Create ECS Service
-          - aws ecs list-services --cluster "${ECS_CLUSTER_NAME}"  | grep "${ECS_SERVICE_NAME}" || aws ecs create-service --service-name "${ECS_SERVICE_NAME}" --cluster "${ECS_CLUSTER_NAME}" --task-definition "${ECS_TASK_NAME}" --desired-count 1 --launch-type "FARGATE" --network-configuration "awsvpcConfiguration={subnets=[subnet-915e4ccc],securityGroups=[sg-6c378a25],assignPublicIp='ENABLED'}" --load-balancers "targetGroupArn=arn:aws:elasticloadbalancing:us-east-1:166964003196:targetgroup/moments-tg/ff996b474e380c02,containerName=app,containerPort=3000"
+          - aws ecs list-services --cluster "${ECS_CLUSTER_NAME}"  | grep "${ECS_SERVICE_NAME}" || aws ecs create-service --service-name "${ECS_SERVICE_NAME}" --cluster "${ECS_CLUSTER_NAME}" --task-definition "${ECS_TASK_NAME}" --desired-count 1 --launch-type "FARGATE" --network-configuration "awsvpcConfiguration={subnets=['subnet-915e4ccc','subnet-b18169d6'],securityGroups=['sg-6c378a25'],assignPublicIp='ENABLED'}" --load-balancers "targetGroupArn=arn:aws:elasticloadbalancing:us-east-1:166964003196:targetgroup/moments-tg/ff996b474e380c02,containerName=app,containerPort=3000"
           - aws ecs update-service --cluster "${ECS_CLUSTER_NAME}" --service "${ECS_SERVICE_NAME}" --task-definition "${ECS_TASK_NAME}:${TASK_VERSION}"
-          # Follow https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_container_instance.html for instrunctions
-          # needed to provide the compute resources (EC2 instances) that the tasks will run on.

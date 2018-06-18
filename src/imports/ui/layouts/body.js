@@ -40,12 +40,14 @@ Template.hello.events({
 Template.app_body.created = function(){
   console.log(`${this.view.name} created`);
   // counter starts at 0
-  this.moments = new ReactiveVar([]);
+  sessionStorage.getItem('moment') || sessionStorage.setItem('moment', JSON.stringify([]));
+  this.moments = new ReactiveVar(JSON.parse(sessionStorage.getItem('moment')));
 };
 
 Template.app_body.helpers({
   moments() {
-    let m = Template.instance().moments.get();
+    let m = Template.instance().moments.get(); //JSON.parse(sessionStorage.getItem('moment')); //localTimeline.find({}); //Session.get('moment');// || 
+    //let m = Template.instance().moments.get();
     console.log(m);
     return m;
   },
@@ -81,7 +83,10 @@ Template.app_body.events({
             };
             let m = instance.moments.get();
             m.unshift(moment);
-            instance.moments.set(m)
+            sessionStorage.setItem('moment', JSON.stringify(m));
+            instance.moments.set(m);
+            //Session.set('moment', [moment]);
+            //localTimeline.insert(moment);
           }
         });
       };

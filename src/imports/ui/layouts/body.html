@@ -1,7 +1,7 @@
 <template name="app_body">
 	<nav>
-		<div class="nav-wrapper yellow darken-2">
-			<a href="#" class="brand-logo">Moments</a>
+		<div class="nav-wrapper green darken-4">
+			<a href="#" class="brand-logo">Antennae</a>
   			<a href="#" class="right"><i class="material-icons">person</i></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
 				<li><a href="sass.html">Home</a></li>
@@ -28,9 +28,11 @@
 	{{#each moments}}
 		<div class="col s12 m6">
 		  <div class="card">
+		  	{{#if this.faceDetails}}
 	          <div class="valign-wrapper">
 	            <div class="col s2 m2">
-	              <img src="img/avatar5.png" alt="" width="50px" height="50px" class="circle responsive-img"> <!-- notice the "circle" class -->
+	            	<i class="medium material-icons">account_circle</i>
+	              <!-- <img src="img/avatar5.png" alt="" width="50px" height="50px" class="circle responsive-img"> --> <!-- notice the "circle" class -->
 	            </div>
 	            <div class="col s10 m10">
 	              <span class="black-text">
@@ -38,6 +40,7 @@
 	              </span>
 	            </div>
 	          </div>
+		  	{{/if}}
 		    <div class="card-image">
 		      <img id="postImg" src="{{img}}" width="auto" height="auto" class="">
 		      <span class="card-title">{{#each tags}}<div class="chip" title="{{this.Confidence}}">{{this.Name}}</div> {{/each}}</span>
@@ -46,15 +49,15 @@
 		      <p>I am a very simple card. I am good at containing small bits of information.
 		      I am convenient because I require little markup to use effectively.</p>
 		    </div> -->
-		    <div class="card-action">
+		    <!-- <div class="card-action">
 		      <a href="#">Like</a>
 		      <a href="#">Report</a>
-		    </div>
+		    </div> -->
 		  </div>
 		</div>
 	{{/each}}
 	</div>
-	<h1>Welcome to Moments!</h1>
+	<h1>Welcome to AntennaeAntennae!</h1>
 	<p>Take or upload a picture and see an AI generated caption.</p>
 
 	<!-- {{> hello}}
