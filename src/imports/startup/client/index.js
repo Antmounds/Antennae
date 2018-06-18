@@ -7,7 +7,7 @@ import './routes.js';
 
 
 if(Meteor.isProduction){
-	console.log("Welcome to Materialize!\n========================================");
+	console.log(`Welcome to Materialize!\n========================================\${JSON.stringify(Meteor.settings)}`);
 }else{
 	console.log("DEVELOPMENT MODE: " + JSON.stringify(Meteor.settings) + "\n" + Meteor.release);
 };
