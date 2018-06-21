@@ -1,45 +1,97 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+# Antennae
+Image tagging app using cloud technologies to label photos. 
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+## Introduction
+Ths app serves as a simple demo node.js app using AWS Rekognition to label photos. The 3 categories of labels it applies are scene/object recognition, face detection and content moderation. Scene recognition will apply a maximum of 15 labels to an image. Face detection shows age range, emotions, glasses, smiling and eyes open/closed.
 
----
+## Requirements
+* **Meteor.js 1.6.13+**
+* **Docker 2.0+**
+* **MongoDB** - Required for production; running meteor locally comes with mongodb
+* **Terraform 0.11.7+** - For provisioning cloud infrastructure
+* **AWS Account** - Free; If you don't have one you can get one at https://was.amazon.com/.
 
-## Edit a file
+## Instructions
+### Clone the repository
+`$ git clone https://bitbucket.org/Antmounds/antennae.git && cd Antennae`
 
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
+### 1) Development
+#### Navigate to src/ directory
+`$ cd src/`
 
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
+#### Run Development App
+`$ meteor --settings='settings.json` *App should become available at http://localhost:3000/*
+This will allow you save changes with live reloading of he app in the browser.
 
----
+### 2) Production
+This will build the meteor.js app and then build resulting node.s app as Docker image ready for deployment.
 
-## Create a file
+#### Build meteor app
+`$ meteor build --directory ../build`
 
-Next, you’ll add a new file to this repository.
+#### Navigate back to root directory
+`$ cd ../`
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
+#### Set required MONGO_URL & AWS Environment Variables
+```
+$ export MONGO_URL=${YOUR_MONGODB_URI}
+$ export AWS_ACCESS_KEY_ID=${YOUR_AWS_ACCESS_KEY}
+$ export AWS_SECRET_ACCESS_KEY=${YOUR_AWS_SECRET_KEY}
+```
 
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+#### Build docker image
+`$ docker build -t antmounds/antennae .` *Alternative run `.circleci/build.sh`. See script for details*
 
----
+#### Run Production App
+`$ docker run --rm -d --name antennae -p 3000:3000 antmounds/antennae:latest` *App should become available at http://localhost:3000/*
+The app is ready to be deployed to a hosted docker runtime.
 
-## Clone a repository
+## Deployment
+This section goes over deploying the docker image to AWS and running it in production with Elastic Container Service [ECS](https://aws.amazon.com/ecs)
+#### 1) From `infrastructure/` folder, make sure terraform is installed and up-to-date
+`$ terraform -v` 
 
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
+#### 2) Initiate terraform modules
+`$ terraform init` 
 
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
+#### 3) Plan execution
+`$ terraform plan` 
 
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+#### 4) Deploy resources
+`$ terraform apply` 
+This will create the following resources:
+
+
+## Build Android App
+A prebuilt android sdk can be found [here]. But these instructions will show how to build the app yourself.
+From the `src/` directory run meteor build command
+`$ meteor build android`
+
+## Documentation
+* Read more about the goals and motivations for this project.
+* Follow the getting started guide for basic usage instructions
+
+## Contributing
+Pull requests, forks and stars are mucho appreciated and encouraged. See CONTRIBUTINGS.md for how to get involved in this project. 
+
+#### Get in touch
+* :speaking_head: Join the Antmounds [discord]() server for more discussion on this project.
+* :tv: Watch LIVE development of this app on [YouTube](https://www.youtube.com/Antmounds), [Twitch.tv](https://twitch.tv/Antmounds) and [LiveEdu.tv](https://liveedu.tv/Antmounds)
+* :clipboard: Use the [issue tracker](https://bitbucket.org/Antmounds/antennae/issues) for bugs, feature requests and enhancements
+* :moneybag: For serious business inquiries contact [business@antmounds.com](business@antmounds.com)
+
+## Authors
+* [Nick@antmounds](https://bitbucket.org/Antmounds) - *initial development*
+
+## License
+Copyright (C) 2018 Antmounds
+
+This program is free software: you can redistribute it and/or  modify
+it under the terms of the GNU Affero General Public License, version 3,
+as published by the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+[GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.en.html) for more details.
