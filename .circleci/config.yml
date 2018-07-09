@@ -7,7 +7,7 @@ jobs:
       - image: docker:stable-git
     #working_directory:
     environment:
-      IMAGE_NAME: $CIRCLE_PROJECT_REPONAME:$(git log -1 --format=%h)
+      IMAGE_NAME: "$CIRCLE_PROJECT_REPONAME:$(git log -1 --format=%h)"
       DOCKERHUB_IMAGE_NAME: "${DOCKER_HUB_USERNAME}/${IMAGE_NAME}"
       AWS_IMAGE_NAME: "166964003196.dkr.ecr.us-east-1.amazonaws.com/${IMAGE_NAME}"
     steps:
@@ -16,9 +16,7 @@ jobs:
           docker_layer_caching: true
       - run: 
           name: Build image
-          command: |
-            IMAGE_NAME=$CIRCLE_PROJECT_REPONAME:$(git log -1 --format=%h)
-            docker build --rm -f Dockerfile-test -t $IMAGE_NAME --build-arg BUILD=$CIRCLE_BUILD_NUM --build-arg MONGO_URL=$MONGO_URL .
+          command: docker build --rm -f Dockerfile-test -t $IMAGE_NAME --build-arg BUILD=$CIRCLE_BUILD_NUM --build-arg MONGO_URL=$MONGO_URL .
       - run:
           # tag Docker image for the Dockerhub registry
           name: Tag Dockerhub image
