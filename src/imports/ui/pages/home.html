@@ -1,0 +1,51 @@
+<template name="home">
+	<form id="newPost" class="newPost">
+		<div class="fixed-action-btn">
+			<a class="btn-floating btn-large green" onClick="selectPic.click()">
+				<i class="large material-icons">add_a_photo</i>
+				<input id="selectPic" type="file" accept="image/*" capture>
+		  	</a>
+		  <!-- <ul>
+		    <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+		    <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+		    <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+		    <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+		  </ul> -->
+		</div>
+	</form>
+	<div class="row">
+	{{#each moments}}
+		<div class="col s12 m6">
+		  <div class="card">
+		  	{{#if this.faceDetails}}
+	          <div class="valign-wrapper">
+	            <div class="col s2 m2">
+	            	<i class="medium material-icons">account_circle</i>
+	              <!-- <img src="img/avatar5.png" alt="" width="50px" height="50px" class="circle responsive-img"> --> <!-- notice the "circle" class -->
+	            </div>
+	            <div class="col s10 m10">
+	              <span class="black-text">
+	                {{faceDetails}}
+	              </span>
+	            </div>
+	          </div>
+		  	{{/if}}
+		    <div class="card-image">
+		      <img id="postImg" src="{{img}}" width="auto" height="auto" class="">
+		      <span class="card-title">{{#each tags}}<div class="chip" title="{{this.Confidence}}">{{this.Name}}</div> {{/each}}</span>
+		    </div>
+		    <!-- <div class="card-content">
+		      <p>I am a very simple card. I am good at containing small bits of information.
+		      I am convenient because I require little markup to use effectively.</p>
+		    </div> -->
+		    <!-- <div class="card-action">
+		      <a href="#">Like</a>
+		      <a href="#">Report</a>
+		    </div> -->
+		  </div>
+		</div>
+	{{/each}}
+	</div>
+	<h1>Welcome to Antennae!</h1>
+	<p>Take or upload a picture and see an AI generated caption.</p>
+</template>

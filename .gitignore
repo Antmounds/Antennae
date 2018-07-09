@@ -1,5 +1,5 @@
 ## Node & NPM
-#**/node_modules #temporarily until i get the full docker buld file working
+#**/node_modules #temporarily until full docker build file working
 **/npm-debug.log*
 **/*.lock
 **/package-lock.json

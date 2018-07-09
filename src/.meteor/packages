@@ -25,5 +25,5 @@ accounts-password@1.5.1
 kadira:flow-router
 kadira:blaze-layout
 momentjs:moment
-materialize:materialize
 underscore
+materialize:materialize

@@ -1,3 +1,15 @@
+/*
+ * Copyright 2017-present Antmounds.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the GNU Affero General Public License, version 3.0 (the "License"). You may not use this file except in compliance with
+ * the License. A copy of the License is located at
+ *
+ *     https://www.gnu.org/licenses/agpl-3.0.en.html
+ *
+ * or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+ * CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+ * and limitations under the License.
+ */
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 
@@ -7,7 +19,8 @@ import '../../ui/layouts/body.js';
 // import pages;
 // import '../../ui/pages/404.html';
 // import '../../ui/pages/500.html';
-// import '../../ui/pages/browse.js';
+import '../../ui/pages/home.js';
+import '../../ui/pages/profile.js';
 
 // Global route triggers
 FlowRouter.triggers.enter(function(context){
@@ -19,8 +32,17 @@ FlowRouter.route('/', {
   name: 'home',
   action() {
     console.log("Loading home");
-    document.title = 'Home | Moments';
-    BlazeLayout.render('app_body');
+    document.title = 'Home | Antennae';
+    BlazeLayout.render('app_body', {content: 'home'});
+  }
+});
+
+FlowRouter.route('/profile', {
+  name: 'profile',
+  action() {
+    console.log("Loading profile");
+    document.title = 'Profile | Antennae';
+    BlazeLayout.render('app_body', {content: 'profile'});
   }
 });
 

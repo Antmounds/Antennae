@@ -1,20 +1,23 @@
 # Antennae
-Image tagging app using cloud technologies to label photos. 
+Out-the-box face recognition web app for desktop and mobile. *Trust but verify*
 
 
 ## Introduction
-Ths app serves as a simple demo node.js app using AWS Rekognition to label photos. The 3 categories of labels it applies are scene/object recognition, face detection and content moderation. Scene recognition will apply a maximum of 15 labels to an image. Face detection shows age range, emotions, glasses, smiling and eyes open/closed.
+Antennae is a free and open-source face recognition node.js app using [AWS Rekognition](https://aws.amazon.com/rekognition/) to detect and match faces. The app allows you to create collections of 'face prints' and later search an image across any number of selected databases. Each search will also return detected emotions, gender, estimated age range, and other facial features such as the presence of glasses, face hair and smiles. Use cases include allowing you to easily and quickly find missing persons, helping the visually impaired, verifying dates and rendevouz, recognizing celebrities, victim identificaion, and so much more! 
+
+This repo features infrastructure code that will allow you to self-host the application using a containerized, highly available, self-repairing, military grade, secure cloud environment. For a managed SaaS solution check out [Antennae Cloud](https://getantennae.com/cloud), featuring private and pre-populated public face print databases, teams, white-label and 24/7 support options.
 
 ## Requirements
-* **Meteor.js 1.6.13+**
-* **Docker 2.0+**
-* **MongoDB** - Required for production; running meteor locally comes with mongodb
-* **Terraform 0.11.7+** - For provisioning cloud infrastructure
-* **AWS Account** - Free; If you don't have one you can get one at https://was.amazon.com/.
+* **Meteor.js 1.6.13+** 	- Required for development;
+* **Node.js 10.5.0+** 		- Required for production w/o docker;
+* **Docker 2.0+**			- Required for testing and production; Free, download and more info at https://docs.docker.com/install/
+* **MongoDB** 				- Required for production; running meteor locally comes with mongodb
+* **Terraform 0.11.7+** 	- For provisioning cloud infrastructure
+* **AWS Account** 			- Free; If you don't have one you can get one at https://aws.amazon.com/.
 
 ## Instructions
 ### Clone the repository
-`$ git clone https://bitbucket.org/Antmounds/antennae.git && cd Antennae`
+`$ git clone https://bitbucket.org/Antmounds/antennae.git && cd Antennae/`
 
 ### 1) Development
 #### Navigate to src/ directory
@@ -22,7 +25,7 @@ Ths app serves as a simple demo node.js app using AWS Rekognition to label photo
 
 #### Run Development App
 `$ meteor --settings='settings.json` *App should become available at http://localhost:3000/*
-This will allow you save changes with live reloading of he app in the browser.
+This will allow you to save changes with live reloading of the app in the browser.
 
 ### 2) Production
 This will build the meteor.js app and then build resulting node.s app as Docker image ready for deployment.
@@ -41,14 +44,19 @@ $ export AWS_SECRET_ACCESS_KEY=${YOUR_AWS_SECRET_KEY}
 ```
 
 #### Build docker image
-`$ docker build -t antmounds/antennae .` *Alternative run `.circleci/build.sh`. See script for details*
+`$ docker build -t antmounds/antennae .` *Alternatively run `.circleci/build.sh`. See script for details*
 
 #### Run Production App
 `$ docker run --rm -d --name antennae -p 3000:3000 antmounds/antennae:latest` *App should become available at http://localhost:3000/*
 The app is ready to be deployed to a hosted docker runtime.
 
+## Build Android App
+A prebuilt android sdk can be found [here](https://bitbucket.org/Antmounds/antennae/downloads). But these instructions below will show how to build the app yourself.
+From the `src/` directory run meteor build command
+`$ meteor build android`
+
 ## Deployment
-This section goes over deploying the docker image to AWS and running it in production with Elastic Container Service [ECS](https://aws.amazon.com/ecs)
+This section goes over deploying the docker image to AWS and running it in production with Elastic Container Service ([ECS])(https://aws.amazon.com/ecs)
 #### 1) From `infrastructure/` folder, make sure terraform is installed and up-to-date
 `$ terraform -v` 
 
@@ -62,18 +70,12 @@ This section goes over deploying the docker image to AWS and running it in produ
 `$ terraform apply` 
 This will create the following resources:
 
-
-## Build Android App
-A prebuilt android sdk can be found [here]. But these instructions will show how to build the app yourself.
-From the `src/` directory run meteor build command
-`$ meteor build android`
-
 ## Documentation
 * Read more about the goals and motivations for this project.
 * Follow the getting started guide for basic usage instructions
 
 ## Contributing
-Pull requests, forks and stars are mucho appreciated and encouraged. See CONTRIBUTINGS.md for how to get involved in this project. 
+Pull requests, forks and stars are mucho appreciated and encouraged. See [CONTRIBUTING.md](https://bitbucket.org/Antmounds/antennae.git#CONTRIBUTING) for how to get involved in this project. 
 
 #### Get in touch
 * :speaking_head: Join the Antmounds [discord]() server for more discussion on this project.
@@ -87,7 +89,7 @@ Pull requests, forks and stars are mucho appreciated and encouraged. See CONTRIB
 ## License
 Copyright (C) 2018 Antmounds
 
-This program is free software: you can redistribute it and/or  modify
+This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License, version 3,
 as published by the Free Software Foundation.
 

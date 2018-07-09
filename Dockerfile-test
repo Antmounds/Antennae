@@ -4,9 +4,10 @@ LABEL maintainer="bitbucket.com/Antmounds" license="GPLv3"
 
 ARG AWS_ACCESS_KEY_ID
 ARG AWS_SECRET_ACCESS_KEY
+ARG BUILD
 ARG MONGO_URL
 
-ENV PORT=3000 ROOT_URL=http://localhost:$PORT MONGO_URL=$MONGO_URL NODE_ENV=development AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+ENV PORT=3000 ROOT_URL=http://localhost:$PORT MONGO_URL=$MONGO_URL NODE_ENV=development AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY BUILD=$BUILD
 
 # OS update
 RUN apk update && apk upgrade
@@ -20,7 +21,8 @@ RUN apk add --no-cache --virtual .gyp \
 
 # add prebuilt meteor files
 WORKDIR /app/
-COPY build/* .
+
+COPY build/bundle .
 
 RUN (cd programs/server && npm install && npm install --save bcrypt fibers)
 

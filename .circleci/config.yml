@@ -1,0 +1,15 @@
+# Antennae CircleCI 2.0 configuration
+# 
+version: 2
+jobs:
+  build:
+    docker:
+      -image: docker:stable-git
+    #working_directory: 
+    steps:
+      - checkout
+      - run: 
+          name: Build image
+          command: |
+            IMAGE_NAME=$CIRCLE_PROJECT_REPONAME:$(git log -1 --format=%h)
+            docker build --rm -f Dockerfile-test -t $IMAGE_NAME --build-arg BUILD=$CIRCLE_BUILD_NUM --build-arg MONGO_URL=$MONGO_URL .
