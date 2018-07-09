@@ -8,6 +8,8 @@ jobs:
     #working_directory: 
     steps:
       - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run: 
           name: Build image
           command: |
