@@ -22,6 +22,7 @@ jobs:
           # tag Docker image for the Dockerhub registry
           name: Tag Dockerhub image
           command: |
+            IMAGE_NAME=$CIRCLE_PROJECT_REPONAME:$(git log -1 --format=%h)
             DOCKERHUB_IMAGE_NAME=${DOCKER_HUB_USERNAME}/${IMAGE_NAME}
             docker tag $IMAGE_NAME $DOCKERHUB_IMAGE_NAME
       - run:
@@ -31,7 +32,10 @@ jobs:
       - run:
           # push the new Docker image to the Docker registry
           name: Dockerhub push
-          command: docker push $DOCKERHUB_IMAGE_NAME
+          command: |
+            IMAGE_NAME=$CIRCLE_PROJECT_REPONAME:$(git log -1 --format=%h)
+            DOCKERHUB_IMAGE_NAME=${DOCKER_HUB_USERNAME}/${IMAGE_NAME}
+            docker push $DOCKERHUB_IMAGE_NAME
           
 workflows:
   version: 2
