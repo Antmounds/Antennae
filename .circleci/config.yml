@@ -13,7 +13,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          # docker_layer_caching: true # Only for paid accounts
+          docker_layer_caching: true # Only for paid accounts
       - run: 
           name: Build image
           command: docker build --rm -f Dockerfile-test -t $IMAGE_NAME --build-arg BUILD=$CIRCLE_BUILD_NUM --build-arg MONGO_URL=$MONGO_URL .
