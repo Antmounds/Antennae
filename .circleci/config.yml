@@ -16,15 +16,16 @@ jobs:
       - run: 
           name: Build image
           command: |
-            IMAGE_NAME=$CIRCLE_PROJECT_REPONAME:$(git log -1 --format=%h)
+            IMAGE_NAME=$CIRCLE_PROJECT_REPONAME
             docker build --rm -f Dockerfile-test -t $IMAGE_NAME --build-arg BUILD=$CIRCLE_BUILD_NUM --build-arg MONGO_URL=$MONGO_URL .
       - run:
           # tag Docker image for the Dockerhub registry
           name: Tag Dockerhub image
           command: |
-            IMAGE_NAME=$CIRCLE_PROJECT_REPONAME:$(git log -1 --format=%h)
+            IMAGE_NAME=$CIRCLE_PROJECT_REPONAME
             DOCKERHUB_IMAGE_NAME=${DOCKER_HUB_USERNAME}/${IMAGE_NAME}
-            docker tag $IMAGE_NAME $DOCKERHUB_IMAGE_NAME
+            docker tag $IMAGE_NAME $DOCKERHUB_IMAGE_NAME:latest
+            docker tag $IMAGE_NAME $DOCKERHUB_IMAGE_NAME:$(git log -1 --format=%h)
       - run:
           # authenticate with the Docker Hub registry
           name: Dockerhub login
@@ -33,7 +34,7 @@ jobs:
           # push the new Docker image to the Docker registry
           name: Dockerhub push
           command: |
-            IMAGE_NAME=$CIRCLE_PROJECT_REPONAME:$(git log -1 --format=%h)
+            IMAGE_NAME=$CIRCLE_PROJECT_REPONAME
             DOCKERHUB_IMAGE_NAME=${DOCKER_HUB_USERNAME}/${IMAGE_NAME}
             docker push $DOCKERHUB_IMAGE_NAME
           
