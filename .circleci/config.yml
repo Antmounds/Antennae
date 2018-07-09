@@ -7,7 +7,7 @@ jobs:
       - image: docker:stable-git
     #working_directory:
     environment:
-      IMAGE_NAME: "$CIRCLE_PROJECT_REPONAME:$(git log -1 --format=%h)"
+      IMAGE_NAME: "${CIRCLE_PROJECT_REPONAME}:"$(git log -1 --format=%h)
       DOCKERHUB_IMAGE_NAME: "${DOCKER_HUB_USERNAME}/${IMAGE_NAME}"
       AWS_IMAGE_NAME: "166964003196.dkr.ecr.us-east-1.amazonaws.com/${IMAGE_NAME}"
     steps:
