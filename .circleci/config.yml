@@ -7,20 +7,23 @@ jobs:
       - image: docker:stable-git
     #working_directory:
     environment:
-      IMAGE_NAME: ${CIRCLE_PROJECT_REPONAME}:$(git log -1 --format=%h)
       DOCKERHUB_IMAGE_NAME: "${DOCKER_HUB_USERNAME}/${IMAGE_NAME}"
       AWS_IMAGE_NAME: "166964003196.dkr.ecr.us-east-1.amazonaws.com/${IMAGE_NAME}"
     steps:
       - checkout
       - setup_remote_docker:
-          docker_layer_caching: true # Only for paid accounts
+          docker_layer_caching: true
       - run: 
           name: Build image
-          command: docker build --rm -f Dockerfile-test -t $IMAGE_NAME --build-arg BUILD=$CIRCLE_BUILD_NUM --build-arg MONGO_URL=$MONGO_URL .
+          command: |
+            IMAGE_NAME=$CIRCLE_PROJECT_REPONAME:$(git log -1 --format=%h)
+            docker build --rm -f Dockerfile-test -t $IMAGE_NAME --build-arg BUILD=$CIRCLE_BUILD_NUM --build-arg MONGO_URL=$MONGO_URL .
       - run:
           # tag Docker image for the Dockerhub registry
           name: Tag Dockerhub image
-          command: docker tag $IMAGE_NAME $DOCKERHUB_IMAGE_NAME
+          command: |
+            DOCKERHUB_IMAGE_NAME=${DOCKER_HUB_USERNAME}/${IMAGE_NAME}
+            docker tag $IMAGE_NAME $DOCKERHUB_IMAGE_NAME
       - run:
           # authenticate with the Docker Hub registry
           name: Dockerhub login
