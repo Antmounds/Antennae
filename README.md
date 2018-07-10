@@ -1,5 +1,5 @@
 # Antennae
-[![CircleCI](https://circleci.com/bb/Antmounds/antennae.svg?style=svg)](https://circleci.com/bb/Antmounds/antennae) [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://wes/agpl-3.0) [![Discord Chat](https://img.shields.io/discord/299962468581638144.svg?logo=discord)](https://discord.gg/dw3Dam2)
+[![CircleCI](https://circleci.com/bb/Antmounds/antennae.svg?style=svg)](https://circleci.com/bb/Antmounds/antennae) [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0) [![Discord Chat](https://img.shields.io/discord/299962468581638144.svg?logo=discord)](https://discord.gg/dw3Dam2)
 
 Out-the-box face recognition web app for desktop and mobile. *Trust but verify*
 
@@ -10,11 +10,11 @@ Antennae is a free and open-source face recognition node.js app using [AWS Rekog
 This repo features infrastructure code that will allow you to self-host the application using a containerized, highly available, self-repairing, military grade, secure cloud environment. For a managed SaaS solution check out [Antennae Cloud](https://getantennae.com/cloud), featuring private and pre-populated public face print databases, teams, white-label and 24/7 support options.
 
 ## Requirements
-* **Meteor.js 1.6.13+** 	- Required for development;
-* **Node.js 10.5.0+** 		- Required for production w/o docker;
+* **Meteor.js 1.6.13+** 	- Required for development; https://www.meteor.com/install
+* **Node.js 10.5.0+** 		- Required for production w/o docker; 
 * **Docker 2.0+**			- Required for testing and production; Free, download and more info at https://docs.docker.com/install/
-* **MongoDB** 				- Required for production; running meteor locally comes with mongodb
-* **Terraform 0.11.7+** 	- For provisioning cloud infrastructure
+* **MongoDB** 				- Required for production; running meteor locally comes with mongodb; [Install](https://docs.mongodb.com/manual/installation/) or use a [SaaS](https://mlab.com/)
+* **Terraform 0.11.7+** 	- For provisioning cloud infrastructure; [Install Terraform](https://www.terraform.io/intro/getting-started/install.html)
 * **AWS Account** 			- Free; If you don't have one you can get one at https://aws.amazon.com/.
 
 ## Instructions
