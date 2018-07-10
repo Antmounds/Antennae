@@ -11,7 +11,7 @@ This repo features infrastructure code that will allow you to self-host the appl
 
 ## Requirements
 * **Meteor.js 1.6.13+** 	- Required for development; https://www.meteor.com/install
-* **Node.js 10.5.0+** 		- Required for production w/o docker; 
+* **Node.js 10.5.0+** 		- Required for production w/o docker; https://nodejs.org/en/
 * **Docker 2.0+**			- Required for testing and production; Free, download and more info at https://docs.docker.com/install/
 * **MongoDB** 				- Required for production; running meteor locally comes with mongodb; [Install](https://docs.mongodb.com/manual/installation/) or use a [SaaS](https://mlab.com/)
 * **Terraform 0.11.7+** 	- For provisioning cloud infrastructure; [Install Terraform](https://www.terraform.io/intro/getting-started/install.html)
