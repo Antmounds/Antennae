@@ -1,4 +1,6 @@
 # Antennae
+[![CircleCI](https://circleci.com/bb/Antmounds/antennae.svg?style=svg)](https://circleci.com/bb/Antmounds/antennae) [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://wes/agpl-3.0) [![Discord Chat](https://img.shields.io/discord/299962468581638144.svg?logo=discord)](https://discord.gg/dw3Dam2)
+
 Out-the-box face recognition web app for desktop and mobile. *Trust but verify*
 
 
