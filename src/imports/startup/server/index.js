@@ -28,7 +28,7 @@ console.log('index.js: ' + server_mode + "-->" + JSON.stringify(Meteor.settings)
 Meteor.methods({
 
 	info(){
-		return `version: 1.0.0 - build: ${process.env.BUILD || 1234} - hostname: ${os.hostname()}`;
+		return `version: 0.9.0 - build: ${process.env.BUILD || 1234} - hostname: ${os.hostname()}`;
 	},
 
 	async getData(){    

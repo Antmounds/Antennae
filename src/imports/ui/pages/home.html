@@ -13,6 +13,10 @@
 		  </ul> -->
 		</div>
 	</form>
+	{{#unless moments}}
+	<h1>Welcome to Antennae!</h1>
+	<p>Take or upload a picture and see an AI generated caption.</p>
+	{{else}}
 	<div class="row">
 	{{#each moments}}
 		<div class="col s12 m6">
@@ -46,6 +50,5 @@
 		</div>
 	{{/each}}
 	</div>
-	<h1>Welcome to Antennae!</h1>
-	<p>Take or upload a picture and see an AI generated caption.</p>
+	{{/unless}}
 </template>

@@ -3,38 +3,44 @@
 		<div class="nav-wrapper brown">
 			<a href="#" data-activates="slide-out" class="button-collapse left"><i class="material-icons">menu</i></a>
 			<a href="/" class="brand-logo">Antennae</a>
-  			<a href="profile" class="right"><i class="material-icons">person</i></a>
+  			<!-- <a href="profile" class="right"><i class="material-icons">person</i></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
 				<li><a href="home">Home</a></li>
 				<li><a href="profile">Profile</a></li>
-				<!-- <li><a href="collapsible.html">JavaScript</a></li> -->
-			</ul>
+				<li><a href="collapsible.html">JavaScript</a></li>
+			</ul> -->
 		</div>
 	</nav>
-
-	<ul id="slide-out" class="side-nav">
-		<!-- <li>
-			<div class="user-view">
-			  <div class="background">
-			    <img src="images/office.jpg">
-			  </div>
-			  <a href="#user"><img class="circle" src="images/yuna.jpg"></a>
-			  <a href="#name"><span class="white-text name">John Doe</span></a>
-			  <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
-			</div>
-		</li> -->
-		<li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-		<li><a href="/profile">Collections</a></li>
-		<li><div class="divider"></div></li>
-		<li><a class="subheader">Subheader</a></li>
-		<li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-		<!-- <footer class="page-footer">version 1.0.2 build 200</footer> -->
-		<li style="bottom: 0%; margin-top: 100%; position: relative;"><a class="subheader" style="line-height:15px;overflow:visible;">{{app_info}}</a></li>
-	</ul>
+	<div class="container">
+		<ul id="slide-out" class="side-nav fixed">
+			<!-- <li>
+				<div class="user-view">
+				  <div class="background">
+				    <img src="images/office.jpg">
+				  </div>
+				  <a href="#user"><img class="circle" src="images/yuna.jpg"></a>
+				  <a href="#name"><span class="white-text name">John Doe</span></a>
+				  <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+				</div>
+			</li> -->
+			<li><a href="/"><i class="material-icons">cloud</i>Antennae Cloud</a></li>
+			<li><a href="/profile">Dashboard</a></li>
+			<li><a href="/profile">Collections</a></li>
+			<li><div class="divider"></div></li>
+			<li><a class="subheader">About</a></li>
+			<li><a class="waves-effect" href="#!">Settings</a></li>
+			<!-- <footer class="page-footer">version 1.0.2 build 200</footer> -->
+			<li style="bottom: 0%; margin-top: 100%; position: relative;"><a class="subheader" style="line-height:15px;overflow:visible;">{{app_info}}</a></li>
+		</ul>
+	</div>
    
+	<div class="container">
 	
 
-	{{> Template.dynamic template=content}}
+		{{> Template.dynamic template=content}}
+	
+
+	</div>
 
 
 	<!-- {{> hello}}
