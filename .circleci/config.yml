@@ -13,7 +13,7 @@ jobs:
           name: Build image
           command: |
             IMAGE_NAME=$CIRCLE_PROJECT_REPONAME
-            docker build --rm -t $IMAGE_NAME --build-arg BUILD=$CIRCLE_BUILD_NUM --build-arg MONGO_URL=$MONGO_URL .
+            docker build --rm -t $IMAGE_NAME --build-arg BUILD=$CIRCLE_BUILD_NUM .
       - run:
           # tag Docker image for the Dockerhub registry
           name: Tag Dockerhub image
