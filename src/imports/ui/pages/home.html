@@ -13,15 +13,14 @@
 		  </ul> -->
 		</div>
 	</form>
-	{{#unless moments}}
+	{{#unless search}}
 	<h1>Welcome to Antennae!</h1>
-	<p>Take or upload a picture and see an AI generated caption.</p>
+	<p>Take or upload a picture for immediate facial recognition.</p>
 	{{else}}
 	<div class="row">
-	{{#each moments}}
 		<div class="col s12 m6">
 		  <div class="card">
-		  	{{#if this.faceDetails}}
+		  	{{#if search.faceDetails}}
 	          <div class="valign-wrapper">
 	            <div class="col s2 m2">
 	            	<i class="medium material-icons">account_circle</i>
@@ -29,14 +28,14 @@
 	            </div>
 	            <div class="col s10 m10">
 	              <span class="black-text">
-	                {{faceDetails}}
+	                {{search.faceDetails}}
 	              </span>
 	            </div>
 	          </div>
 		  	{{/if}}
 		    <div class="card-image">
-		      <img id="postImg" src="{{img}}" width="auto" height="auto" class="">
-		      <span class="card-title">{{#each tags}}<div class="chip" title="{{this.Confidence}}">{{this.Name}}</div> {{/each}}</span>
+		      <img id="postImg" src="{{search.img}}" width="auto" height="auto" class="" alt="search image">
+		      <span class="card-title">{{#each search.tags}}<div class="chip tooltipped" title="{{this.Confidence}}" data-position="top" data-tooltip="{{this.Confidence}}">{{this.Name}}</div> {{/each}}</span>
 		    </div>
 		    <!-- <div class="card-content">
 		      <p>I am a very simple card. I am good at containing small bits of information.
@@ -48,7 +47,27 @@
 		    </div> -->
 		  </div>
 		</div>
-	{{/each}}
+
+
+  <div class="col s12 m6">
+    <div class="card horizontal">
+      <div class="card-image">
+        <img class="responsive-img" src="{{search.img}}" width="100px" style="max-width: 100px;" alt="search image">
+        <img class="responsive-img" src="{{search.img}}" width="100px" style="max-width: 100px;" alt="search image">
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+        	<span class="right" title="{{search.created}}">{{timeAgo search.created}}</span>
+          <p>UNKNOWN<br />{{search.faceDetails}}</p>
+          <div class="chip tooltipped" title="{{this.Confidence}}" data-position="top" data-tooltip="{{this.Confidence}}">Social Media</div>
+        </div>
+        <div class="card-action">
+          <a href="#">Save face</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
 	</div>
 	{{/unless}}
 </template>

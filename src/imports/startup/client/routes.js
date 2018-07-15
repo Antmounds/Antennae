@@ -19,8 +19,9 @@ import '../../ui/layouts/body.js';
 // import pages;
 // import '../../ui/pages/404.html';
 // import '../../ui/pages/500.html';
+import '../../ui/pages/history.js';
 import '../../ui/pages/home.js';
-import '../../ui/pages/profile.js';
+import '../../ui/pages/collections.js';
 
 // Global route triggers
 FlowRouter.triggers.enter(function(context){
@@ -37,12 +38,21 @@ FlowRouter.route('/', {
   }
 });
 
-FlowRouter.route('/profile', {
-  name: 'profile',
+FlowRouter.route('/collections', {
+  name: 'collections',
   action() {
-    console.log("Loading profile");
-    document.title = 'Profile | Antennae';
-    BlazeLayout.render('app_body', {content: 'profile'});
+    console.log("Loading collections");
+    document.title = 'Collections | Antennae';
+    BlazeLayout.render('app_body', {content: 'collections'});
+  }
+});
+
+FlowRouter.route('/history', {
+  name: 'history',
+  action() {
+    console.log("Loading history");
+    document.title = 'History | Antennae';
+    BlazeLayout.render('app_body', {content: 'history'});
   }
 });
 

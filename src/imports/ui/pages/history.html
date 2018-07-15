@@ -1,0 +1,37 @@
+<template name="history">
+	<h3>History</h3>
+	{{#unless searches}}
+	<h1>No search history yet...</h1>
+	<p>Take or upload a picture to see history here.</p>
+	{{else}}
+	<div class="row">
+		{{#each searches}}
+		<div class="col s12 m6">
+	    <div class="card horizontal">
+	      <div class="card-image">
+	        <img class="responsive-img" src="{{this.search_image}}" width="100px" style="max-width: 100px;" alt="search image">
+	        <!-- <img class="responsive-img" src="{{this.search_image}}" width="100px" style="max-width: 100px;" alt="search image"> -->
+	      </div>
+	      <div class="card-stacked">
+	        <div class="card-content">
+				<span class="right" title="{{this.created}}">{{timeAgo this.created}}</span>
+				<!-- <br /> -->
+				<p>UNKNOWN PERSON<br />{{this.faceDetails}}</p>
+				{{#if this.faces}}
+				{{#each this.faces}}
+				<div class="chip tooltipped" title="{{this.Confidence}}" data-position="top" data-tooltip="{{this.Confidence}}">Social Media</div>
+				{{/each}}
+				{{/if}}
+	        </div>
+	        <div class="card-action">
+	          {{#if this.search_results.faceDetails}}
+	          <a href="#">Save face</a>
+	          {{/if}}
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	  {{/each}}
+	</div>
+	{{/unless}}
+</template>

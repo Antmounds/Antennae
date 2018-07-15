@@ -1,12 +1,13 @@
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import AWS from 'aws-sdk';
 
-AWS.config.region = 'us-east-1';
+import { Searches } from './searches.js';
 
+AWS.config.region = 'us-east-1';
 var rekognition = new AWS.Rekognition();
 
 Meteor.methods({
-	"moment.scan"(picData){
+	"search.face"(picData){
 		//return 1;
 		console.log("ANALYZING IMAGE...");
 		var t0 = new Date().getTime();
@@ -39,19 +40,6 @@ Meteor.methods({
 		let promise2 = labelRequest.promise();
 		let promise3 = faceRequest.promise();
 		// Fulfill promises in parallel
-		// return Promise.all([
-		// 	promise1.catch(error => { return error }),
-		// 	promise2.catch(error => { return error }),
-		// 	promise3.catch(error => { return error }),
-		// ]).then(values => {
-		// 	console.log(values[0]);
-		// 	console.log(values[1]);
-		// 	console.log(values[2]);
-		// 	let t1 = new Date().getTime();
-		// 	console.log(`Request took ${t1 - t0} ms`);
-		// 	return values;
-		// });
-		//return {};
 		let response = Promise.all([
 			promise1.catch(error => { throw new Meteor.Error(error.code, error.message, error);return error; }),
 			promise2.catch(error => { throw new Meteor.Error(error.code, error.message, error);return error; }),
@@ -62,6 +50,17 @@ Meteor.methods({
 			console.log(values[2]);
 			let t1 = new Date().getTime();
 			console.log(`Response took ${t1 - t0} ms`);
+			let search_results = {
+				moderation: values[0].ModerationLabels,
+				labels: values[1].Labels,
+				faceDetails: values[2].FaceDetails
+			};
+			let search = {
+				search_image: picData,
+				search_results: search_results
+			};
+			let saveSearch = Searches.insert(search);
+			console.log(saveSearch);
 			return values;
 		}).catch(error => {
 			console.log('caught error!');
@@ -83,5 +82,5 @@ let runScanRule = {
 	type: 'method',
 	name: 'moment.scan'
 };
-// Add the rule, allowing up to 1 scan every 20 seconds
-DDPRateLimiter.addRule(runScanRule, 1, 1000);
+// Add the rule, allowing up to 1 scan every 10 seconds
+DDPRateLimiter.addRule(runScanRule, 1, 10000);

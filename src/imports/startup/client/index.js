@@ -12,14 +12,12 @@
  */
 import '../accounts-config.js';
 import './routes.js';
-// import './materialize.js';
-// import './materialize.min.js';
 // import './demo.js';
 // import './picker.js';
 
 
 if(Meteor.isProduction){
-	console.log(`Welcome to Materialize!\n========================================\${JSON.stringify(Meteor.settings)}`);
+	console.log(`Welcome to Antennae!\nYou opened the console! Looking for the code? Check out the project repo at https://bitbucket.org/Antmounds/antennae\n========================================\n${JSON.stringify(Meteor.settings)}`);
 }else{
 	console.log("DEVELOPMENT MODE: " + JSON.stringify(Meteor.settings) + "\n" + Meteor.release);
 };

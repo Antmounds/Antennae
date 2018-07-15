@@ -26,7 +26,7 @@ This repo features infrastructure code that will allow you to self-host the appl
 `$ cd src/`
 
 #### Run Development App
-`$ meteor --settings='settings.json` *App should become available at http://localhost:3000/*
+`$ meteor --settings='settings.json'` *App should become available at http://localhost:3000/*
 This will allow you to save changes with live reloading of the app in the browser.
 
 ### 2) Production
@@ -80,7 +80,7 @@ This will create the following resources:
 Pull requests, forks and stars are mucho appreciated and encouraged. See [CONTRIBUTING.md](https://bitbucket.org/Antmounds/antennae.git#CONTRIBUTING) for how to get involved in this project. 
 
 #### Get in touch
-* :speaking_head: Join the Antmounds [discord]() server for more discussion on this project.
+* :speaking_head: Join the Antmounds [discord](https://discord.gg/dw3Dam2) server for more discussion on this project.
 * :tv: Watch LIVE development of this app on [YouTube](https://www.youtube.com/Antmounds), [Twitch.tv](https://twitch.tv/Antmounds) and [LiveEdu.tv](https://liveedu.tv/Antmounds)
 * :clipboard: Use the [issue tracker](https://bitbucket.org/Antmounds/antennae/issues) for bugs, feature requests and enhancements
 * :moneybag: For serious business inquiries contact [business@antmounds.com](business@antmounds.com)
