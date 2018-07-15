@@ -3,9 +3,11 @@ FROM node:alpine
 LABEL maintainer="bitbucket.com/Antmounds" license="GPLv3"
 
 ARG BUILD
+ARG METEOR_SETTINGS
 ARG MONGO_URL
+ARG PORT=3000
 
-ENV PORT=3000 ROOT_URL=http://localhost:$PORT MONGO_URL=$MONGO_URL NODE_ENV=development BUILD=$BUILD
+ENV PORT=$PORT ROOT_URL=http://localhost:$PORT MONGO_URL=$MONGO_URL NODE_ENV=production BUILD=$BUILD METEOR_SETTINGS=$METEOR_SETTINGS
 
 # OS update
 RUN apk update && apk upgrade

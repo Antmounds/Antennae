@@ -3,22 +3,22 @@
     "name": "standard-minifier-js",
     "version": "2.3.4"
   },
-  "totalMinifiedBytes": 882446,
-  "totalMinifiedGzipBytes": 261316,
+  "totalMinifiedBytes": 959865,
+  "totalMinifiedGzipBytes": 282849,
   "minifiedBytesByPackage": {
     "packages/meteor.js": 9015,
     "packages/meteor-base.js": 31,
     "packages/mobile-experience.js": 37,
     "packages/modules-runtime.js": 4087,
     "packages/modules.js": [
-      112233,
+      112416,
       {
         "node_modules": {
           "meteor": {
             "modules": {
               "client.js": 124,
               "css.js": 261,
-              "install-packages.js": 2273,
+              "install-packages.js": 2456,
               "process.js": 347,
               "reify.js": 71,
               "stubs.js": 97,
@@ -794,7 +794,6 @@
         }
       }
     ],
-    "packages/insecure.js": 28,
     "packages/mongo.js": [
       9423,
       {
@@ -813,7 +812,6 @@
     "packages/standard-minifier-css.js": 41,
     "packages/standard-minifier-js.js": 40,
     "packages/shell-server.js": 32,
-    "packages/autopublish.js": 31,
     "packages/underscore.js": 14349,
     "packages/ddp-rate-limiter.js": 36,
     "packages/localstorage.js": 835,
@@ -939,6 +937,26 @@
     "packages/momentjs_moment.js": 53311,
     "packages/fourseven_scss.js": 34,
     "packages/materialize_materialize.js": 165490,
+    "packages/aldeed_simple-schema.js": 34834,
+    "packages/raix_eventemitter.js": 2228,
+    "packages/aldeed_collection2-core.js": 7013,
+    "packages/aldeed_schema-index.js": [
+      1662,
+      {
+        "node_modules": {
+          "meteor": {
+            "aldeed:schema-index": {
+              "lib": {
+                "indexing.js": 831
+              }
+            }
+          }
+        }
+      }
+    ],
+    "packages/aldeed_schema-deny.js": 1081,
+    "packages/aldeed_collection2.js": 38,
+    "packages/themeteorchef_jquery-validation.js": 21231,
     "packages/webapp.js": [
       887,
       {
@@ -967,36 +985,59 @@
         }
       }
     ],
-    "app/global-imports.js": 1190,
+    "app/global-imports.js": 1415,
     "app/app.js": [
-      21391,
+      29184,
       {
         "imports": {
           "ui": {
             "layouts": {
               "body.html": 74,
-              "template.body.js": 8117,
+              "template.body.js": 8655,
               "body.js": 1396
             },
             "pages": {
+              "collections.html": 81,
+              "template.collections.js": 2922,
+              "history.html": 77,
+              "template.history.js": 2412,
               "home.html": 74,
-              "template.home.js": 3058,
-              "profile.html": 77,
-              "template.profile.js": 3929,
-              "home.js": 1915,
-              "profile.js": 450
+              "template.home.js": 4649,
+              "collections.js": 1139,
+              "history.js": 802,
+              "home.js": 1794
+            }
+          },
+          "api": {
+            "collections": {
+              "collections.js": 1028
+            },
+            "searches": {
+              "searches.js": 1308
             }
           },
           "startup": {
             "client": {
-              "index.js": 691,
-              "routes.js": 708
+              "index.js": 806,
+              "routes.js": 936
             },
             "accounts-config.js": 486
           }
         },
         "client": {
           "main.js": 56
+        }
+      }
+    ],
+    "packages/mdg_validation-error.js": [
+      1178,
+      {
+        "node_modules": {
+          "meteor": {
+            "mdg:validation-error": {
+              "validation-error.js": 520
+            }
+          }
         }
       }
     ]

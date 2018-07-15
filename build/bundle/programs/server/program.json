@@ -169,9 +169,6 @@
       "path": "packages/webapp.js"
     },
     {
-      "path": "packages/autopublish.js"
-    },
-    {
       "node_modules": "npm/node_modules/meteor/ddp-server/node_modules",
       "sourceMap": "packages/ddp-server.js.map",
       "path": "packages/ddp-server.js"
@@ -185,9 +182,6 @@
     },
     {
       "path": "packages/binary-heap.js"
-    },
-    {
-      "path": "packages/insecure.js"
     },
     {
       "node_modules": "npm/node_modules/meteor/mongo/node_modules",
@@ -284,6 +278,28 @@
       "path": "packages/materialize_materialize.js"
     },
     {
+      "path": "packages/aldeed_simple-schema.js"
+    },
+    {
+      "path": "packages/raix_eventemitter.js"
+    },
+    {
+      "path": "packages/aldeed_collection2-core.js"
+    },
+    {
+      "sourceMap": "packages/aldeed_schema-index.js.map",
+      "path": "packages/aldeed_schema-index.js"
+    },
+    {
+      "path": "packages/aldeed_schema-deny.js"
+    },
+    {
+      "path": "packages/aldeed_collection2.js"
+    },
+    {
+      "path": "packages/themeteorchef_jquery-validation.js"
+    },
+    {
       "path": "packages/livedata.js"
     },
     {
@@ -310,6 +326,10 @@
     },
     {
       "path": "packages/service-configuration.js"
+    },
+    {
+      "sourceMap": "packages/mdg_validation-error.js.map",
+      "path": "packages/mdg_validation-error.js"
     }
   ]
 }

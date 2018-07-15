@@ -3,6 +3,6 @@
 
 
 /* Exports */
-Package._define("autopublish");
+Package._define("aldeed:collection2");
 
 })();

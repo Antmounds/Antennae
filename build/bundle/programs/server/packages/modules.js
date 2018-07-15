@@ -102,12 +102,10 @@ install("routepolicy", "meteor/routepolicy/main.js");
 install("boilerplate-generator", "meteor/boilerplate-generator/generator.js");
 install("webapp-hashing");
 install("webapp", "meteor/webapp/webapp_server.js");
-install("autopublish");
 install("ddp-server");
 install("ddp");
 install("allow-deny");
 install("binary-heap");
-install("insecure");
 install("mongo");
 install("blaze-html-templates");
 install("reactive-var");
@@ -136,12 +134,20 @@ install("kadira:blaze-layout");
 install("momentjs:moment");
 install("fourseven:scss");
 install("materialize:materialize");
+install("aldeed:simple-schema");
+install("raix:eventemitter");
+install("aldeed:collection2-core");
+install("aldeed:schema-index");
+install("aldeed:schema-deny");
+install("aldeed:collection2");
+install("themeteorchef:jquery-validation");
 install("livedata");
 install("hot-code-push");
 install("launch-screen");
 install("ui");
 install("autoupdate");
 install("service-configuration");
+install("mdg:validation-error");
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
