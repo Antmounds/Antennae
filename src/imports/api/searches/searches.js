@@ -13,12 +13,7 @@ Searches.deny({
 });
 
 Searches.Schema = new SimpleSchema({
-  // Our schema rules will go here.
-  "search_id": {
-    type: String,
-    label: "Search ID",
-    optional: true
-  },
+  // schema rules
   "search_type": {
     type: [String],
     label: "Search types",
@@ -60,7 +55,8 @@ Searches.Schema = new SimpleSchema({
         return new Date;
       } 
     },
-    optional: true
+    optional: true,
+    //index: true
   },
   "updated": {
     type: Date,
@@ -74,8 +70,16 @@ Searches.Schema = new SimpleSchema({
   }
 });
 
-Searches.attachSchema( Searches.Schema ); 
+Searches.attachSchema( Searches.Schema );
 
+if(Meteor.isServer){
+  Meteor.startup(() => {
+    Searches._ensureIndex({
+        created: -1,
+    });
+    // Searches._ensureIndex({ search_image: 1});
+  });
+}
 
 Searches.publicFields = {
   search_id: 1,
