@@ -1,0 +1,33 @@
+version: '3.6'
+
+services:
+
+  app:
+    image: antennae-1
+    restart: on-failure
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - MONGO_URL=mongodb://mongo/antennae
+      - MONGO_OPLOG_URL=mongodb://mongo/local
+    ports:
+      - 80:3000
+    networks:
+      - overlay
+    depends_on:
+      - db
+
+  db:
+    image: mongo
+    restart: always
+    networks:
+      overlay:
+        aliases:
+          - mongo
+    command: mongod --config /etc/mongod.conf
+    volumes:
+      - ./docker/mongod.conf:/etc/mongod.conf
+      - ./docker/replicaSet.js:/docker-entrypoint-initdb.d/replicaSet.js
+
+networks:
+  overlay:
