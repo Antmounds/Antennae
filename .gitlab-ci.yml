@@ -1,21 +1,58 @@
-stages:
-  - test
-  - build
-  - deploy
+variables:
+  CI_DEBUG_TRACE: "true"
+  USERNAME: "antmounds"
+  IMAGE_NAME: "antennae"
+  DOCKERHUB_IMAGE_NAME: ${USERNAME}/${IMAGE_NAME}
+  GITLAB_IMAGE_NAME: ${USERNAME}/${IMAGE_NAME}
 
-test:
-  image: ubuntu
-  stage: test
-  script: echo "Running tests";ls -lha;export;
+stages:
+  - build
+  - tag
+  - push
+  - deploy
 
 build:
   image: docker:stable-git
-  # variables:
-  #   CI_DEBUG_TRACE: "true"
   stage: build
   script: 
     - echo "Building the app"
     - export
+    - docker build --rm -t $IMAGE_NAME --build-arg BUILD=$CI_PIPELINE_IID .
+
+tag_dockerhub:
+  image: docker:stable
+  stage: tag
+  script: |
+    docker tag $IMAGE_NAME $DOCKERHUB_IMAGE_NAME:latest
+    docker tag $IMAGE_NAME $DOCKERHUB_IMAGE_NAME:$CI_PIPELINE_IID
+  only:
+  - master
+
+tag_gitlab:
+  image: docker:stable
+  stage: tag
+  script: |
+    docker tag $IMAGE_NAME $CI_REGISTRY_IMAGE:latest
+    docker tag $IMAGE_NAME $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
+
+push_dockerhub:
+  image: docker:stable
+  stage: push
+  script: |
+    docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
+    docker push $IMAGE_NAME
+  only:
+  - master
+
+push_gitlab:
+  image: docker:stable
+  stage: push
+  script: |
+    docker login registry.gitlab.com
+    docker push $IMAGE_NAME
+
+
+
 
 deploy_staging:
   stage: deploy
