@@ -51,10 +51,7 @@ build_push_dockerhub:
 deploy_dev:
   image: hashicorp/terraform
   stage: deploy
-  script: |
-      echo "Deploy to dev environment"
-      version
-      help
+  script: version
   environment:
     name: dev
     url: dev.getantennae.com
