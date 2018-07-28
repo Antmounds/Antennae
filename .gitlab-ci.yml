@@ -10,50 +10,36 @@ variables:
   USERNAME: "antmounds"
   IMAGE_NAME: "antennae"
   DOCKERHUB_IMAGE_NAME: ${USERNAME}/${IMAGE_NAME}
-  GITLAB_IMAGE_NAME: ${USERNAME}/${IMAGE_NAME}
 
 stages:
   - build
-  - tag
-  - push
   - deploy
 
-build:
+build_push_gitlab:
   stage: build
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
   script: 
-    - echo "Building the app"
+    - echo "Building the app for Gitlab registry"
     - docker pull $CI_REGISTRY_IMAGE:latest || true
-    - docker build --rm --cache-from $CI_REGISTRY_IMAGE:latest -t $IMAGE_NAME --build-arg BUILD=$CI_PIPELINE_IID .
+    - docker build --rm --cache-from $CI_REGISTRY_IMAGE:latest -t $CI_REGISTRY_IMAGE --build-arg BUILD=$CI_PIPELINE_IID .
+    - docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:latest
+    - docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
+    - docker push $CI_REGISTRY_IMAGE
 
-tag_dockerhub:
-  stage: tag
-  script:
-    - docker tag $IMAGE_NAME $DOCKERHUB_IMAGE_NAME:latest
-    - docker tag $IMAGE_NAME $DOCKERHUB_IMAGE_NAME:$CI_PIPELINE_IID
+build_push_dockerhub:
+  stage: build
+  before_script:
+    - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+  script: 
+    - echo "Building the app for Dockerhub registry"
+    - docker pull $CI_REGISTRY_IMAGE:latest || true
+    - docker build --rm --cache-from $CI_REGISTRY_IMAGE:latest -t $DOCKERHUB_IMAGE_NAME --build-arg BUILD=$CI_PIPELINE_IID .
+    - docker tag $DOCKERHUB_IMAGE_NAME $DOCKERHUB_IMAGE_NAME:latest
+    - docker tag $DOCKERHUB_IMAGE_NAME $DOCKERHUB_IMAGE_NAME:$CI_PIPELINE_IID
+    - docker push $DOCKERHUB_IMAGE_NAME
   only:
   - master
-
-tag_gitlab:
-  stage: tag
-  script: |
-    docker tag $IMAGE_NAME $CI_REGISTRY_IMAGE:latest
-    docker tag $IMAGE_NAME $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
-
-push_dockerhub:
-  image: docker:stable
-  stage: push
-  script: |
-    docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
-    docker push $IMAGE_NAME
-  only:
-  - master
-
-push_gitlab:
-  image: docker:stable
-  stage: push
-  script: |
-    docker login registry.gitlab.com
-    docker push $IMAGE_NAME
 
 
 
