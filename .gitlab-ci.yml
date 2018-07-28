@@ -5,6 +5,9 @@ variables:
   DOCKERHUB_IMAGE_NAME: ${USERNAME}/${IMAGE_NAME}
   GITLAB_IMAGE_NAME: ${USERNAME}/${IMAGE_NAME}
 
+services:
+- docker:dind
+
 stages:
   - build
   - tag
@@ -12,7 +15,7 @@ stages:
   - deploy
 
 build:
-  image: docker:dind
+  image: docker:stable
   stage: build
   script: 
     - echo "Building the app"
