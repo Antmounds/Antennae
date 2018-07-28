@@ -4,16 +4,18 @@ stages:
   - deploy
 
 test:
+  image: ubuntu
   stage: test
-  script: echo "Running tests";ls -lha;
+  script: echo "Running tests";ls -lha;export;
 
 build:
   image: docker:stable-git
-  variables:
-    CI_DEBUG_TRACE: "true"
+  # variables:
+  #   CI_DEBUG_TRACE: "true"
   stage: build
   script: 
     - echo "Building the app"
+    - export
 
 deploy_staging:
   stage: deploy
