@@ -49,7 +49,7 @@ build_push_dockerhub:
   - master
 
 deploy_dev:
-  image: antmounds/ci-builder
+  image: antmounds/cd-builder
   stage: deploy
   script: |
     terraform --version
