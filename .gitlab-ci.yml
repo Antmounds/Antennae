@@ -5,11 +5,13 @@ stages:
 
 test:
   stage: test
-  script: echo "Running tests"
+  script: echo "Running tests";ls -lha;
 
 build:
+  image: docker:stable-git
   stage: build
-  script: echo "Building the app"
+  script: 
+    - echo "Building the app"
 
 deploy_staging:
   stage: deploy
