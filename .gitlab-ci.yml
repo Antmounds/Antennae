@@ -49,9 +49,11 @@ build_push_dockerhub:
   - master
 
 deploy_dev:
-  image: hashicorp/terraform
+  image: antmounds/ci-builder
   stage: deploy
-  script: version
+  script: |
+    terraform --version
+    aws -v
   environment:
     name: dev
     url: dev.getantennae.com
