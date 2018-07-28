@@ -41,6 +41,20 @@ build_push_dockerhub:
   only:
   - master
 
+deploy_dev:
+  image: hashicorp/terraform
+  stage: deploy
+  script: |
+      echo "Deploy to dev environment"
+      terraform -v
+      terraform help
+  environment:
+    name: dev
+    url: dev.getantennae.com
+  when: manual
+  except:
+    - master
+
 
 
 
