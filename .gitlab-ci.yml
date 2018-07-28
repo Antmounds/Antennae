@@ -53,7 +53,7 @@ deploy_dev:
   stage: deploy
   script: |
     terraform --version
-    aws -v
+    aws --version
   environment:
     name: dev
     url: dev.getantennae.com
