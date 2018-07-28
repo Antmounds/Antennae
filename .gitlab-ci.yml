@@ -21,7 +21,7 @@ stages:
   - deploy
 
 build_push_gitlab:
-  <<: *job_definition
+  <<: *job_build
   stage: build
   before_script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
@@ -34,7 +34,7 @@ build_push_gitlab:
     - docker push $CI_REGISTRY_IMAGE
 
 build_push_dockerhub:
-  <<: *job_definition
+  <<: *job_build
   stage: build
   before_script:
     - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
