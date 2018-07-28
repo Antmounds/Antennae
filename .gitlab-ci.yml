@@ -9,6 +9,8 @@ test:
 
 build:
   image: docker:stable-git
+  variables:
+    CI_DEBUG_TRACE: "true"
   stage: build
   script: 
     - echo "Building the app"
