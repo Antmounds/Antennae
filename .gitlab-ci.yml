@@ -1,5 +1,4 @@
 variables:
-  CI_DEBUG_TRACE: "true"
   USERNAME: "antmounds"
   IMAGE_NAME: "antennae"
   DOCKERHUB_IMAGE_NAME: ${USERNAME}/${IMAGE_NAME}
@@ -19,15 +18,14 @@ build:
   stage: build
   script: 
     - echo "Building the app"
-    - export
     - docker build --rm -t $IMAGE_NAME --build-arg BUILD=$CI_PIPELINE_IID .
 
 tag_dockerhub:
   image: docker:stable
   stage: tag
-  script: |
-    docker tag $IMAGE_NAME $DOCKERHUB_IMAGE_NAME:latest
-    docker tag $IMAGE_NAME $DOCKERHUB_IMAGE_NAME:$CI_PIPELINE_IID
+  script:
+    - docker tag $IMAGE_NAME $DOCKERHUB_IMAGE_NAME:latest
+    - docker tag $IMAGE_NAME $DOCKERHUB_IMAGE_NAME:$CI_PIPELINE_IID
   only:
   - master
 
