@@ -12,7 +12,7 @@ stages:
   - deploy
 
 build:
-  image: docker:stable-git
+  image: docker:dind
   stage: build
   script: 
     - echo "Building the app"
