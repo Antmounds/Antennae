@@ -1,7 +1,12 @@
-image: docker:stable
+.job_template: &job_build  # Hidden key that defines an anchor named 'job_build'
+  image: docker:stable
+  services:
+    - docker:dind
 
-services:
-- docker:dind
+# image: docker:stable
+
+# services:
+# - docker:dind
 
 variables:
   # When using dind, it's wise to use the overlayfs driver for
@@ -16,26 +21,28 @@ stages:
   - deploy
 
 build_push_gitlab:
+  <<: *job_definition
   stage: build
   before_script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
   script: 
     - echo "Building the app for Gitlab registry"
-    - docker pull $CI_REGISTRY_IMAGE:latest || true
-    - docker build --rm --cache-from $CI_REGISTRY_IMAGE:latest -t $CI_REGISTRY_IMAGE --build-arg BUILD=$CI_PIPELINE_IID .
-    - docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:latest
+    - docker pull $CI_REGISTRY_IMAGE:dev || true
+    - docker build --rm --cache-from $CI_REGISTRY_IMAGE:dev -t $CI_REGISTRY_IMAGE --build-arg BUILD=$CI_PIPELINE_IID .
+    - docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:dev
     - docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
     - docker push $CI_REGISTRY_IMAGE
 
 build_push_dockerhub:
+  <<: *job_definition
   stage: build
   before_script:
     - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
   script: 
     - echo "Building the app for Dockerhub registry"
-    - docker pull $CI_REGISTRY_IMAGE:latest || true
-    - docker build --rm --cache-from $CI_REGISTRY_IMAGE:latest -t $DOCKERHUB_IMAGE_NAME --build-arg BUILD=$CI_PIPELINE_IID .
-    - docker tag $DOCKERHUB_IMAGE_NAME $DOCKERHUB_IMAGE_NAME:latest
+    - docker pull $CI_REGISTRY_IMAGE:dev || true
+    - docker build --rm --cache-from $CI_REGISTRY_IMAGE:dev -t $DOCKERHUB_IMAGE_NAME --build-arg BUILD=$CI_PIPELINE_IID .
+    - docker tag $DOCKERHUB_IMAGE_NAME $DOCKERHUB_IMAGE_NAME:dev
     - docker tag $DOCKERHUB_IMAGE_NAME $DOCKERHUB_IMAGE_NAME:$CI_PIPELINE_IID
     - docker push $DOCKERHUB_IMAGE_NAME
   only:
@@ -46,8 +53,8 @@ deploy_dev:
   stage: deploy
   script: |
       echo "Deploy to dev environment"
-      terraform -v
-      terraform help
+      version
+      help
   environment:
     name: dev
     url: dev.getantennae.com
