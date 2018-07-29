@@ -1,16 +1,12 @@
+# Antennae GitLab configuration
+# 
 .job_template: &job_build  # Hidden key that defines an anchor named 'job_build'
   image: docker:stable
   services:
     - docker:dind
 
-# image: docker:stable
-
-# services:
-# - docker:dind
-
 variables:
-  # When using dind, it's wise to use the overlayfs driver for
-  # improved performance.
+  # When using dind, it's wise to use the overlayfs driver for improved performance.
   DOCKER_DRIVER: overlay2
   USERNAME: "antmounds"
   IMAGE_NAME: "antennae"
@@ -40,11 +36,11 @@ build_push_dockerhub:
     - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
   script: 
     - echo "Building the app for Dockerhub registry"
-    - docker pull $CI_REGISTRY_IMAGE:dev || true
-    - docker build --rm --cache-from $CI_REGISTRY_IMAGE:dev -t $DOCKERHUB_IMAGE_NAME --build-arg BUILD=$CI_PIPELINE_IID .
+    - docker pull $DOCKERHUB_IMAGE_NAME:dev || true
+    - docker build --rm --cache-from $DOCKERHUB_IMAGE_NAME:dev -t $DOCKERHUB_IMAGE_NAME --build-arg BUILD=$CI_PIPELINE_IID .
     - docker tag $DOCKERHUB_IMAGE_NAME $DOCKERHUB_IMAGE_NAME:dev
     - docker tag $DOCKERHUB_IMAGE_NAME $DOCKERHUB_IMAGE_NAME:$CI_PIPELINE_IID
-    - docker push $DOCKERHUB_IMAGE_NAME
+    # - docker push $DOCKERHUB_IMAGE_NAME (wait till version # is >= CircleCI build_num)
   only:
   - master
 
@@ -57,30 +53,42 @@ deploy_dev:
   environment:
     name: dev
     url: dev.getantennae.com
-  when: manual
   except:
     - master
 
-
-
-
-deploy_staging:
+deploy_new:
+  image: antmounds/cd-builder
   stage: deploy
-  script:
-    - echo "Deploy to staging server"
+  script: |
+    terraform --version
+    aws --version
   environment:
     name: staging
-    url: https://staging.example.com
+    url: new.getantennae.com
   only:
-  - master
+    - master
 
-deploy_prod:
+deploy_app:
+  image: antmounds/cd-builder
   stage: deploy
-  script:
-    - echo "Deploy to production server"
+  script: |
+    terraform --version
+    aws --version
   environment:
     name: production
-    url: https://example.com
+    url: app.getantennae.com
   when: manual
   only:
-  - master
+    - master
+
+deploy_infrastructure:
+  image: antmounds/cd-builder
+  stage: deploy
+  script: |
+    terraform --version
+    aws --version
+  environment:
+    name: terraform
+  when: manual
+  only:
+    - infrastructure
