@@ -4,6 +4,8 @@
   image: docker:stable
   services:
     - docker:dind
+  cache:
+    untracked: true
 
 variables:
   # When using dind, it's wise to use the overlayfs driver for improved performance.
