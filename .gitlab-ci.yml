@@ -26,7 +26,7 @@ build_push_gitlab:
   script: 
     - echo "Building the app for Gitlab registry"
     - docker pull $CI_REGISTRY_IMAGE:dev || true
-    - docker build --rm --cache-from $CI_REGISTRY_IMAGE:dev -t $CI_REGISTRY_IMAGE --build-arg BUILD=$CI_PIPELINE_IID .
+    - docker build --rm -f docker/Dockerfile --cache-from $CI_REGISTRY_IMAGE:dev -t $CI_REGISTRY_IMAGE --build-arg BUILD=$CI_PIPELINE_IID .
     - docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
     - docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE/dev:$CI_PIPELINE_IID
     - docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE/dev/nick:$CI_PIPELINE_IID
@@ -42,7 +42,7 @@ build_push_dockerhub:
   script: 
     - echo "Building the app for Dockerhub registry"
     - docker pull $DOCKERHUB_IMAGE_NAME || true
-    - docker build --rm --cache-from $DOCKERHUB_IMAGE_NAME -t $DOCKERHUB_IMAGE_NAME --build-arg BUILD=$CI_PIPELINE_IID .
+    - docker build --rm -f docker/Dockerfile --cache-from $DOCKERHUB_IMAGE_NAME -t $DOCKERHUB_IMAGE_NAME --build-arg BUILD=$CI_PIPELINE_IID .
     - docker tag $DOCKERHUB_IMAGE_NAME $DOCKERHUB_IMAGE_NAME:$CI_PIPELINE_IID
     # - docker push $DOCKERHUB_IMAGE_NAME (wait till version # is >= CircleCI build_num)
   only:
