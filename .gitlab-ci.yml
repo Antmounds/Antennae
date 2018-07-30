@@ -52,8 +52,10 @@ deploy_dev:
   image: antmounds/cd-builder
   stage: deploy
   script: |
-    terraform --version
     aws --version
+    docker --version
+    docker-compose --version
+    terraform --version
   environment:
     name: dev
     url: dev.getantennae.com
@@ -91,12 +93,13 @@ deploy_infrastructure:
   variables:
     AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+    AWS_DEFAULT_REGION: us-east-1
   script: |
     cd infrastructure/aws-ecs
-    terraform init
-    terraform plan
-    terraform refresh
+    terraform init -backend=true -input=false -lock=true
     terraform show
+    terraform plan -lock=true -refresh=true
+    #terraform apply -lock=true -refresh=true -auto-approve -target=resource -var 'foo=bar'
     terraform --version
     aws --version
   environment:
