@@ -1,6 +1,6 @@
 ## Node & NPM
-##**/node_modules
-**/npm
+# **/node_modules
+# **/npm
 **/npm-debug.log*
 **/*.lock
 **/package-lock.json
