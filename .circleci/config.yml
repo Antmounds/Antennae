@@ -13,7 +13,7 @@ jobs:
           name: Build image
           command: |
             IMAGE_NAME=$CIRCLE_PROJECT_REPONAME
-            docker build --rm -t $IMAGE_NAME --build-arg BUILD=$CIRCLE_BUILD_NUM --build-arg METEOR_SETTINGS="$(cat src/tools/settings.json)" .
+            docker build --rm -f docker/Dockerfile -t $IMAGE_NAME --build-arg BUILD=$CIRCLE_BUILD_NUM --build-arg METEOR_SETTINGS="$(cat src/tools/settings.json)" .
       - run:
           # tag Docker image for the Dockerhub registry
           name: Tag Dockerhub image
