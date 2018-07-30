@@ -27,7 +27,7 @@ Template.history.helpers({
 
   searches(){
   	let searches = Searches.find({}, { sort: { created: -1 } });
-  	console.log(searches.fetch());
+  	// console.log(searches.fetch());
   	return searches;
   	//Tracker.onInvalidate(() => console.trace());
   },

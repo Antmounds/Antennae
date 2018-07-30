@@ -38,6 +38,9 @@ This will build the meteor.js app and then build resulting node.s app as Docker 
 #### Navigate back to root directory
 `$ cd ../`
 
+#### Build docker image
+`$ docker build -t antmounds/antennae .` *Alternatively run `.circleci/build.sh`. See script for details*
+
 #### Set required MONGO_URL & AWS Environment Variables
 ```
 $ export MONGO_URL=${YOUR_MONGODB_URI}
@@ -45,11 +48,8 @@ $ export AWS_ACCESS_KEY_ID=${YOUR_AWS_ACCESS_KEY}
 $ export AWS_SECRET_ACCESS_KEY=${YOUR_AWS_SECRET_KEY}
 ```
 
-#### Build docker image
-`$ docker build -t antmounds/antennae .` *Alternatively run `.circleci/build.sh`. See script for details*
-
 #### Run Production App
-`$ docker run --rm -d --name antennae -p 3000:3000 antmounds/antennae:latest` *App should become available at http://localhost:3000/*
+`$ docker run --rm -d -e MONGO_URL=$MONGO_URL -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY --name antennae -p 3000:3000 antmounds/antennae:latest` *App should become available at http://localhost:3000/*
 The app is ready to be deployed to a hosted docker runtime.
 
 ## Build Android App
