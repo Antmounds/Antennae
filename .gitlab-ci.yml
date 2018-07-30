@@ -89,10 +89,13 @@ deploy_infrastructure:
   image: antmounds/cd-builder
   stage: deploy
   script: |
+    cd infrastructure/aws-ecs
+    terraform init
+    terraform plan
+    terraform refresh
+    terraform show
     terraform --version
     aws --version
   environment:
     name: terraform
   when: manual
-  only:
-    - infrastructure
