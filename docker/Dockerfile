@@ -13,7 +13,7 @@ RUN apk add --no-cache --virtual .gyp \
     git \
     make \
     python && \
-	(cd programs/server && npm install --production && npm install fibers) && \
+	(cd programs/server && npm install --save --production && npm install --save fibers) && \
 # remove files in .gitignore
     git clean -Xdf
 
