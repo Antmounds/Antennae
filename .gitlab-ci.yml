@@ -26,11 +26,12 @@ build_push_gitlab:
   script: 
     - echo "Building the app for Gitlab registry"
     - docker pull $CI_REGISTRY_IMAGE:dev || true
-    - docker build --rm --cache-from $CI_REGISTRY_IMAGE:dev -t $CI_REGISTRY_IMAGE:dev --build-arg BUILD=$CI_PIPELINE_IID .
-    - docker tag $CI_REGISTRY_IMAGE:dev $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
-    - docker tag $CI_REGISTRY_IMAGE:dev $CI_REGISTRY_IMAGE/dev:$CI_PIPELINE_IID
-    - docker tag $CI_REGISTRY_IMAGE:dev $CI_REGISTRY_IMAGE/dev/nick:$CI_PIPELINE_IID
-    - docker push $CI_REGISTRY_IMAGE:dev
+    - docker build --rm --cache-from $CI_REGISTRY_IMAGE:dev -t $CI_REGISTRY_IMAGE --build-arg BUILD=$CI_PIPELINE_IID .
+    - docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:dev
+    - docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
+    - docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE/dev:$CI_PIPELINE_IID
+    - docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE/dev/nick:$CI_PIPELINE_IID
+    - docker push $CI_REGISTRY_IMAGE
 
 build_push_dockerhub:
   <<: *job_build
