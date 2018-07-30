@@ -23,16 +23,17 @@ build_push_gitlab:
   stage: build
   before_script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
-  script: 
-    - echo "Building the app for Gitlab registry"
-    - docker pull $CI_REGISTRY_IMAGE:dev || true
-    - docker build --rm -f docker/Dockerfile --cache-from $CI_REGISTRY_IMAGE:dev -t $CI_REGISTRY_IMAGE --build-arg BUILD=$CI_PIPELINE_IID .
-    - docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
-    - docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE/dev:$CI_PIPELINE_IID
-    - docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE/dev/nick:$CI_PIPELINE_IID
-    - docker push $CI_REGISTRY_IMAGE
-    - docker push $CI_REGISTRY_IMAGE/dev:$CI_PIPELINE_IID
-    - docker push $CI_REGISTRY_IMAGE/dev/nick:$CI_PIPELINE_IID
+  script: |
+    echo "Building the app for Gitlab registry"
+    DEV=$(echo $GITLAB_USER_LOGIN | tr '[:upper:]' '[:lower:]')
+    docker pull $CI_REGISTRY_IMAGE/dev:$DEV || true
+    docker build --rm -f docker/Dockerfile --cache-from $CI_REGISTRY_IMAGE:$DEV -t $CI_REGISTRY_IMAGE --build-arg BUILD=$CI_PIPELINE_IID .
+    docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
+    docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE/dev:$DEV
+    docker push $CI_REGISTRY_IMAGE
+    docker push $CI_REGISTRY_IMAGE/dev:$DEV
+  except:
+    - infrastructure
 
 build_push_dockerhub:
   <<: *job_build
@@ -61,13 +62,16 @@ deploy_dev:
     url: dev.getantennae.com
   except:
     - master
+    - infrastructure
 
 deploy_new:
   image: antmounds/cd-builder
   stage: deploy
   script: |
-    terraform --version
     aws --version
+    docker --version
+    docker-compose --version
+    terraform --version
   environment:
     name: staging
     url: new.getantennae.com
@@ -78,8 +82,10 @@ deploy_app:
   image: antmounds/cd-builder
   stage: deploy
   script: |
-    terraform --version
     aws --version
+    docker --version
+    docker-compose --version
+    terraform --version
   environment:
     name: production
     url: app.getantennae.com
@@ -96,12 +102,9 @@ deploy_infrastructure:
     AWS_DEFAULT_REGION: us-east-1
   script: |
     cd infrastructure/aws-ecs
-    terraform init -backend=true -input=false -lock=true
-    terraform show
-    terraform plan -lock=true -refresh=true
-    #terraform apply -lock=true -refresh=true -auto-approve -target=resource -var 'foo=bar'
-    terraform --version
-    aws --version
+    terraform init -backend=true -input=false -lock=true -upgrade=true
+    terraform plan -input=false -lock=true -refresh=true
+    #terraform apply -input=false -lock=true -refresh=true -auto-approve -target=resource -var 'foo=bar'
   environment:
     name: terraform
   when: manual
