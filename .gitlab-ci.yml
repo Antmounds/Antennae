@@ -1,7 +1,7 @@
 # Antennae GitLab configuration
 # 
 .job_template: &job_build  # Hidden key that defines an anchor named 'job_build'
-  image: docker:stable
+  image: antmounds/cd-builder # docker:stable
   services:
     - docker:dind
   cache:
@@ -19,7 +19,7 @@ stages:
   - deploy
 
 build_push_aws:
-  image: antmounds/cd-builder
+  <<: *job_build
   stage: build
   variables:
     AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
