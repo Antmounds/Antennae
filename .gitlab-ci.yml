@@ -47,9 +47,10 @@ build_push_gitlab:
     docker pull $CI_REGISTRY_IMAGE/dev:$DEV || true
     docker build --rm -f docker/Dockerfile --cache-from $CI_REGISTRY_IMAGE/dev:$DEV -t $CI_REGISTRY_IMAGE --build-arg BUILD=$CI_PIPELINE_IID .
     docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
-    docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE/dev:$DEV
+    docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE/dev
+    docker tag $CI_REGISTRY_IMAGE/dev $CI_REGISTRY_IMAGE/dev:$DEV
     docker push $CI_REGISTRY_IMAGE
-    docker push $CI_REGISTRY_IMAGE/dev:$DEV
+    docker push $CI_REGISTRY_IMAGE/dev
   except:
     - infrastructure
 
