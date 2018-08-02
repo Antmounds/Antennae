@@ -4,6 +4,8 @@
   image: antmounds/cd-builder # docker:stable
   services:
     - docker:dind
+  cache:
+    untracked: true
 
 variables:
   # When using dind, it's wise to use the overlayfs driver for improved performance.
@@ -31,9 +33,10 @@ build_push_aws:
   script: |
     echo "Building the app for AWS Elastic Container Registry"
     DEV=$(echo $GITLAB_USER_LOGIN | tr '[:upper:]' '[:lower:]')
-    docker pull $AWS_IMAGE_URI || true
-    docker build --rm -f docker/Dockerfile --cache-from $AWS_IMAGE_URI -t $AWS_IMAGE_URI --build-arg BUILD=$CI_PIPELINE_IID .
+    docker load -i image.tar || true
+    docker build --rm -f docker/Dockerfile --cache-from ${AWS_IMAGE_URI} -t $AWS_IMAGE_URI --build-arg BUILD=$CI_PIPELINE_IID .
     docker tag $AWS_IMAGE_URI $AWS_IMAGE_URI:$CI_PIPELINE_IID
+    docker save $AWS_IMAGE_URI -o image.tar
     docker push $AWS_IMAGE_URI
 
 build_push_gitlab:
