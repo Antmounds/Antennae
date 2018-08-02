@@ -18,6 +18,26 @@ stages:
   - build
   - deploy
 
+build_push_aws:
+  image: antmounds/cd-builder
+  stage: build
+  variables:
+    AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+    AWS_DEFAULT_REGION: us-east-1
+  before_script:
+    # authenticate with the AWS ECR registry
+    - $(aws ecr get-login --no-include-email --region us-east-1)
+  script: |
+    echo "Building the app for Gitlab registry"
+    DEV=$(echo $GITLAB_USER_LOGIN | tr '[:upper:]' '[:lower:]')
+    docker pull $CI_REGISTRY_IMAGE/dev:$DEV || true
+    docker build --rm -f docker/Dockerfile --cache-from $CI_REGISTRY_IMAGE/dev:$DEV -t $CI_REGISTRY_IMAGE --build-arg BUILD=$CI_PIPELINE_IID .
+    docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
+    docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE/dev:$DEV
+    docker push $CI_REGISTRY_IMAGE
+    docker push $CI_REGISTRY_IMAGE/dev:$DEV
+
 build_push_gitlab:
   <<: *job_build
   stage: build
@@ -27,7 +47,7 @@ build_push_gitlab:
     echo "Building the app for Gitlab registry"
     DEV=$(echo $GITLAB_USER_LOGIN | tr '[:upper:]' '[:lower:]')
     docker pull $CI_REGISTRY_IMAGE/dev:$DEV || true
-    docker build --rm -f docker/Dockerfile --cache-from $CI_REGISTRY_IMAGE:$DEV -t $CI_REGISTRY_IMAGE --build-arg BUILD=$CI_PIPELINE_IID .
+    docker build --rm -f docker/Dockerfile --cache-from $CI_REGISTRY_IMAGE/dev:$DEV -t $CI_REGISTRY_IMAGE --build-arg BUILD=$CI_PIPELINE_IID .
     docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
     docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE/dev:$DEV
     docker push $CI_REGISTRY_IMAGE
@@ -104,7 +124,7 @@ deploy_infrastructure:
     cd infrastructure/aws-ecs
     terraform init -backend=true -input=false -lock=true -upgrade=true
     terraform plan -input=false -lock=true -refresh=true
-    #terraform apply -input=false -lock=true -refresh=true -auto-approve -target=resource -var 'foo=bar'
+    #terraform apply -input=false -lock=true -refresh=true -auto-approve -target=resource -var 'app_version_warm=$CI_PIPELINE_IID'
   environment:
     name: terraform
   when: manual
