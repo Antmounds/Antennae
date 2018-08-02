@@ -19,7 +19,7 @@ stages:
   - deploy
 
 build_push_aws:
-  image: python # docker:stable
+  image: antmounds/cd-builder # docker:stable
   services:
     - docker:dind
   stage: build
@@ -30,12 +30,12 @@ build_push_aws:
     AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
     AWS_DEFAULT_REGION: us-east-1
   before_script:
-    - pip install awscli
     # authenticate with the AWS ECR registry
-    - $(aws ecr get-login --no-include-email --region us-east-1)
+    # - $(aws ecr get-login --no-include-email --region us-east-1)
   script: |
     echo "Building the app for AWS Elastic Container Registry"
     DEV=$(echo $GITLAB_USER_LOGIN | tr '[:upper:]' '[:lower:]')
+    $(aws ecr get-login --no-include-email --region us-east-1)
     docker load -i image.tar || true
     docker build --rm -f docker/Dockerfile --cache-from ${AWS_IMAGE_URI} -t $AWS_IMAGE_URI --build-arg BUILD=$CI_PIPELINE_IID .
     docker tag $AWS_IMAGE_URI $AWS_IMAGE_URI:$CI_PIPELINE_IID
@@ -88,6 +88,8 @@ deploy_dev:
   except:
     - master
     - infrastructure
+  only:
+    - develop
 
 deploy_new:
   image: antmounds/cd-builder
