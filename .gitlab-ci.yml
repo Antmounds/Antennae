@@ -4,8 +4,6 @@
   image: antmounds/cd-builder # docker:stable
   services:
     - docker:dind
-  cache:
-    untracked: true
 
 variables:
   # When using dind, it's wise to use the overlayfs driver for improved performance.
@@ -23,6 +21,8 @@ stages:
 build_push_aws:
   <<: *job_build
   stage: build
+  cache:
+    untracked: true
   variables:
     AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
