@@ -1,10 +1,10 @@
 # Antennae GitLab configuration
 # 
 .job_template: &job_build  # Hidden key that defines an anchor named 'job_build'
-  image: antmounds/cd-builder # docker:stable
+  image: docker:stable
   services:
-    - docker:stable
     - docker:dind
+    - antmounds/cd-builder
   cache:
     untracked: true
 
