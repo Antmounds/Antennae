@@ -30,7 +30,6 @@ build_app:
   script: |
     echo "Building image..."
     DEV=$(echo $GITLAB_USER_LOGIN | tr '[:upper:]' '[:lower:]')
-    docker load -i image.tar || true
     docker build --rm -f docker/Dockerfile --cache-from ${CI_REGISTRY_IMAGE}/dev -t $CI_REGISTRY_IMAGE -t $CI_REGISTRY_IMAGE/dev --build-arg BUILD=$CI_PIPELINE_IID .
     docker save $CI_REGISTRY_IMAGE -o image.tar
     docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
@@ -45,13 +44,12 @@ push_aws:
   variables:
     AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
-    AWS_DEFAULT_REGION: us-east-1
   before_script:
     # authenticate with the AWS ECR registry
     # - $(aws ecr get-login --no-include-email --region us-east-1)
   script: |
     echo "Pushing app to AWS Elastic Container Registry"
-    $(aws ecr get-login --no-include-email)
+    $(aws ecr get-login --no-include-email --region us-east-1)
     docker load -i image.tar || true
     docker tag $CI_REGISTRY_IMAGE $AWS_IMAGE_URI
     docker tag $AWS_IMAGE_URI $AWS_IMAGE_URI:$CI_PIPELINE_IID
@@ -66,6 +64,8 @@ push_gitlab:
     echo "Pushing app to Gitlab registry"
     DEV=$(echo $GITLAB_USER_LOGIN | tr '[:upper:]' '[:lower:]')
     docker pull $CI_REGISTRY_IMAGE/dev:$DEV || true
+    docker tag $CI_REGISTRY_IMAGE/dev:$DEV $CI_REGISTRY_IMAGE
+    docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
     docker push $CI_REGISTRY_IMAGE
   except:
     - infrastructure
