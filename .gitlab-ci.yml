@@ -1,6 +1,6 @@
 # Antennae GitLab configuration
 # 
-.job_template: &job_build  # Hidden key that defines an anchor named 'job_build'
+.job_template: &build_defaults  # Hidden key that defines an anchor named 'build_defaults'
   image: antmounds/cd-builder # docker:stable
   services:
     - docker:dind
@@ -20,7 +20,7 @@ stages:
   - deploy
 
 build_app:
-  <<: *job_build
+  <<: *build_defaults
   stage: build
   cache:
     paths: 
@@ -39,7 +39,7 @@ build_app:
     docker push $CI_REGISTRY_IMAGE/dev
 
 push_aws:
-  <<: *job_build
+  <<: *build_defaults
   stage: push
   cache:
     paths: 
@@ -59,7 +59,7 @@ push_aws:
     docker push $AWS_IMAGE_URI
 
 push_gitlab:
-  <<: *job_build
+  <<: *build_defaults
   stage: push
   before_script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
@@ -72,7 +72,7 @@ push_gitlab:
     docker push $CI_REGISTRY_IMAGE
 
 push_dockerhub:
-  <<: *job_build
+  <<: *build_defaults
   stage: push
   cache:
     paths: 
@@ -100,7 +100,7 @@ deploy_dev:
     cd infrastructure/aws-ecs
     terraform init -backend=true -input=false -lock=true -upgrade=true
     terraform plan -input=false -lock=true -refresh=true
-    terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_dev -var 'app_version_dev=$CI_PIPELINE_IID'
+    terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_dev -var app_version_dev=${CI_PIPELINE_IID}
   environment:
     name: dev
     url: dev.getantennae.com
@@ -118,7 +118,7 @@ deploy_new:
     cd infrastructure/aws-ecs
     terraform init -backend=true -input=false -lock=true -upgrade=true
     terraform plan -input=false -lock=true -refresh=true
-    terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_warm -var 'app_version_warm=$CI_PIPELINE_IID'
+    terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_warm -var app_version_warm=${CI_PIPELINE_IID}
   environment:
     name: staging
     url: new.getantennae.com
@@ -136,7 +136,7 @@ deploy_app:
     cd infrastructure/aws-ecs
     terraform init -backend=true -input=false -lock=true -upgrade=true
     terraform plan -input=false -lock=true -refresh=true
-    terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_hot -var 'app_version_hot=$CI_PIPELINE_IID'
+    terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_hot -var app_version_hot=${CI_PIPELINE_IID}
   environment:
     name: production
     url: app.getantennae.com
@@ -155,7 +155,7 @@ deploy_infrastructure:
     cd infrastructure/aws-ecs
     terraform init -backend=true -input=false -lock=true -upgrade=true
     terraform plan -input=false -lock=true -refresh=true
-    #terraform apply -input=false -lock=true -refresh=true -auto-approve -target=resource -var 'app_version_warm=$CI_PIPELINE_IID'
+    #terraform apply -input=false -lock=true -refresh=true -auto-approve -target=resource -var app_version_warm=${CI_PIPELINE_IID}
   environment:
     name: terraform
   when: manual
