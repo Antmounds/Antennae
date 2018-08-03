@@ -29,6 +29,8 @@ build_push_aws:
     AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
     AWS_DEFAULT_REGION: us-east-1
+  before_script:
+    # - $(aws ecr get-login --no-include-email --region us-east-1)
   script: |
     echo "Pushing app to AWS Elastic Container Registry"
     DEV=$(echo $GITLAB_USER_NAME | tr '[:upper:]' '[:lower:]')
