@@ -32,7 +32,7 @@ build_app:
     echo "Building image..."
     DEV=$(echo $GITLAB_USER_NAME | tr '[:upper:]' '[:lower:]')
     docker pull $CI_REGISTRY_IMAGE/dev:$DEV || true
-    docker build --rm -f docker/Dockerfile --cache-from ${CI_REGISTRY_IMAGE}/dev:$DEV -t $CI_REGISTRY_IMAGE -t $CI_REGISTRY_IMAGE/dev --build-arg BUILD=$CI_PIPELINE_IID .
+    docker build --rm -f docker/Dockerfile --cache-from ${CI_REGISTRY_IMAGE}/dev:$DEV -t $CI_REGISTRY_IMAGE -t $CI_REGISTRY_IMAGE/dev --build-arg BUILD=$CI_PIPELINE_IID --build-arg METEOR_SETTINGS="$(cat src/tools/settings.json)" .
     docker save $CI_REGISTRY_IMAGE -o image.tar
     docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
     docker tag $CI_REGISTRY_IMAGE/dev $CI_REGISTRY_IMAGE/dev:$DEV
@@ -50,10 +50,9 @@ push_aws:
     AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
   before_script:
     # authenticate with the AWS ECR registry
-    # - $(aws ecr get-login --no-include-email --region us-east-1)
+    - $(aws ecr get-login --no-include-email --region us-east-1)
   script: |
     echo "Pushing app to AWS Elastic Container Registry"
-    $(aws ecr get-login --no-include-email --region us-east-1)
     docker load -i image.tar || true
     docker tag $CI_REGISTRY_IMAGE $AWS_IMAGE_URI
     docker tag $AWS_IMAGE_URI $AWS_IMAGE_URI:$CI_PIPELINE_IID
@@ -71,20 +70,22 @@ push_gitlab:
     docker tag $CI_REGISTRY_IMAGE/dev:$DEV $CI_REGISTRY_IMAGE
     docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
     docker push $CI_REGISTRY_IMAGE
-  except:
-    - infrastructure
 
 push_dockerhub:
   <<: *job_build
   stage: push
+  cache:
+    paths: 
+      - image.tar
+    policy: pull
   before_script:
     - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
   script: 
     - echo "Pushing app to Dockerhub registry"
-    - docker pull $DOCKERHUB_IMAGE_NAME || true
-    - docker build --rm -f docker/Dockerfile --cache-from $DOCKERHUB_IMAGE_NAME -t $DOCKERHUB_IMAGE_NAME --build-arg BUILD=$CI_PIPELINE_IID .
+    - docker load -i image.tar || true
+    - docker tag $CI_REGISTRY_IMAGE $DOCKERHUB_IMAGE_NAME
     - docker tag $DOCKERHUB_IMAGE_NAME $DOCKERHUB_IMAGE_NAME:$CI_PIPELINE_IID
-    # - docker push $DOCKERHUB_IMAGE_NAME (wait till version # is >= CircleCI build_num)
+    - docker push $DOCKERHUB_IMAGE_NAME
   only:
   - master
 
@@ -96,12 +97,13 @@ deploy_dev:
     docker --version
     docker-compose --version
     terraform --version
+    cd infrastructure/aws-ecs
+    terraform init -backend=true -input=false -lock=true -upgrade=true
+    terraform plan -input=false -lock=true -refresh=true
+    terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_dev -var 'app_version_dev=$CI_PIPELINE_IID'
   environment:
     name: dev
     url: dev.getantennae.com
-  except:
-    - master
-    - infrastructure
   only:
     - develop
 
@@ -113,6 +115,10 @@ deploy_new:
     docker --version
     docker-compose --version
     terraform --version
+    cd infrastructure/aws-ecs
+    terraform init -backend=true -input=false -lock=true -upgrade=true
+    terraform plan -input=false -lock=true -refresh=true
+    terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_warm -var 'app_version_warm=$CI_PIPELINE_IID'
   environment:
     name: staging
     url: new.getantennae.com
@@ -127,6 +133,10 @@ deploy_app:
     docker --version
     docker-compose --version
     terraform --version
+    cd infrastructure/aws-ecs
+    terraform init -backend=true -input=false -lock=true -upgrade=true
+    terraform plan -input=false -lock=true -refresh=true
+    terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_hot -var 'app_version_hot=$CI_PIPELINE_IID'
   environment:
     name: production
     url: app.getantennae.com
@@ -150,4 +160,4 @@ deploy_infrastructure:
     name: terraform
   when: manual
   only:
-    - develop
+    - infrastructure
