@@ -22,6 +22,9 @@ stages:
 build_app:
   <<: *job_build
   stage: build
+  cache:
+    paths: image.tar
+    policy: push
   before_script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
   script: |
@@ -38,7 +41,8 @@ push_aws:
   <<: *job_build
   stage: push
   cache:
-    untracked: true
+    paths: image.tar
+    policy: pull
   variables:
     AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
     AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
