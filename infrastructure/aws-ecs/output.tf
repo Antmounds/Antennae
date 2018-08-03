@@ -20,6 +20,7 @@ output "ALB DNS" {
   value = "${aws_alb.web_app.dns_name}"
 }
 
-output "Launch Template" {
-  value = "${aws_launch_template.ecs_asg_lc.name}: ${aws_launch_template.ecs_asg_lc.latest_version}"
-}
+#output "Launch Template" {
+#  value = "${aws_launch_template.ecs_asg_lc.name}: ${aws_launch_template.ecs_asg_lc.latest_version}"
+#}
+

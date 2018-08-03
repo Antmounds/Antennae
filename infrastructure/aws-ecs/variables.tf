@@ -12,7 +12,7 @@ variable "app_version_hot" {
 
 variable "app_version_hot_count" {
   type        = "string"
-  default     = "2"
+  default     = "3"
   description = "How many containers of the live (hot) version to run"
 }
 
@@ -24,8 +24,20 @@ variable "app_version_warm" {
 
 variable "app_version_warm_count" {
   type        = "string"
-  default     = "1"
+  default     = "2"
   description = "How many containers of the new (warm) version to run"
+}
+
+variable "app_version_dev" {
+  type        = "string"
+  default     = "55"
+  description = "DEV version of the service/app"
+}
+
+variable "app_version_dev_count" {
+  type        = "string"
+  default     = "1"
+  description = "How many containers of the dev version to run"
 }
 
 variable "app_version_cold" {
@@ -42,7 +54,7 @@ variable "app_version_cold_count" {
 
 variable "asg_desired_count" {
   type        = "string"
-  default     = "1"
+  default     = "2"
   description = "How many instances should back the cluster?"
 }
 
@@ -54,7 +66,7 @@ variable "environment" {
 
 variable "instance_type" {
   type        = "string"
-  default     = "t2.micro"
+  default     = "t2.small"
   description = "Cluster autoscaling group instance type"
 }
 
@@ -78,7 +90,7 @@ variable "repo_url" {
 
 variable "spot_price" {
   type        = "string"
-  default     = ""
+  default     = "0.0069"
   description = "If set, spotinstance will be bid for at this price"
 }
 
