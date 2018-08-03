@@ -31,7 +31,7 @@ build_push_aws:
     AWS_DEFAULT_REGION: us-east-1
   before_script:
     # authenticate with the AWS ECR registry
-    # - $(aws ecr get-login --no-include-email --region us-east-1)
+    - $(aws ecr get-login --no-include-email --region us-east-1)
   script: |
     echo "Pushing app to AWS Elastic Container Registry"
     DEV=$(echo $GITLAB_USER_NAME | tr '[:upper:]' '[:lower:]')
