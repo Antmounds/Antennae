@@ -19,9 +19,7 @@ stages:
   - deploy
 
 build_push_aws:
-  image: antmounds/cd-builder # docker:stable
-  services:
-    - docker:dind
+  <<: *job_build
   stage: build
   cache:
     untracked: true
