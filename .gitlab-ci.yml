@@ -9,20 +9,37 @@ variables:
   # When using dind, it's wise to use the overlayfs driver for improved performance.
   DOCKER_HOST: tcp://docker:2375/
   DOCKER_DRIVER: overlay2
-  USERNAME: "antmounds"
-  IMAGE_NAME: "antennae"
+  USERNAME: antmounds
+  IMAGE_NAME: antennae
   AWS_IMAGE_URI: 166964003196.dkr.ecr.us-east-1.amazonaws.com/${IMAGE_NAME}
   DOCKERHUB_IMAGE_NAME: ${USERNAME}/${IMAGE_NAME}
 
 stages:
   - build
+  - push
   - deploy
 
-build_push_aws:
-  image: antmounds/cd-builder # docker:stable
-  services:
-    - docker:dind
+build_app:
+  <<: *job_build
   stage: build
+  cache:
+    untracked: true
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
+  script: |
+    echo "Building image..."
+    docker load -i image.tar || true
+    docker build --rm -f docker/Dockerfile --cache-from ${CI_REGISTRY_IMAGE}/dev -t $CI_REGISTRY_IMAGE --build-arg BUILD=$CI_PIPELINE_IID .
+    docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
+    docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE/dev
+    docker tag $CI_REGISTRY_IMAGE/dev $CI_REGISTRY_IMAGE/dev:$DEV
+    docker save $CI_REGISTRY_IMAGE -o image.tar
+    docker push $CI_REGISTRY_IMAGE
+    docker push $CI_REGISTRY_IMAGE/dev
+
+push_aws:
+  <<: *job_build
+  stage: push
   cache:
     untracked: true
   variables:
@@ -34,39 +51,34 @@ build_push_aws:
     # - $(aws ecr get-login --no-include-email --region us-east-1)
   script: |
     echo "Pushing app to AWS Elastic Container Registry"
-    DEV=$(echo $GITLAB_USER_NAME | tr '[:upper:]' '[:lower:]')
-    $(aws ecr get-login --no-include-email --region us-east-1)
+    $(aws ecr get-login --no-include-email)
     docker load -i image.tar || true
-    docker build --rm -f docker/Dockerfile --cache-from ${AWS_IMAGE_URI} -t $AWS_IMAGE_URI --build-arg BUILD=$CI_PIPELINE_IID .
+    docker tag $CI_REGISTRY_IMAGE $AWS_IMAGE_URI
     docker tag $AWS_IMAGE_URI $AWS_IMAGE_URI:$CI_PIPELINE_IID
-    docker save $AWS_IMAGE_URI -o image.tar
     docker push $AWS_IMAGE_URI
 
-build_push_gitlab:
+push_gitlab:
   <<: *job_build
-  stage: build
+  stage: push
   before_script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
   script: |
-    echo "Building the app for Gitlab registry"
+    echo "Pushing app to Gitlab registry"
     DEV=$(echo $GITLAB_USER_LOGIN | tr '[:upper:]' '[:lower:]')
     docker pull $CI_REGISTRY_IMAGE/dev:$DEV || true
-    docker build --rm -f docker/Dockerfile --cache-from $CI_REGISTRY_IMAGE/dev:$DEV -t $CI_REGISTRY_IMAGE --build-arg BUILD=$CI_PIPELINE_IID .
+    docker tag $CI_REGISTRY_IMAGE/dev:$DEV $CI_REGISTRY_IMAGE
     docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
-    docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE/dev
-    docker tag $CI_REGISTRY_IMAGE/dev $CI_REGISTRY_IMAGE/dev:$DEV
     docker push $CI_REGISTRY_IMAGE
-    docker push $CI_REGISTRY_IMAGE/dev
   except:
     - infrastructure
 
-build_push_dockerhub:
+push_dockerhub:
   <<: *job_build
-  stage: build
+  stage: push
   before_script:
     - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
   script: 
-    - echo "Building the app for Dockerhub registry"
+    - echo "Pushing app to Dockerhub registry"
     - docker pull $DOCKERHUB_IMAGE_NAME || true
     - docker build --rm -f docker/Dockerfile --cache-from $DOCKERHUB_IMAGE_NAME -t $DOCKERHUB_IMAGE_NAME --build-arg BUILD=$CI_PIPELINE_IID .
     - docker tag $DOCKERHUB_IMAGE_NAME $DOCKERHUB_IMAGE_NAME:$CI_PIPELINE_IID
