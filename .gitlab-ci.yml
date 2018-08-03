@@ -30,6 +30,7 @@ build_push_aws:
     AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
     AWS_DEFAULT_REGION: us-east-1
   before_script:
+    # authenticate with the AWS ECR registry
     # - $(aws ecr get-login --no-include-email --region us-east-1)
   script: |
     echo "Pushing app to AWS Elastic Container Registry"
