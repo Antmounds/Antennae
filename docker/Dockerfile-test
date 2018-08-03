@@ -1,0 +1,78 @@
+FROM ubuntu as BUILD
+
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    apt-transport-https \
+    apt-utils \
+    aufs-tools \
+    automake \
+    build-essential \
+    curl \
+    git \
+    lsb-release \
+    npm \
+    sudo \
+    && rm -rf /var/lib/apt/lists/* && \
+    curl https://install.meteor.com/ | sh && \
+    curl -sL https://deb.nodesource.com/setup_10.x | sh && \
+    apt-get install -y nodejs && \  
+
+    # Clean up stuff that's no longer needed
+    apt-get autoremove -y && apt-get clean && \
+
+    # Create user and add to sudoers
+    useradd --create-home --shell /bin/bash nick && \
+    echo 'nick ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers && \
+    adduser nick sudo
+
+USER nick
+
+WORKDIR /home/nick/app
+
+COPY .gitignore .
+COPY .git ./.git/
+COPY src ./src/
+
+RUN sudo chown -R nick /home/nick && \
+    cd src && \
+    meteor npm install --production --save bcrypt @babel/runtime fibers && \
+    meteor build ../build --directory && \
+    cd ../build/bundle/programs/server && npm install --production && \
+    git clean -Xdf
+
+FROM node:alpine as INSTALL
+
+WORKDIR /build
+
+COPY --from=BUILD /home/nick/app/build/bundle .
+
+# --no-cache: download package index on-the-fly, no need to cleanup afterwards
+# --virtual: bundle packages, remove whole bundle at once, when done
+RUN apk add --no-cache --virtual .gyp \
+    g++ \
+    git \
+    make \
+    python && \
+    (cd programs/server && npm install --production && npm install fibers) && \
+# remove files in .gitignore
+    git clean -Xdf
+
+FROM node:alpine as TEST
+
+LABEL maintainer="bitbucket.com/Antmounds" license="GPLv3" app="Antennae"
+
+ARG BUILD
+ARG METEOR_SETTINGS
+ARG MONGO_URL=mongodb://mongo/antennae
+ARG PORT=3000
+
+ENV PORT=$PORT ROOT_URL=http://localhost:$PORT MONGO_URL=$MONGO_URL NODE_ENV=production BUILD=$BUILD METEOR_SETTINGS=$METEOR_SETTINGS
+
+WORKDIR /app/
+
+COPY --from=INSTALL /build .
+
+EXPOSE $PORT
+
+USER guest
+
+CMD [ "node", "main.js" ]

@@ -5,13 +5,16 @@ import { Session } from 'meteor/session';
 import './collections.html';
 import { Collections } from '../../api/collections/collections.js';
 
-localTimeline = new Meteor.Collection(null);
-
 
 Template.collections.created = function(){
 	console.log(`${this.view.name} created`);
-	// counter starts at 0
-	this.counter = new ReactiveVar(0);
+	var self = this;    
+	//self.curSearches = new ReactiveDict(null);
+
+	self.autorun(() => {
+		self.subscribe("collections.get");
+		console.log(`Collections are ${self.subscriptionsReady() ? 'ready' : 'not ready'}`);
+	});
 };
 
 Template.collections.rendered = function(){
@@ -22,14 +25,18 @@ Template.collections.rendered = function(){
 Template.collections.helpers({
 
   collections(){
-  	if(Collections.find().count>10){
+  	if(Collections.find().count>0){
   		console.log(Collections.find());
 		return Collections.find({}, { sort: { created: 1 } });
 	}else{
   		console.log('no collections; loading samples')
 
-		return data;
+		return false;
 	}
+  },
+
+  publicCollections(){
+  	return data;
   },
 
   enabled(){

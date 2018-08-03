@@ -1,0 +1,163 @@
+# Antennae GitLab configuration
+# 
+.job_template: &job_build  # Hidden key that defines an anchor named 'job_build'
+  image: antmounds/cd-builder # docker:stable
+  services:
+    - docker:dind
+
+variables:
+  # When using dind, it's wise to use the overlayfs driver for improved performance.
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_DRIVER: overlay2
+  USERNAME: antmounds
+  IMAGE_NAME: antennae
+  AWS_IMAGE_URI: 166964003196.dkr.ecr.us-east-1.amazonaws.com/${IMAGE_NAME}
+  DOCKERHUB_IMAGE_NAME: ${USERNAME}/${IMAGE_NAME}
+
+stages:
+  - build
+  - push
+  - deploy
+
+build_app:
+  <<: *job_build
+  stage: build
+  cache:
+    paths: 
+      - image.tar
+    policy: push
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
+  script: |
+    echo "Building image..."
+    DEV=$(echo $GITLAB_USER_NAME | tr '[:upper:]' '[:lower:]')
+    docker pull $CI_REGISTRY_IMAGE/dev:$DEV || true
+    docker build --rm -f docker/Dockerfile --cache-from ${CI_REGISTRY_IMAGE}/dev:$DEV -t $CI_REGISTRY_IMAGE -t $CI_REGISTRY_IMAGE/dev --build-arg BUILD=$CI_PIPELINE_IID --build-arg METEOR_SETTINGS="$(cat src/tools/settings.json)" .
+    docker save $CI_REGISTRY_IMAGE -o image.tar
+    docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
+    docker tag $CI_REGISTRY_IMAGE/dev $CI_REGISTRY_IMAGE/dev:$DEV
+    docker push $CI_REGISTRY_IMAGE/dev
+
+push_aws:
+  <<: *job_build
+  stage: push
+  cache:
+    paths: 
+      - image.tar
+    policy: pull
+  variables:
+    AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+  before_script:
+    # authenticate with the AWS ECR registry
+    - $(aws ecr get-login --no-include-email --region us-east-1)
+  script: |
+    echo "Pushing app to AWS Elastic Container Registry"
+    docker load -i image.tar || true
+    docker tag $CI_REGISTRY_IMAGE $AWS_IMAGE_URI
+    docker tag $AWS_IMAGE_URI $AWS_IMAGE_URI:$CI_PIPELINE_IID
+    docker push $AWS_IMAGE_URI
+
+push_gitlab:
+  <<: *job_build
+  stage: push
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
+  script: |
+    echo "Pushing app to Gitlab registry"
+    DEV=$(echo $GITLAB_USER_NAME | tr '[:upper:]' '[:lower:]')
+    docker pull $CI_REGISTRY_IMAGE/dev:$DEV || true
+    docker tag $CI_REGISTRY_IMAGE/dev:$DEV $CI_REGISTRY_IMAGE
+    docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
+    docker push $CI_REGISTRY_IMAGE
+
+push_dockerhub:
+  <<: *job_build
+  stage: push
+  cache:
+    paths: 
+      - image.tar
+    policy: pull
+  before_script:
+    - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+  script: 
+    - echo "Pushing app to Dockerhub registry"
+    - docker load -i image.tar || true
+    - docker tag $CI_REGISTRY_IMAGE $DOCKERHUB_IMAGE_NAME
+    - docker tag $DOCKERHUB_IMAGE_NAME $DOCKERHUB_IMAGE_NAME:$CI_PIPELINE_IID
+    - docker push $DOCKERHUB_IMAGE_NAME
+  only:
+  - master
+
+deploy_dev:
+  image: antmounds/cd-builder
+  stage: deploy
+  script: |
+    aws --version
+    docker --version
+    docker-compose --version
+    terraform --version
+    cd infrastructure/aws-ecs
+    terraform init -backend=true -input=false -lock=true -upgrade=true
+    terraform plan -input=false -lock=true -refresh=true
+    terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_dev -var 'app_version_dev=$CI_PIPELINE_IID'
+  environment:
+    name: dev
+    url: dev.getantennae.com
+  only:
+    - develop
+
+deploy_new:
+  image: antmounds/cd-builder
+  stage: deploy
+  script: |
+    aws --version
+    docker --version
+    docker-compose --version
+    terraform --version
+    cd infrastructure/aws-ecs
+    terraform init -backend=true -input=false -lock=true -upgrade=true
+    terraform plan -input=false -lock=true -refresh=true
+    terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_warm -var 'app_version_warm=$CI_PIPELINE_IID'
+  environment:
+    name: staging
+    url: new.getantennae.com
+  only:
+    - master
+
+deploy_app:
+  image: antmounds/cd-builder
+  stage: deploy
+  script: |
+    aws --version
+    docker --version
+    docker-compose --version
+    terraform --version
+    cd infrastructure/aws-ecs
+    terraform init -backend=true -input=false -lock=true -upgrade=true
+    terraform plan -input=false -lock=true -refresh=true
+    terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_hot -var 'app_version_hot=$CI_PIPELINE_IID'
+  environment:
+    name: production
+    url: app.getantennae.com
+  when: manual
+  only:
+    - master
+
+deploy_infrastructure:
+  image: antmounds/cd-builder
+  stage: deploy
+  variables:
+    AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+    AWS_DEFAULT_REGION: us-east-1
+  script: |
+    cd infrastructure/aws-ecs
+    terraform init -backend=true -input=false -lock=true -upgrade=true
+    terraform plan -input=false -lock=true -refresh=true
+    #terraform apply -input=false -lock=true -refresh=true -auto-approve -target=resource -var 'app_version_warm=$CI_PIPELINE_IID'
+  environment:
+    name: terraform
+  when: manual
+  only:
+    - infrastructure

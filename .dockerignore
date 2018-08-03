@@ -1,5 +1,5 @@
 ## Git
-**/.git*
+build/**/.git*
 
 ## Build tools
 **/.editorconfig
@@ -28,7 +28,18 @@
 **/README*
 **/*.log*
 
+## Terraform
+*.tfstate*
+terraform.tfvars
+.terraform
+*.tf
+
+
 ## Vendor src files
-**/example
+**/example*
 **/examples
-**/test
+**/test*
+
+docker
+infrastructure
+src

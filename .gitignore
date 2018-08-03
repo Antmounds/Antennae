@@ -1,5 +1,6 @@
 ## Node & NPM
-##temporarily until full docker build file working node_modules
+# **/node_modules
+# **/npm
 **/npm-debug.log*
 **/*.lock
 **/package-lock.json
@@ -44,6 +45,6 @@ build/**/README*
 build/**/*.log*
 
 ## Vendor src files
-build/**/example
+build/**/example*
 build/**/examples
-build/**/test
+build/**/test*
