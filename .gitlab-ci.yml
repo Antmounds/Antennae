@@ -26,15 +26,15 @@ build_app:
     untracked: true
   before_script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
+    - docker load -i image.tar || true
   script: |
     echo "Building image..."
+    DEV=$(echo $GITLAB_USER_LOGIN | tr '[:upper:]' '[:lower:]')
     docker load -i image.tar || true
-    docker build --rm -f docker/Dockerfile --cache-from ${CI_REGISTRY_IMAGE}/dev -t $CI_REGISTRY_IMAGE --build-arg BUILD=$CI_PIPELINE_IID .
-    docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
-    docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE/dev
-    docker tag $CI_REGISTRY_IMAGE/dev $CI_REGISTRY_IMAGE/dev:$DEV
+    docker build --rm -f docker/Dockerfile --cache-from ${CI_REGISTRY_IMAGE}/dev -t $CI_REGISTRY_IMAGE -t $CI_REGISTRY_IMAGE/dev --build-arg BUILD=$CI_PIPELINE_IID .
     docker save $CI_REGISTRY_IMAGE -o image.tar
-    docker push $CI_REGISTRY_IMAGE
+    docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
+    docker tag $CI_REGISTRY_IMAGE/dev $CI_REGISTRY_IMAGE/dev:$DEV
     docker push $CI_REGISTRY_IMAGE/dev
 
 push_aws:
@@ -66,8 +66,6 @@ push_gitlab:
     echo "Pushing app to Gitlab registry"
     DEV=$(echo $GITLAB_USER_LOGIN | tr '[:upper:]' '[:lower:]')
     docker pull $CI_REGISTRY_IMAGE/dev:$DEV || true
-    docker tag $CI_REGISTRY_IMAGE/dev:$DEV $CI_REGISTRY_IMAGE
-    docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
     docker push $CI_REGISTRY_IMAGE
   except:
     - infrastructure
