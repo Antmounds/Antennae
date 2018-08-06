@@ -41,7 +41,7 @@ resource "docker_image" "antennae" {
 
 resource "docker_container" "app" {
   name              = "ant"
-  image             = "${docker_image.antennae.name}"                        #"${docker_image.antennae.name}"
+  image             = "${docker_image.antennae.latest}"   #"${docker_image.antennae.name}"
   must_run          = true
   network_mode      = "bridge"
   networks          = ["${docker_network.antnet.name}"]
