@@ -1,0 +1,44 @@
+<template name="collection">
+	
+	<div class="row">
+		<div class="col s12 m8 offset-m2 l6 offset-l3">
+			<ul class="collection with-header">
+				<li class="collection-header">
+					
+					<h5>{{collection.collection_name}}<span class="right"><span class="green-text">{{prints.count}}</span> prints</span></h5>
+				</li>
+				{{#each prints}}
+				<li id="{{_id}}" class="collection-item">
+					<div class="row valign-wrapper">
+						<div class="col s2">
+						  <img src="{{print_img}}" alt="" class="circle responsive-img" width="auto" height="auto"> <!-- notice the "circle" class -->
+						</div>
+						<div class="col s10">
+						  <span class="black-text">
+								<p>
+									<a id="goToCollection" href="collection" class="title">{{print_name}}</a><br />
+									{{print_id}}
+								</p>
+						  </span>
+						  <a id="btnDeleteFace" name="{{_id}}" class="btn btn-small right">delete</a>
+						</div>
+					</div>
+				</li>
+				{{/each}}
+			</ul>
+		</div>
+	</div>
+
+	<div class="fixed-action-btn click-to-toggle">
+		<a class="btn-floating btn-large blue">
+			<i class="large material-icons">edit</i>
+		</a>
+		<ul>
+			<li><a id="btnDeleteCollection" class="btn-floating red"><i class="material-icons">delete_forever</i></a></li>
+			<!-- <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li> -->
+			<li><a id="btnAddPerson" class="btn-floating green"><i class="material-icons">person_add</i></a></li>
+			<!-- <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li> -->
+		</ul>
+	</div>
+
+</template>

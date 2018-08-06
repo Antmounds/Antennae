@@ -1,0 +1,27 @@
+<template name="settings">
+	<h5>Settings</h5>
+	<br />
+	<br />
+	<br />
+
+	<form action="#">
+		<i class="right material-icons tooltipped" title="It's important to set a responsible similarity depending on application use" data-position="left" data-tooltip="For security and accurate identification, organizations, agencies and LEOs are advised to set a similarity level of at least 97%">help</i>
+		<label for="similarityLevel"><h6>Similarity</h6></label>
+		<p class="range-field">
+			<input type="range" id="similarityLevel" name="similarityLevel" value="97" min="30" max="100" step="1" />
+		</p>
+			<!-- <input type="range" id="similarityLevel" name="similarityLevel" value="97" min="30" max="100" step="1" list="tickmarks" />
+			<datalist id="tickmarks">
+				<option value="30" label="30%"></option>
+				<option value="50" label="50%"></option>
+				<option value="60"></option>
+				<option value="70"></option>
+				<option value="80"></option>
+				<option value="90"></option>
+				<option value="100" label="100%"></option>
+			</datalist> -->
+	</form>
+        
+
+
+</template>
