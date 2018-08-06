@@ -3,7 +3,7 @@
 		<div class="fixed-action-btn">
 			<a class="btn-floating btn-large green" onClick="selectPic.click()">
 				<i class="large material-icons">add_a_photo</i>
-				<input id="selectPic" type="file" accept="image/*" capture>
+				<input id="selectPic" type="file" accept="image/*" capture="user">
 		  	</a>
 		  <!-- <ul>
 		    <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
@@ -15,8 +15,8 @@
 	</form>
 	{{#unless search}}
 	<h1>Welcome to Antennae!</h1>
-	<p>Take or upload a picture for immediate facial recognition.</p>
-	<p>Check-in for points.</p>
+	<p>Search) Take or upload a picture for immediate face recognition.</p>
+	<p>Check-in) get recognized for loyalty points at fastfood, airports, hotels, dispensaries and more!</p>
 	{{else}}
 	<div class="row">
 		<div class="col s12 m6">

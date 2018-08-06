@@ -77,7 +77,11 @@ This will create the following resources:
 * Follow the getting started guide for basic usage instructions
 
 ## Contributing
-Pull requests, forks and stars are mucho appreciated and encouraged. See [CONTRIBUTING.md](https://bitbucket.org/Antmounds/antennae.git#CONTRIBUTING) for how to get involved in this project. 
+Pull requests, forks and stars are mucho appreciated and encouraged. See [CONTRIBUTING.md](https://bitbucket.org/Antmounds/antennae.git#CONTRIBUTING) for how to get involved in this project.
+
+<a href="https://www.patreon.com/antmounds">
+	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
+</a> 
 
 #### Get in touch
 * :speaking_head: Join the Antmounds [discord](https://discord.gg/dw3Dam2) server for more discussion on this project.

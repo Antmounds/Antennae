@@ -8,11 +8,11 @@ COPY .git /.git/
 
 # --no-cache: download package index on-the-fly, no need to cleanup afterwards
 # --virtual: bundle packages, remove whole bundle at once, when done
-RUN apk add --no-cache --virtual .gyp \
-    g++ \
-    git \
-    make \
-    python && \
+RUN apk add --no-cache --update --virtual .gyp \
+	    g++ \
+	    git \
+	    make \
+	    python && \
 	(cd programs/server && npm install --save --production && npm install --save fibers) && \
 # remove files in .gitignore
     git clean -Xdf

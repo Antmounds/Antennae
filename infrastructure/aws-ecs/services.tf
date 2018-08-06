@@ -64,8 +64,8 @@ data "template_file" "container_definition_hot" {
 resource "aws_ecs_task_definition" "app_task_hot" {
   family                   = "${var.app_name}-hot"
   container_definitions    = "${data.template_file.container_definition_hot.rendered}"
-  cpu                      = 130
-  memory                   = 130
+  cpu                      = 200
+  memory                   = 200
   network_mode             = "bridge"
   requires_compatibilities = ["${var.launch_type}"]
 
@@ -160,8 +160,8 @@ data "template_file" "container_definition_warm" {
 resource "aws_ecs_task_definition" "app_task_warm" {
   family                   = "${var.app_name}-warm"
   container_definitions    = "${data.template_file.container_definition_warm.rendered}"
-  cpu                      = 130
-  memory                   = 130
+  cpu                      = 200
+  memory                   = 200
   network_mode             = "bridge"
   requires_compatibilities = ["${var.launch_type}"]
 
@@ -251,8 +251,8 @@ data "template_file" "container_definition_dev" {
 resource "aws_ecs_task_definition" "app_task_dev" {
   family                   = "${var.app_name}-dev"
   container_definitions    = "${data.template_file.container_definition_dev.rendered}"
-  cpu                      = 130
-  memory                   = 130
+  cpu                      = 200
+  memory                   = 200
   network_mode             = "bridge"
   requires_compatibilities = ["${var.launch_type}"]
 

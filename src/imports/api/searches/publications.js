@@ -6,7 +6,7 @@ import { Searches } from './searches.js';
 Meteor.publish('searches.get', function(searchId='') {
 	check(searchId,String);
 	searchId = searchId || {};
-  	console.log(Searches.find(searchId).count());
+  	// console.log(Searches.find(searchId).count());
 	return Searches.find(
 		searchId, 
 	  { 

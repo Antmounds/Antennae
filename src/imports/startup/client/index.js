@@ -12,6 +12,8 @@
  */
 import '../accounts-config.js';
 import './routes.js';
+import { Session } from 'meteor/session';
+import Swal from 'sweetalert2';
 // import './demo.js';
 // import './picker.js';
 
@@ -41,4 +43,35 @@ Template.registerHelper('formatDaysSince', function(startDate) {
 });
 Template.registerHelper('stringify', function(data) {
   return JSON.stringify(data);
+});
+
+// Startup checks
+Meteor.startup(() => {
+	console.log(sessionStorage.getItem('faceRecognitionConsent'));
+	if(!sessionStorage.getItem('faceRecognitionConsent')){
+		Swal({
+			title: 'Face Recognition',
+			text: 'By using this app, you give Antennae permission to store and process your images for the purposes of facial recognition. No pictures are saved, only mathematical representations of facial features.',
+			type: 'warning',
+			animation: true,
+			// customClass: 'animated tada',
+			showCancelButton: true,
+			confirmButtonText: 'I Consent'
+		}).then((result) => {
+				console.log(result);
+			if(result.value){
+				console.log("permission granted");
+				console.log(result);
+	            sessionStorage.setItem('faceRecognitionConsent', true);
+			} else if (result.dismiss == Swal.DismissReason.cancel){
+				console.log(result);
+				Swal(
+					'Cancelled',
+					'Your face is safe. Please stop using the app.',
+					'error'
+				);
+	    		FlowRouter.go("checkin");
+			};
+		});
+	}
 });

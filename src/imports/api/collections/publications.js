@@ -6,7 +6,7 @@ import { Collections } from './collections.js';
 Meteor.publish('collections.get', function(collectionId='') {
 	check(collectionId,String);
 	collectionId = collectionId || {};
-  	console.log(Collections.find(collectionId).count());
+  	// console.log(Collections.find(collectionId).count());
 	return Collections.find(
 		collectionId, 
 	  { 

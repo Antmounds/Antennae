@@ -26,5 +26,5 @@ momentjs:moment
 underscore
 materialize:materialize
 aldeed:collection2@2.10.0
-themeteorchef:jquery-validation
 check
+practicalmeteor:faker

@@ -3,16 +3,16 @@ FROM ubuntu
 LABEL maintainer="bitbucket.com/Antmounds" license="GPLv3"
 
 RUN apt-get update && apt-get install -y \
-    apt-transport-https \
-    apt-utils \
-    aufs-tools \
-    automake \
-    build-essential \
-    curl \
-    git \
-    lsb-release \
-    sudo \
-	&& rm -rf /var/lib/apt/lists/* && \
+        apt-transport-https \
+        apt-utils \
+        aufs-tools \
+        automake \
+        build-essential \
+        curl \
+        git \
+        lsb-release \
+        sudo && \
+    rm -rf /var/lib/apt/lists/* && \
     curl https://install.meteor.com/ | sh && \
 	curl -sL https://deb.nodesource.com/setup_8.x | sh && \
 	apt-get install -y nodejs && \  

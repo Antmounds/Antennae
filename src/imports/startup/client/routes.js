@@ -16,12 +16,18 @@ import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 // Import components
 // import layouts;
 import '../../ui/layouts/body.js';
+import '../../ui/layouts/sub_body.js';
 // import pages;
 // import '../../ui/pages/404.html';
 // import '../../ui/pages/500.html';
+import '../../ui/pages/checkin.js';
+import '../../ui/pages/collection.js';
+import '../../ui/pages/collections.js';
 import '../../ui/pages/history.js';
 import '../../ui/pages/home.js';
-import '../../ui/pages/collections.js';
+import '../../ui/pages/login.js';
+import '../../ui/pages/search.js';
+import '../../ui/pages/settings.js';
 
 // Global route triggers
 FlowRouter.triggers.enter(function(context){
@@ -35,6 +41,24 @@ FlowRouter.route('/', {
     console.log("Loading home");
     document.title = 'Home | Antennae';
     BlazeLayout.render('app_body', {content: 'home'});
+  }
+});
+
+FlowRouter.route('/checkin', {
+  name: 'checkin',
+  action() {
+    console.log("Loading checkin");
+    document.title = 'Check-in | Antennae';
+    BlazeLayout.render('app_body', {content: 'checkin'});
+  }
+});
+
+FlowRouter.route("/collection/:collection_id", {
+  name: "collection",
+  action() {
+    console.log("Loading a collection");
+    document.title = "Collection | Antennae";
+    BlazeLayout.render('app_sub_body', {content: 'collection'});
   }
 });
 
@@ -53,6 +77,33 @@ FlowRouter.route('/history', {
     console.log("Loading history");
     document.title = 'History | Antennae';
     BlazeLayout.render('app_body', {content: 'history'});
+  }
+});
+
+FlowRouter.route('/login', {
+  name: 'login',
+  action() {
+    console.log("Loading login");
+    document.title = 'Login | Antennae';
+    BlazeLayout.render('app_body', {content: 'login'});
+  }
+});
+
+FlowRouter.route('/search', {
+  name: 'search',
+  action() {
+    console.log("Loading search");
+    document.title = 'Collections | Antennae';
+    BlazeLayout.render('app_body', {content: 'search'});
+  }
+});
+
+FlowRouter.route('/settings', {
+  name: 'settings',
+  action() {
+    console.log("Loading settings");
+    document.title = 'Collections | Antennae';
+    BlazeLayout.render('app_body', {content: 'settings'});
   }
 });
 

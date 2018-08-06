@@ -3,7 +3,7 @@ version: '3.6'
 services:
 
   app:
-    image: antennae-1
+    image: antennae
     restart: on-failure
     environment:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
