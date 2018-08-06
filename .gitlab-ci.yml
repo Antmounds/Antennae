@@ -1,6 +1,6 @@
 # Antennae GitLab configuration
 # 
-.job_template: &job_build  # Hidden key that defines an anchor named 'job_build'
+.job_template: &build_defaults  # Hidden key that defines an anchor named 'build_defaults'
   image: antmounds/cd-builder # docker:stable
   services:
     - docker:dind
@@ -20,7 +20,7 @@ stages:
   - deploy
 
 build_app:
-  <<: *job_build
+  <<: *build_defaults
   stage: build
   cache:
     paths: 
@@ -39,7 +39,7 @@ build_app:
     docker push $CI_REGISTRY_IMAGE/dev
 
 push_aws:
-  <<: *job_build
+  <<: *build_defaults
   stage: push
   cache:
     paths: 
@@ -59,20 +59,20 @@ push_aws:
     docker push $AWS_IMAGE_URI
 
 push_gitlab:
-  <<: *job_build
+  <<: *build_defaults
   stage: push
   before_script:
+    - DEV=$(echo $GITLAB_USER_NAME | tr '[:upper:]' '[:lower:]')
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
+    - docker pull $CI_REGISTRY_IMAGE/dev:$DEV || true
   script: |
     echo "Pushing app to Gitlab registry"
-    DEV=$(echo $GITLAB_USER_NAME | tr '[:upper:]' '[:lower:]')
-    docker pull $CI_REGISTRY_IMAGE/dev:$DEV || true
     docker tag $CI_REGISTRY_IMAGE/dev:$DEV $CI_REGISTRY_IMAGE
     docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
     docker push $CI_REGISTRY_IMAGE
 
 push_dockerhub:
-  <<: *job_build
+  <<: *build_defaults
   stage: push
   cache:
     paths: 
@@ -80,9 +80,9 @@ push_dockerhub:
     policy: pull
   before_script:
     - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+    - docker load -i image.tar || true
   script: 
     - echo "Pushing app to Dockerhub registry"
-    - docker load -i image.tar || true
     - docker tag $CI_REGISTRY_IMAGE $DOCKERHUB_IMAGE_NAME
     - docker tag $DOCKERHUB_IMAGE_NAME $DOCKERHUB_IMAGE_NAME:$CI_PIPELINE_IID
     - docker push $DOCKERHUB_IMAGE_NAME
@@ -92,6 +92,9 @@ push_dockerhub:
 deploy_dev:
   image: antmounds/cd-builder
   stage: deploy
+  environment:
+    name: dev
+    url: http://dev.getantennae.com
   script: |
     aws --version
     docker --version
@@ -100,16 +103,16 @@ deploy_dev:
     cd infrastructure/aws-ecs
     terraform init -backend=true -input=false -lock=true -upgrade=true
     terraform plan -input=false -lock=true -refresh=true
-    terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_dev -var 'app_version_dev=$CI_PIPELINE_IID'
-  environment:
-    name: dev
-    url: dev.getantennae.com
+    terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_dev -var app_version_dev=${CI_PIPELINE_IID}
   only:
     - develop
 
 deploy_new:
   image: antmounds/cd-builder
   stage: deploy
+  environment:
+    name: staging
+    url: http://new.getantennae.com
   script: |
     aws --version
     docker --version
@@ -118,16 +121,16 @@ deploy_new:
     cd infrastructure/aws-ecs
     terraform init -backend=true -input=false -lock=true -upgrade=true
     terraform plan -input=false -lock=true -refresh=true
-    terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_warm -var 'app_version_warm=$CI_PIPELINE_IID'
-  environment:
-    name: staging
-    url: new.getantennae.com
+    terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_warm -var app_version_warm=${CI_PIPELINE_IID}
   only:
     - master
 
 deploy_app:
   image: antmounds/cd-builder
   stage: deploy
+  environment:
+    name: production
+    url: http://app.getantennae.com
   script: |
     aws --version
     docker --version
@@ -136,10 +139,7 @@ deploy_app:
     cd infrastructure/aws-ecs
     terraform init -backend=true -input=false -lock=true -upgrade=true
     terraform plan -input=false -lock=true -refresh=true
-    terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_hot -var 'app_version_hot=$CI_PIPELINE_IID'
-  environment:
-    name: production
-    url: app.getantennae.com
+    terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_hot -var app_version_hot=${CI_PIPELINE_IID}
   when: manual
   only:
     - master
@@ -155,7 +155,7 @@ deploy_infrastructure:
     cd infrastructure/aws-ecs
     terraform init -backend=true -input=false -lock=true -upgrade=true
     terraform plan -input=false -lock=true -refresh=true
-    #terraform apply -input=false -lock=true -refresh=true -auto-approve -target=resource -var 'app_version_warm=$CI_PIPELINE_IID'
+    #terraform apply -input=false -lock=true -refresh=true -auto-approve -target=resource -var app_version_warm=${CI_PIPELINE_IID}
   environment:
     name: terraform
   when: manual
