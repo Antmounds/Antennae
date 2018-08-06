@@ -1,3 +1,16 @@
+#provider "aws" {
+#  region = "${var.region}"
+#}
+
+# load available public subnet ids
+#data "aws_subnet_ids" "public" {
+#  vpc_id = "${data.aws_vpc.main.id}"
+#
+# tags {
+#    Tier = "WEB"
+#  }
+#}
+
 # Get the latest Ubuntu AMI
 data "aws_ami" "ubuntu" {
   most_recent = true
@@ -46,13 +59,42 @@ yum upgrade -y && yum clean all
 EOF
 }
 
+resource "aws_launch_configuration" "ecs_asg_lc" {
+  #name = "ECS-${var.environment}-LC_"
+  name_prefix = "ECS-${var.environment}-LC"
+
+  associate_public_ip_address = true
+  image_id                    = "${var.launch_type == "EC2" ? data.aws_ami.linux.id : data.aws_ami.ubuntu.id}"
+  iam_instance_profile        = "ecsInstanceRole"                                                              # "${data.aws_iam_role.ecs-role.arn}"
+  instance_type               = "${var.instance_type}"
+  key_name                    = "ant"
+  enable_monitoring           = true
+  ebs_optimized               = false
+  spot_price                  = "${var.spot_price}"
+  security_groups             = ["${aws_security_group.ecs_asg_sg.id}"]
+
+  root_block_device = {
+    volume_type           = "gp2"
+    volume_size           = 8
+    delete_on_termination = true
+  }
+
+  user_data_base64 = "${base64encode(local.ecs-node-userdata)}"
+
+  lifecycle {
+    create_before_destroy = true
+
+    #ignore_changes        = ["name"]
+  }
+}
+
 resource "aws_launch_template" "ecs_asg_lc" {
   name                                 = "ECS-${var.environment}"
   description                          = "Instance template for ECS hosts"
-  disable_api_termination              = true
+  #disable_api_termination              = true
   image_id                             = "${var.launch_type == "EC2" ? data.aws_ami.linux.id : data.aws_ami.ubuntu.id}"
   instance_type                        = "${var.instance_type}"
-  instance_initiated_shutdown_behavior = "terminate"
+  #instance_initiated_shutdown_behavior = "terminate"
   key_name                             = "ant"
   ebs_optimized                        = false
   vpc_security_group_ids               = ["${aws_security_group.ecs_asg_sg.id}"]
@@ -60,6 +102,15 @@ resource "aws_launch_template" "ecs_asg_lc" {
 
   iam_instance_profile = {
     arn = "${aws_iam_instance_profile.ecs_profile.arn}"
+  }
+
+  instance_market_options {
+    market_type = "spot"
+
+    spot_options {
+      block_duration_minutes = 0
+      max_price              = "${var.spot_price}"
+    }
   }
 
   monitoring {
@@ -91,27 +142,26 @@ resource "aws_launch_template" "ecs_asg_lc" {
 resource "aws_autoscaling_group" "ecs_asg" {
   name = "tf-ecs-asg-${var.app_name}_${upper(var.environment)}"
 
-  #launch_configuration      = "${aws_launch_configuration.ecs_asg_lc.id}"
-  health_check_grace_period = 120
-  min_size                  = 0
-  max_size                  = 25
   default_cooldown          = 30
   desired_capacity          = "${var.asg_desired_count}"
+  min_size                  = 0
+  max_size                  = 25
+  launch_configuration      = "${aws_launch_configuration.ecs_asg_lc.id}"
+  health_check_grace_period = 0
+  health_check_type         = "EC2"
   vpc_zone_identifier       = ["${aws_subnet.public.*.id}"]
   enabled_metrics           = ["GroupTotalInstances", "GroupMaxSize", "GroupInServiceInstances", "GroupPendingInstances", "GroupDesiredCapacity", "GroupMinSize", "GroupStandbyInstances", "GroupTerminatingInstances"]
 
-  launch_template = {
-    id      = "${aws_launch_template.ecs_asg_lc.id}"
-    version = "$$Latest"
-  }
+  #launch_template = {
+  # id      = "${aws_launch_template.ecs_asg_lc.id}"
+  # version = "$$Latest"
+  #}
 
   lifecycle {
     create_before_destroy = true
     ignore_changes        = ["tags"]
   }
-
-  depends_on = ["aws_launch_template.ecs_asg_lc"]
-
+  depends_on = ["aws_launch_configuration.ecs_asg_lc"]
   tags = [
     {
       key                 = "Name"
@@ -140,7 +190,7 @@ resource "aws_autoscaling_group" "ecs_asg" {
     },
     {
       key                 = "Launch Configuration"
-      value               = "${aws_launch_template.ecs_asg_lc.name}"
+      value               = "${aws_launch_configuration.ecs_asg_lc.id}"
       propagate_at_launch = true
     },
   ]
@@ -166,7 +216,7 @@ resource "aws_security_group" "ecs_asg_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
 
-    self        = true
+    #self        = true
     description = "Allow communication to all ports from other instances with this group"
   }
 

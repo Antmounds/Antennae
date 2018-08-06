@@ -297,7 +297,8 @@
       "path": "packages/aldeed_collection2.js"
     },
     {
-      "path": "packages/themeteorchef_jquery-validation.js"
+      "node_modules": "npm/node_modules/meteor/practicalmeteor_faker/node_modules",
+      "path": "packages/practicalmeteor_faker.js"
     },
     {
       "path": "packages/livedata.js"

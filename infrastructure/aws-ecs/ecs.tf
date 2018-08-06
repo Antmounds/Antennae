@@ -39,8 +39,35 @@ resource "aws_iam_role" "ecs_service_role" {
 EOF
 }
 
-resource "aws_iam_role" "ecs_execution_role" {
-  name = "tf-ecs-execution-role"
+resource "aws_iam_role_policy" "ecs" {
+  name = "TfEcsClusterRole"
+  role = "${aws_iam_role.ecs_service_role.id}"
+
+  #policy = "${data.template_file.instance_profile.rendered}"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ecr:GetAuthorizationToken",
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role" "ecs_task_role" {
+  name = "tf-ecs-task-role"
 
   assume_role_policy = <<EOF
 {
@@ -59,25 +86,19 @@ resource "aws_iam_role" "ecs_execution_role" {
 EOF
 }
 
-resource "aws_iam_role_policy" "ecs" {
-  name = "TfEcsClusterRole"
-  role = "${aws_iam_role.ecs_execution_role.id}"
-
-  #policy = "${data.template_file.instance_profile.rendered}"
+resource "aws_iam_role_policy" "ecs-task" {
+  name = "TfEcsTaskRole"
+  role = "${aws_iam_role.ecs_task_role.id}"
 
   policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
     {
+      "Sid": "",
       "Effect": "Allow",
       "Action": [
-        "ecr:GetAuthorizationToken",
-        "ecr:BatchCheckLayerAvailability",
-        "ecr:GetDownloadUrlForLayer",
-        "ecr:BatchGetImage",
-        "logs:CreateLogStream",
-        "logs:PutLogEvents"
+        "rekognition:*"
       ],
       "Resource": "*"
     }

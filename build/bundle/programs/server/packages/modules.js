@@ -140,7 +140,7 @@ install("aldeed:collection2-core");
 install("aldeed:schema-index");
 install("aldeed:schema-deny");
 install("aldeed:collection2");
-install("themeteorchef:jquery-validation");
+install("practicalmeteor:faker");
 install("livedata");
 install("hot-code-push");
 install("launch-screen");

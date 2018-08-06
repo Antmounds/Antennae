@@ -13,6 +13,7 @@ moment = Package['momentjs:moment'].moment;
 _ = Package.underscore._;
 check = Package.check.check;
 Match = Package.check.Match;
+faker = Package['practicalmeteor:faker'].faker;
 Meteor = Package.meteor.Meteor;
 global = Package.meteor.global;
 meteorEnv = Package.meteor.meteorEnv;
