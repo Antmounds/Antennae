@@ -1,6 +1,6 @@
 FROM ubuntu
 
-LABEL maintainer="bitbucket.com/Antmounds" license="GPLv3"
+LABEL app="Antennae" license="GPLv3" maintainer="gitlab.com/Antmounds" repo="https://gitlab.com/Antmounds/Antennae"
 
 RUN apt-get update && apt-get install -y \
         apt-transport-https \

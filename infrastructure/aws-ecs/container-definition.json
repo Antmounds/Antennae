@@ -3,6 +3,7 @@
    "essential": true,
     "image": "${image_url}",
     "name": "${container_name}",
+    "memoryReservation": 200,
     "portMappings": [
       {
         "containerPort": 3000

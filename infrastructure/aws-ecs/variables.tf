@@ -30,7 +30,7 @@ variable "app_version_warm_count" {
 
 variable "app_version_dev" {
   type        = "string"
-  default     = "55"
+  default     = "72"
   description = "DEV version of the service/app"
 }
 
@@ -54,7 +54,7 @@ variable "app_version_cold_count" {
 
 variable "asg_desired_count" {
   type        = "string"
-  default     = "2"
+  default     = "1"
   description = "How many instances should back the cluster?"
 }
 

@@ -89,16 +89,18 @@ resource "aws_launch_configuration" "ecs_asg_lc" {
 }
 
 resource "aws_launch_template" "ecs_asg_lc" {
-  name                                 = "ECS-${var.environment}"
-  description                          = "Instance template for ECS hosts"
+  name        = "ECS-${var.environment}"
+  description = "Instance template for ECS hosts"
+
   #disable_api_termination              = true
-  image_id                             = "${var.launch_type == "EC2" ? data.aws_ami.linux.id : data.aws_ami.ubuntu.id}"
-  instance_type                        = "${var.instance_type}"
+  image_id      = "${var.launch_type == "EC2" ? data.aws_ami.linux.id : data.aws_ami.ubuntu.id}"
+  instance_type = "${var.instance_type}"
+
   #instance_initiated_shutdown_behavior = "terminate"
-  key_name                             = "ant"
-  ebs_optimized                        = false
-  vpc_security_group_ids               = ["${aws_security_group.ecs_asg_sg.id}"]
-  user_data                            = "${base64encode(local.ecs-node-userdata)}"
+  key_name               = "ant"
+  ebs_optimized          = false
+  vpc_security_group_ids = ["${aws_security_group.ecs_asg_sg.id}"]
+  user_data              = "${base64encode(local.ecs-node-userdata)}"
 
   iam_instance_profile = {
     arn = "${aws_iam_instance_profile.ecs_profile.arn}"
@@ -149,6 +151,7 @@ resource "aws_autoscaling_group" "ecs_asg" {
   launch_configuration      = "${aws_launch_configuration.ecs_asg_lc.id}"
   health_check_grace_period = 0
   health_check_type         = "EC2"
+  termination_policies      = ["OldestInstance"]
   vpc_zone_identifier       = ["${aws_subnet.public.*.id}"]
   enabled_metrics           = ["GroupTotalInstances", "GroupMaxSize", "GroupInServiceInstances", "GroupPendingInstances", "GroupDesiredCapacity", "GroupMinSize", "GroupStandbyInstances", "GroupTerminatingInstances"]
 

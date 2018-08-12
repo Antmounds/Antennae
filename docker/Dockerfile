@@ -19,7 +19,7 @@ RUN apk add --no-cache --update --virtual .gyp \
 
 FROM node:alpine as DEPLOY
 
-LABEL maintainer="bitbucket.com/Antmounds" license="GPLv3" app="Antennae"
+LABEL app="Antennae" license="GPLv3" maintainer="gitlab.com/Antmounds" repo="https://gitlab.com/Antmounds/Antennae"
 
 ARG BUILD
 ARG METEOR_SETTINGS
