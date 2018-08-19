@@ -3,8 +3,8 @@
     "name": "standard-minifier-js",
     "version": "2.3.4"
   },
-  "totalMinifiedBytes": 1657966,
-  "totalMinifiedGzipBytes": 484333,
+  "totalMinifiedBytes": 1664405,
+  "totalMinifiedGzipBytes": 484659,
   "minifiedBytesByPackage": {
     "packages/meteor.js": 9433,
     "packages/meteor-base.js": 31,
@@ -677,7 +677,7 @@
     ],
     "app/global-imports.js": 1274,
     "app/app.js": [
-      54643,
+      61082,
       {
         "imports": {
           "ui": {
@@ -693,26 +693,26 @@
               "checkin.html": 77,
               "template.checkin.js": 7733,
               "collection.html": 80,
-              "template.collection.js": 2574,
+              "template.collection.js": 2644,
               "collections.html": 81,
               "template.collections.js": 3861,
               "history.html": 77,
-              "template.history.js": 2581,
+              "template.history.js": 2784,
               "home.html": 74,
-              "template.home.js": 4774,
+              "template.home.js": 4018,
               "login.html": 75,
               "template.login.js": 144,
               "search.html": 76,
-              "template.search.js": 148,
+              "template.search.js": 5044,
               "settings.html": 78,
               "template.settings.js": 1234,
               "checkin.js": 1216,
-              "collection.js": 3375,
+              "collection.js": 3390,
               "collections.js": 1967,
-              "history.js": 745,
+              "history.js": 1319,
               "home.js": 1842,
               "login.js": 464,
-              "search.js": 468,
+              "search.js": 1898,
               "settings.js": 476
             }
           },
@@ -721,7 +721,7 @@
               "collections.js": 1071
             },
             "prints": {
-              "prints.js": 1301
+              "prints.js": 1308
             },
             "searches": {
               "searches.js": 1249

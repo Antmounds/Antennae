@@ -23,8 +23,8 @@ accounts-password@1.5.1
 kadira:flow-router
 kadira:blaze-layout
 momentjs:moment
-underscore
+underscore@1.0.10
 materialize:materialize
 aldeed:collection2@2.10.0
-check
+check@1.3.1
 practicalmeteor:faker
