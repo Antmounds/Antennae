@@ -1,11 +1,13 @@
 # Antennae
-[![pipeline status](https://gitlab.com/Antmounds/cd-builder/badges/master/pipeline.svg)](https://gitlab.com/Antmounds/cd-builder/commits/master) [![CircleCI](https://circleci.com/bb/Antmounds/antennae.svg?style=svg)](https://circleci.com/bb/Antmounds/antennae) [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0) [![Discord Chat](https://img.shields.io/discord/299962468581638144.svg?logo=discord)](https://discord.gg/dw3Dam2)
+[![pipeline status](https://gitlab.com/Antmounds/Antennae/badges/develop/pipeline.svg)](https://gitlab.com/Antmounds/Antennae/commits/develop) [![CircleCI](https://circleci.com/gh/Antmounds/Antennae.svg?style=svg)](https://circleci.com/gh/Antmounds/Antennae) [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0) [![Discord Chat](https://img.shields.io/discord/299962468581638144.svg?logo=discord)](https://discord.gg/dw3Dam2)
 
 Out-the-box face recognition web app for desktop and mobile. *Trust but verify*
 
 
 ## Introduction
-Antennae is a free and open-source face recognition node.js app using [AWS Rekognition](https://aws.amazon.com/rekognition/) to detect and match faces. The app allows you to create collections of 'face prints' and later search an image across any number of selected databases. Each search will also return detected emotions, gender, estimated age range, and other facial features such as the presence of glasses, face hair and smiles. Use cases include allowing you to easily and quickly find missing persons, helping the visually impaired, verifying dates and rendevouz, recognizing celebrities, victim identificaion, and so much more! 
+Antennae is a free and open-source face recognition node.js app using [AWS Rekognition](https://aws.amazon.com/rekognition/) to detect and match faces. The app allows you to create collections of 'face prints' and later search an image across any number of selected databases. Each search will also return detected emotions, gender, estimated age range, and other facial features such as the presence of glasses, face hair and smiles. Use cases include allowing you to easily and quickly find missing persons, helping the visually impaired, verifying dates and rendevouz, recognizing celebrities, victim identificaion, and so much more!
+
+Check-in stand mode allows you to set this up for point-of-sale, self-service checkin/out, vip recognition, loyalty rewards programs and greet returning guests by name. Simply by being recognized, allow guests to enter queues, pre-order, confirm options and view current status from their Antennae app. The dashboard shows all guests and where they were recognized. 
 
 This repo features infrastructure code that will allow you to self-host the application using a containerized, highly available, self-repairing, military grade, secure cloud environment. For a managed SaaS solution check out [Antennae Cloud](https://getantennae.com/cloud), featuring private and pre-populated public face print databases, teams, white-label and 24/7 support options.
 
