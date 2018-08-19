@@ -12,7 +12,7 @@ jobs:
       - run: 
           name: Build image
           command: |
-            echo 'export IMAGE_NAME=$CIRCLE_PROJECT_REPONAME' >> $BASH_ENV
+            echo "export IMAGE_NAME=$(echo $CIRCLE_PROJECT_REPONAME | tr '[:upper:]' '[:lower:]')" >> $BASH_ENV
             echo 'export DOCKERHUB_IMAGE_NAME=${DOCKER_HUB_USERNAME}/${IMAGE_NAME}' >> $BASH_ENV
             source $BASH_ENV
             docker build --rm -f docker/Dockerfile -t $IMAGE_NAME --build-arg BUILD=$CIRCLE_BUILD_NUM --build-arg METEOR_SETTINGS="$(cat src/tools/settings.json)" .
