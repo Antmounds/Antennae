@@ -20,6 +20,7 @@ jobs:
           # tag Docker image for the Dockerhub registry
           name: Tag Dockerhub image
           command: |
+            source $BASH_ENV
             docker tag $IMAGE_NAME $DOCKERHUB_IMAGE_NAME:dev
             docker tag $IMAGE_NAME $DOCKERHUB_IMAGE_NAME:$CIRCLE_BUILD_NUM
       - run:
@@ -30,6 +31,7 @@ jobs:
           # push the new Docker image to the Docker registry
           name: Dockerhub push
           command: |
+            source $BASH_ENV
             docker push $DOCKERHUB_IMAGE_NAME
           
 workflows:
