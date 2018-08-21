@@ -19,7 +19,7 @@ import Swal from 'sweetalert2';
 
 
 if(Meteor.isProduction){
-	console.log(`Welcome to Antennae!\nYou opened the console! Looking for the code? Check out the project repo at https://bitbucket.org/Antmounds/antennae\n========================================\n${JSON.stringify(Meteor.settings)}`);
+	console.log(`Welcome to Antennae!\nYou opened the console! Looking for the code? Check out the project repo at https://gitlab.com/Antmounds/Antennae\n========================================\n${JSON.stringify(Meteor.settings)}`);
 }else{
 	console.log("DEVELOPMENT MODE: " + JSON.stringify(Meteor.settings) + "\n" + Meteor.release);
 };

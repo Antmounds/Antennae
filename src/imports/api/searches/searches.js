@@ -31,7 +31,7 @@ Searches.Schema = new SimpleSchema({
     type: String,
     label: "Image to search",
     optional: true,
-    defaultValue: "img/face-id-100.png"
+    defaultValue: "/img/face-id-100.png"
   },
   "search_results": {
     type: Object,
