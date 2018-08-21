@@ -32,7 +32,7 @@ build_app:
     echo "Building image..."
     DEV=$(echo $GITLAB_USER_NAME | tr '[:upper:]' '[:lower:]')
     docker pull $CI_REGISTRY_IMAGE/dev:$DEV || true
-    docker build --rm -f docker/Dockerfile --cache-from ${CI_REGISTRY_IMAGE}/dev:$DEV -t $CI_REGISTRY_IMAGE -t $CI_REGISTRY_IMAGE/dev --build-arg BUILD=$CI_PIPELINE_IID --build-arg METEOR_SETTINGS="$(cat src/tools/settings.json)" .
+    docker build --rm -f docker/Dockerfile --cache-from ${CI_REGISTRY_IMAGE}/dev:$DEV -t $CI_REGISTRY_IMAGE -t $CI_REGISTRY_IMAGE/dev --build-arg BUILD=$CI_PIPELINE_IID --build-arg BUILD-DATE="$(date --utc +%FT%T.%2NZ)" --build-arg METEOR_SETTINGS="$(cat src/tools/settings.json)" .
     docker save $CI_REGISTRY_IMAGE -o image.tar
     docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
     docker tag $CI_REGISTRY_IMAGE/dev $CI_REGISTRY_IMAGE/dev:$DEV
@@ -63,7 +63,7 @@ push_gitlab:
   stage: push
   before_script:
     - DEV=$(echo $GITLAB_USER_NAME | tr '[:upper:]' '[:lower:]')
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
+    - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
     - docker pull $CI_REGISTRY_IMAGE/dev:$DEV || true
   script: |
     echo "Pushing app to Gitlab registry"
@@ -79,7 +79,7 @@ push_dockerhub:
       - image.tar
     policy: pull
   before_script:
-    - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+    - echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USERNAME --password-stdin
     - docker load -i image.tar || true
   script: 
     - echo "Pushing app to Dockerhub registry"
