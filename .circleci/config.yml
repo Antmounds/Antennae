@@ -34,7 +34,7 @@ jobs:
             source $BASH_ENV
             docker push $DOCKERHUB_IMAGE_NAME
   deploy:
-    docker: 
+    docker:
       - image: antmounds/cd-builder
     steps:
       - checkout
@@ -57,6 +57,8 @@ workflows:
     jobs:
       - build
       - deploy:
+          requires:
+            - build
           filters:
             branches:
               only: develop
