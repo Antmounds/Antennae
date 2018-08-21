@@ -45,7 +45,7 @@ Prints.Schema = new SimpleSchema({
     type: String,
     label: "Print img",
     optional: true,
-    defaultValue: "img/avatar.png"
+    defaultValue: "img/face-id-100.png"
   },
   "print_details": {
     type: Object,

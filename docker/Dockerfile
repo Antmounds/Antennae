@@ -34,6 +34,6 @@ COPY --from=INSTALL /build .
 
 EXPOSE $PORT
 
-USER node
+USER guest
 
 CMD [ "node", "main.js" ]

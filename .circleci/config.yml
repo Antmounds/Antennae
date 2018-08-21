@@ -26,16 +26,37 @@ jobs:
       - run:
           # authenticate with the Docker Hub registry
           name: Dockerhub login
-          command: docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
+          command: echo $DOCKER_HUB_PASSWORD | docker login --username $DOCKER_HUB_USERNAME --password-stdin
       - run:
           # push the new Docker image to the Docker registry
           name: Dockerhub push
           command: |
             source $BASH_ENV
             docker push $DOCKERHUB_IMAGE_NAME
+  deploy:
+    docker: 
+      - image: antmounds/cd-builder
+    steps:
+      - checkout
+      - setup_remote_docker
+      - deploy:
+          name: Deploy
+          command: |
+            aws --version
+            docker --version
+            docker-compose --version
+            terraform --version
+            cd infrastructure/aws-ecs
+            terraform init -backend=true -input=false -lock=true -upgrade=true
+            terraform plan -input=false -lock=true -refresh=true
+            #terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_dev -var app_version_dev=${CI_PIPELINE_IID} 
           
 workflows:
   version: 2
   build_and_deploy:
     jobs:
       - build
+      - deploy:
+          filters:
+            branches:
+              only: develop
