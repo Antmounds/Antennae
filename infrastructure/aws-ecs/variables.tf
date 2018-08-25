@@ -6,7 +6,7 @@ variable "app_name" {
 
 variable "app_version_hot" {
   type        = "string"
-  default     = "latest"
+  default     = "dev"
   description = "Live version of the service/app"
 }
 
@@ -18,7 +18,7 @@ variable "app_version_hot_count" {
 
 variable "app_version_warm" {
   type        = "string"
-  default     = "warm"
+  default     = "dev"
   description = "Incoming version of the service/app"
 }
 
@@ -30,7 +30,7 @@ variable "app_version_warm_count" {
 
 variable "app_version_dev" {
   type        = "string"
-  default     = "55"
+  default     = "dev"
   description = "DEV version of the service/app"
 }
 
@@ -48,13 +48,13 @@ variable "app_version_cold" {
 
 variable "app_version_cold_count" {
   type        = "string"
-  default     = "2"
+  default     = "1"
   description = "How many containers of the old (cold) version to run"
 }
 
 variable "asg_desired_count" {
   type        = "string"
-  default     = "2"
+  default     = "1"
   description = "How many instances should back the cluster?"
 }
 

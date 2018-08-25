@@ -47,7 +47,8 @@ Template.collection.helpers({
   	let prints = [{}];
   	if(Prints.find().fetch().length > 0){
   		prints = Prints.find({}, { sort: { created: -1 } });
-  	}
+  	console.log(prints);
+  	};
   	return prints;
   },
 });

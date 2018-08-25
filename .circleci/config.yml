@@ -12,33 +12,55 @@ jobs:
       - run: 
           name: Build image
           command: |
-            IMAGE_NAME=$CIRCLE_PROJECT_REPONAME
-            docker build --rm -f docker/Dockerfile -t $IMAGE_NAME --build-arg BUILD=$CIRCLE_BUILD_NUM --build-arg METEOR_SETTINGS="$(cat src/tools/settings.json)" .
+            echo "export IMAGE_NAME=$(echo $CIRCLE_PROJECT_REPONAME | tr '[:upper:]' '[:lower:]')" >> $BASH_ENV
+            echo 'export DOCKERHUB_IMAGE_NAME=${DOCKER_HUB_USERNAME}/${IMAGE_NAME}' >> $BASH_ENV
+            source $BASH_ENV
+            docker build --rm -f docker/Dockerfile -t $IMAGE_NAME --build-arg BUILD=$CIRCLE_BUILD_NUM --build-arg BUILD-DATE="$(date --utc +%FT%T.%2NZ)" --build-arg METEOR_SETTINGS="$(cat src/tools/settings.json)" .
       - run:
           # tag Docker image for the Dockerhub registry
           name: Tag Dockerhub image
           command: |
-            IMAGE_NAME=$CIRCLE_PROJECT_REPONAME
-            DOCKERHUB_IMAGE_NAME=${DOCKER_HUB_USERNAME}/${IMAGE_NAME}
-            docker tag $IMAGE_NAME $DOCKERHUB_IMAGE_NAME:latest
+            source $BASH_ENV
+            docker tag $IMAGE_NAME $DOCKERHUB_IMAGE_NAME:dev
             docker tag $IMAGE_NAME $DOCKERHUB_IMAGE_NAME:$CIRCLE_BUILD_NUM
       - run:
           # authenticate with the Docker Hub registry
           name: Dockerhub login
-          command: docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
+          command: echo $DOCKER_HUB_PASSWORD | docker login --username $DOCKER_HUB_USERNAME --password-stdin
       - run:
           # push the new Docker image to the Docker registry
           name: Dockerhub push
           command: |
-            IMAGE_NAME=$CIRCLE_PROJECT_REPONAME
-            DOCKERHUB_IMAGE_NAME=${DOCKER_HUB_USERNAME}/${IMAGE_NAME}
-            docker push $DOCKERHUB_IMAGE_NAME
+            source $BASH_ENV
+            # Don't actually push. GitLab CI/CD handles repo pushes.
+            # docker push $DOCKERHUB_IMAGE_NAME
+  deploy:
+    docker:
+      - image: antmounds/cd-builder
+    steps:
+      - checkout
+      - setup_remote_docker
+      - deploy:
+          name: Deploy
+          command: |
+            aws --version
+            docker --version
+            docker-compose --version
+            terraform --version
+            cd infrastructure/aws-ecs
+            terraform init -backend=true -input=false -lock=true -upgrade=true
+            terraform plan -input=false -lock=true -refresh=true
+            # ONLY DEPLOY FROM GITLAB
+            # terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_dev -var app_version_dev=${CIRCLE_BUILD_NUM} 
           
 workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - build:
+      - build
+      - deploy:
+          requires:
+            - build
           filters:
             branches:
-              only: master
+              only: develop

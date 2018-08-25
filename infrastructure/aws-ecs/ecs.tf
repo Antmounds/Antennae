@@ -28,7 +28,7 @@ resource "aws_iam_role" "ecs_service_role" {
   "Statement": [
     {
       "Principal": {
-        "Service": "ecs.amazonaws.com"
+        "Service": "ecs-tasks.amazonaws.com"
       },
       "Action": "sts:AssumeRole",
       "Effect": "Allow",

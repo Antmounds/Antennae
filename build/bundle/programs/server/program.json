@@ -212,24 +212,6 @@
       "path": "packages/accounts-ui.js"
     },
     {
-      "node_modules": "npm/node_modules/meteor/npm-bcrypt/node_modules",
-      "path": "packages/npm-bcrypt.js"
-    },
-    {
-      "path": "packages/sha.js"
-    },
-    {
-      "path": "packages/srp.js"
-    },
-    {
-      "node_modules": "npm/node_modules/meteor/email/node_modules",
-      "path": "packages/email.js"
-    },
-    {
-      "sourceMap": "packages/accounts-password.js.map",
-      "path": "packages/accounts-password.js"
-    },
-    {
       "sourceMap": "packages/reactive-dict.js.map",
       "path": "packages/reactive-dict.js"
     },
@@ -299,6 +281,25 @@
     {
       "node_modules": "npm/node_modules/meteor/practicalmeteor_faker/node_modules",
       "path": "packages/practicalmeteor_faker.js"
+    },
+    {
+      "node_modules": "npm/node_modules/meteor/npm-bcrypt/node_modules",
+      "path": "packages/npm-bcrypt.js"
+    },
+    {
+      "path": "packages/sha.js"
+    },
+    {
+      "sourceMap": "packages/srp.js.map",
+      "path": "packages/srp.js"
+    },
+    {
+      "node_modules": "npm/node_modules/meteor/email/node_modules",
+      "path": "packages/email.js"
+    },
+    {
+      "sourceMap": "packages/accounts-password.js.map",
+      "path": "packages/accounts-password.js"
     },
     {
       "path": "packages/livedata.js"

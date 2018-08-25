@@ -1,11 +1,13 @@
 # Antennae
-[![pipeline status](https://gitlab.com/Antmounds/cd-builder/badges/master/pipeline.svg)](https://gitlab.com/Antmounds/cd-builder/commits/master) [![CircleCI](https://circleci.com/bb/Antmounds/antennae.svg?style=svg)](https://circleci.com/bb/Antmounds/antennae) [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0) [![Discord Chat](https://img.shields.io/discord/299962468581638144.svg?logo=discord)](https://discord.gg/dw3Dam2)
+[![pipeline status](https://gitlab.com/Antmounds/Antennae/badges/develop/pipeline.svg)](https://gitlab.com/Antmounds/Antennae/commits/develop) [![CircleCI](https://circleci.com/gh/Antmounds/antennae.svg?style=svg)](https://circleci.com/gh/Antmounds/antennae) [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0) [![Discord Chat](https://img.shields.io/discord/299962468581638144.svg?logo=discord)](https://discord.gg/dw3Dam2)
 
 Out-the-box face recognition web app for desktop and mobile. *Trust but verify*
 
 
 ## Introduction
-Antennae is a free and open-source face recognition node.js app using [AWS Rekognition](https://aws.amazon.com/rekognition/) to detect and match faces. The app allows you to create collections of 'face prints' and later search an image across any number of selected databases. Each search will also return detected emotions, gender, estimated age range, and other facial features such as the presence of glasses, face hair and smiles. Use cases include allowing you to easily and quickly find missing persons, helping the visually impaired, verifying dates and rendevouz, recognizing celebrities, victim identificaion, and so much more! 
+Antennae is a free and open-source face recognition node.js app using [AWS Rekognition](https://aws.amazon.com/rekognition/) to detect and match faces. The app allows you to create collections of 'face prints' and later search an image across any number of selected databases. Each search will also return detected emotions, gender, estimated age range, and other facial features such as the presence of glasses, face hair and smiles. Use cases include allowing you to easily and quickly find missing persons, helping the visually impaired, verifying dates and rendevouz, recognizing celebrities, victim identificaion, and so much more!
+
+Check-in stand mode allows you to set this up for point-of-sale, self-service checkin/out, vip recognition, loyalty rewards programs and greet returning guests by name. Simply by being recognized, allow guests to enter queues, pre-order, confirm options and view current status from their Antennae app. The dashboard shows all guests and where they were recognized. 
 
 This repo features infrastructure code that will allow you to self-host the application using a containerized, highly available, self-repairing, military grade, secure cloud environment. For a managed SaaS solution check out [Antennae Cloud](https://getantennae.com/cloud), featuring private and pre-populated public face print databases, teams, white-label and 24/7 support options.
 
@@ -79,18 +81,24 @@ This will create the following resources:
 ## Contributing
 Pull requests, forks and stars are mucho appreciated and encouraged. See [CONTRIBUTING.md](https://bitbucket.org/Antmounds/antennae.git#CONTRIBUTING) for how to get involved in this project.
 
-<a href="https://www.patreon.com/antmounds">
-	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
-</a> 
+- #### Get official Antmounds gear!
+	<a href="https://shop.spreadshirt.com/Antmounds">
+		<img src="https://image.spreadshirtmedia.com/content/asset/sprd-logo_horizontal.svg" width="160">
+	</a>
 
-#### Get in touch
-* :speaking_head: Join the Antmounds [discord](https://discord.gg/dw3Dam2) server for more discussion on this project.
+- #### Become a Supporter!
+	<a href="https://www.patreon.com/antmounds">
+		<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
+	</a> 
+
+## Get in touch
+* :speaking_head: Join the Antmounds [discord](https://discord.gg/VtFkvSv) server for more discussion on this project.
 * :tv: Watch LIVE development of this app on [YouTube](https://www.youtube.com/Antmounds), [Twitch.tv](https://twitch.tv/Antmounds) and [LiveEdu.tv](https://liveedu.tv/Antmounds)
-* :clipboard: Use the [issue tracker](https://bitbucket.org/Antmounds/antennae/issues) for bugs, feature requests and enhancements
+* :clipboard: Use the [issue tracker](https://gitlab.com/Antmounds/Antennae/issues) for bugs, feature requests and enhancements
 * :moneybag: For serious business inquiries contact [business@antmounds.com](business@antmounds.com)
 
 ## Authors
-* [Nick@antmounds](https://bitbucket.org/Antmounds) - *initial development*
+* [Nick@antmounds](https://gitlab.com/Antmounds) - *initial development*
 
 ## License
 Copyright (C) 2018 Antmounds

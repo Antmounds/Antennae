@@ -3,8 +3,8 @@
     "name": "standard-minifier-js",
     "version": "2.3.4"
   },
-  "totalMinifiedBytes": 1806015,
-  "totalMinifiedGzipBytes": 525218,
+  "totalMinifiedBytes": 1814267,
+  "totalMinifiedGzipBytes": 526040,
   "minifiedBytesByPackage": {
     "packages/meteor.js": 9433,
     "packages/meteor-base.js": 31,
@@ -460,12 +460,12 @@
     "packages/ecmascript.js": 30,
     "packages/ecmascript-runtime.js": 38,
     "packages/babel-runtime.js": [
-      1484,
+      2076,
       {
         "node_modules": {
           "meteor": {
             "babel-runtime": {
-              "babel-runtime.js": 604,
+              "babel-runtime.js": 1196,
               "node_modules": {
                 "meteor-babel-helpers": {
                   "package.json": 80,
@@ -572,12 +572,12 @@
       }
     ],
     "packages/ecmascript-runtime-client.js": [
-      2218,
+      2433,
       {
         "node_modules": {
           "meteor": {
             "ecmascript-runtime-client": {
-              "modern.js": 468,
+              "modern.js": 683,
               "legacy.js": 1344
             }
           }
@@ -864,7 +864,7 @@
     "packages/observe-sequence.js": 2928,
     "packages/deps.js": 111,
     "packages/htmljs.js": 10030,
-    "packages/blaze.js": 38688,
+    "packages/blaze.js": 39111,
     "packages/accounts-base.js": [
       13691,
       {
@@ -887,21 +887,33 @@
     "packages/templating-runtime.js": 3045,
     "packages/templating.js": 103,
     "packages/reactive-dict.js": [
-      4599,
+      4736,
       {
         "node_modules": {
           "meteor": {
             "reactive-dict": {
-              "migration.js": 781,
-              "reactive-dict.js": 3168
+              "migration.js": 821,
+              "reactive-dict.js": 3288
             }
           }
         }
       }
     ],
-    "packages/session.js": 264,
+    "packages/session.js": 241,
     "packages/sha.js": 2521,
-    "packages/srp.js": 18955,
+    "packages/srp.js": [
+      19422,
+      {
+        "node_modules": {
+          "meteor": {
+            "srp": {
+              "biginteger.js": 17596,
+              "srp.js": 1198
+            }
+          }
+        }
+      }
+    ],
     "packages/accounts-password.js": [
       2888,
       {
@@ -1020,7 +1032,7 @@
     ],
     "app/global-imports.js": 1415,
     "app/app.js": [
-      55686,
+      62127,
       {
         "imports": {
           "ui": {
@@ -1036,26 +1048,26 @@
               "checkin.html": 77,
               "template.checkin.js": 7733,
               "collection.html": 80,
-              "template.collection.js": 2574,
+              "template.collection.js": 2644,
               "collections.html": 81,
               "template.collections.js": 3861,
               "history.html": 77,
-              "template.history.js": 2581,
+              "template.history.js": 2784,
               "home.html": 74,
-              "template.home.js": 4774,
+              "template.home.js": 4018,
               "login.html": 75,
               "template.login.js": 144,
               "search.html": 76,
-              "template.search.js": 148,
+              "template.search.js": 5044,
               "settings.html": 78,
               "template.settings.js": 1234,
               "checkin.js": 1284,
-              "collection.js": 3802,
+              "collection.js": 3817,
               "collections.js": 2047,
-              "history.js": 777,
+              "history.js": 1383,
               "home.js": 1794,
               "login.js": 478,
-              "search.js": 482,
+              "search.js": 1859,
               "settings.js": 490
             }
           },
@@ -1064,15 +1076,15 @@
               "collections.js": 1144
             },
             "prints": {
-              "prints.js": 1374
+              "prints.js": 1387
             },
             "searches": {
-              "searches.js": 1328
+              "searches.js": 1348
             }
           },
           "startup": {
             "client": {
-              "index.js": 1673,
+              "index.js": 1670,
               "routes.js": 2035
             },
             "accounts-config.js": 486

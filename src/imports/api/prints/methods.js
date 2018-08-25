@@ -10,16 +10,36 @@ var rekognition = new AWS.Rekognition();
 Meteor.methods({
 	"print.save"(newPrint){
 		newPrint.print_adder = this.userId || "null";
-		newPrint.print_collection = Collections.findOne(newPrint.collection) || "people";
+		newPrint.print_collection = Collections.findOne(newPrint.collection).collection_id || "people";
 		newPrint.print_name = newPrint.name;
 		newPrint.print_img = newPrint.img;
 		// console.log(newPrint);
-		Prints.simpleSchema().clean(newPrint);
 		if(!newPrint){
 			throw new Meteor.Error('invalid-print','submitted print is invalid!');
 		};
-		let print = Prints.insert(newPrint);
-		return print;
+		Prints.simpleSchema().clean(newPrint);
+        // index a face into a collection
+        let faceParams = {
+          CollectionId: newPrint.print_collection,
+          ExternalImageId: newPrint.print_name,
+		  Image: { 
+			"Bytes": new Buffer.from(newPrint.print_img.split(",")[1], "base64"),
+		  },
+          DetectionAttributes: ["ALL"]
+        };
+        let faceRequest = rekognition.indexFaces(faceParams);
+        let promise = faceRequest.promise();
+        let indexFace = promise.then(result => {
+        	console.log(result);
+        	newPrint.print_id = result.FaceRecords[0].Face.FaceId;
+			let print = Prints.insert(newPrint);
+        	console.log(`inserted: ${print}`);
+        	return result;
+        }).catch(error => {
+        	throw new Meteor.Error(error.code, error.message, error);
+        	return error;
+        });
+		return indexFace;
 	},
 
 	"print.delete"(printId){

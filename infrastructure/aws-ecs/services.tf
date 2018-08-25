@@ -64,13 +64,11 @@ data "template_file" "container_definition_hot" {
 resource "aws_ecs_task_definition" "app_task_hot" {
   family                   = "${var.app_name}-hot"
   container_definitions    = "${data.template_file.container_definition_hot.rendered}"
-  cpu                      = 200
-  memory                   = 200
   network_mode             = "bridge"
   requires_compatibilities = ["${var.launch_type}"]
 
   #execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_task_role.arn}"
+  task_role_arn = "${aws_iam_role.ecs_task_role.arn}"
 }
 
 resource "aws_ecs_service" "app_service_hot" {
@@ -160,13 +158,11 @@ data "template_file" "container_definition_warm" {
 resource "aws_ecs_task_definition" "app_task_warm" {
   family                   = "${var.app_name}-warm"
   container_definitions    = "${data.template_file.container_definition_warm.rendered}"
-  cpu                      = 200
-  memory                   = 200
   network_mode             = "bridge"
   requires_compatibilities = ["${var.launch_type}"]
 
   #execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_task_role.arn}"
+  task_role_arn = "${aws_iam_role.ecs_task_role.arn}"
 }
 
 resource "aws_ecs_service" "app_service_warm" {
@@ -204,7 +200,7 @@ resource "aws_alb_target_group" "app_target_group_dev" {
   port                 = 3000
   protocol             = "HTTP"
   vpc_id               = "${aws_vpc.main.id}"
-  target_type          = "instance"
+  target_type          = "ip"
   deregistration_delay = 30
 
   lifecycle {
@@ -251,13 +247,13 @@ data "template_file" "container_definition_dev" {
 resource "aws_ecs_task_definition" "app_task_dev" {
   family                   = "${var.app_name}-dev"
   container_definitions    = "${data.template_file.container_definition_dev.rendered}"
-  cpu                      = 200
-  memory                   = 200
-  network_mode             = "bridge"
-  requires_compatibilities = ["${var.launch_type}"]
+  network_mode             = "awsvpc"
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = 256
+  memory                   = 512
 
-  #execution_role_arn       = "${aws_iam_role.ecs_execution_role.arn}"
-  task_role_arn            = "${aws_iam_role.ecs_task_role.arn}"
+  execution_role_arn = "${aws_iam_role.ecs_service_role.arn}"
+  task_role_arn      = "${aws_iam_role.ecs_task_role.arn}"
 }
 
 resource "aws_ecs_service" "app_service_dev" {
@@ -265,7 +261,7 @@ resource "aws_ecs_service" "app_service_dev" {
   cluster                            = "${aws_ecs_cluster.app_cluster.arn}"
   task_definition                    = "${aws_ecs_task_definition.app_task_dev.arn}"
   desired_count                      = "${var.app_version_dev_count}"
-  launch_type                        = "${var.launch_type}"
+  launch_type                        = "FARGATE"
   deployment_minimum_healthy_percent = 50
   deployment_maximum_percent         = 200
   health_check_grace_period_seconds  = 60
@@ -276,6 +272,11 @@ resource "aws_ecs_service" "app_service_dev" {
     target_group_arn = "${aws_alb_target_group.app_target_group_dev.arn}"
     container_name   = "${var.app_name}-dev"
     container_port   = "3000"
+  }
+  network_configuration {
+    security_groups  = ["${aws_security_group.web_app_sg.id}"]
+    subnets          = ["${aws_subnet.public.*.id}"]
+    assign_public_ip = true
   }
   depends_on = [
     "aws_iam_role_policy.ecs",

@@ -1,9 +1,11 @@
 #!/bin/bash
 
 
+IMAGE_URI=166964003196.dkr.ecr.us-east-1.amazonaws.com/antennae
+
 # Build meteor app
 cd src/
-meteor npm install --production --save bcrypt fibers
+#meteor npm install --production --save bcrypt fibers
 meteor build --directory ../build
 cd ../
 #(cd build/bundle/programs/server && npm install --production)
@@ -12,8 +14,13 @@ cd ../
 git clean -Xdf build
 
 # build the Docker image (this will use the Dockerfile in the root of the repo)
-docker build --rm -f docker/Dockerfile -t antennae --build-arg BUILD="dev-$(date '+%Y-%m-%d_%H:%M:%S')" --build-arg METEOR_SETTINGS="$(cat src/tools/settings.json)" .
+docker build --rm -f docker/Dockerfile -t $IMAGE_URI:dev --build-arg BUILD="dev-$(date '+%Y-%m-%d_%H:%M:%S')" --build-arg METEOR_SETTINGS="$(cat src/tools/settings.json)" .
 
-docker image prune -f
+# login to AWS ECR
+$(aws ecr get-login --no-include-email --region us-east-1)
+
+docker push $IMAGE_URI:dev
+
+echo 'build & push successful'
 
 exit 0;
