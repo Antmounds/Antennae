@@ -18,6 +18,7 @@ variables:
   IMAGE_NAME: antennae
   AWS_IMAGE_URI: 166964003196.dkr.ecr.us-east-1.amazonaws.com/${IMAGE_NAME}
   DOCKERHUB_IMAGE_NAME: ${USERNAME}/${IMAGE_NAME}
+  QUAY_IMAGE_NAME: quay.io/${USERNAME}/${IMAGE_NAME}
 
 stages:
   - build
