@@ -7,8 +7,6 @@
 # 
 .job_template: &deploy_defaults  # Hidden key that defines an anchor named 'build_defaults'
   image: antmounds/cd-builder
-  services:
-    - docker:dind
 
 variables:
   # When using dind, it's wise to use the overlayfs driver for improved performance.
