@@ -15,7 +15,7 @@ jobs:
             echo "export IMAGE_NAME=$(echo $CIRCLE_PROJECT_REPONAME | tr '[:upper:]' '[:lower:]')" >> $BASH_ENV
             echo 'export DOCKERHUB_IMAGE_NAME=${DOCKER_HUB_USERNAME}/${IMAGE_NAME}' >> $BASH_ENV
             source $BASH_ENV
-            docker build --rm -f docker/Dockerfile -t $IMAGE_NAME --build-arg BUILD=$CIRCLE_BUILD_NUM --build-arg METEOR_SETTINGS="$(cat src/tools/settings.json)" .
+            docker build --rm -f docker/Dockerfile -t $IMAGE_NAME --build-arg BUILD=$CIRCLE_BUILD_NUM --build-arg BUILD-DATE="$(date --utc +%FT%T.%2NZ)" --build-arg METEOR_SETTINGS="$(cat src/tools/settings.json)" .
       - run:
           # tag Docker image for the Dockerhub registry
           name: Tag Dockerhub image
@@ -32,7 +32,8 @@ jobs:
           name: Dockerhub push
           command: |
             source $BASH_ENV
-            docker push $DOCKERHUB_IMAGE_NAME
+            # Don't actually push. GitLab CI/CD handles repo pushes.
+            # docker push $DOCKERHUB_IMAGE_NAME
   deploy:
     docker:
       - image: antmounds/cd-builder
@@ -49,7 +50,8 @@ jobs:
             cd infrastructure/aws-ecs
             terraform init -backend=true -input=false -lock=true -upgrade=true
             terraform plan -input=false -lock=true -refresh=true
-            terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_dev -var app_version_dev=${CIRCLE_BUILD_NUM} 
+            # ONLY DEPLOY FROM GITLAB
+            # terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_dev -var app_version_dev=${CIRCLE_BUILD_NUM} 
           
 workflows:
   version: 2

@@ -1,7 +1,12 @@
 # Antennae GitLab configuration
 # 
 .job_template: &build_defaults  # Hidden key that defines an anchor named 'build_defaults'
-  image: antmounds/cd-builder # docker:stable
+  image: docker:stable-git
+  services:
+    - docker:dind
+# 
+.job_template: &deploy_defaults  # Hidden key that defines an anchor named 'build_defaults'
+  image: antmounds/cd-builder
   services:
     - docker:dind
 
@@ -13,6 +18,7 @@ variables:
   IMAGE_NAME: antennae
   AWS_IMAGE_URI: 166964003196.dkr.ecr.us-east-1.amazonaws.com/${IMAGE_NAME}
   DOCKERHUB_IMAGE_NAME: ${USERNAME}/${IMAGE_NAME}
+  QUAY_IMAGE_NAME: quay.io/${USERNAME}/${IMAGE_NAME}
 
 stages:
   - build
@@ -32,14 +38,14 @@ build_app:
     echo "Building image..."
     DEV=$(echo $GITLAB_USER_NAME | tr '[:upper:]' '[:lower:]')
     docker pull $CI_REGISTRY_IMAGE/dev:$DEV || true
-    docker build --rm -f docker/Dockerfile --cache-from ${CI_REGISTRY_IMAGE}/dev:$DEV -t $CI_REGISTRY_IMAGE -t $CI_REGISTRY_IMAGE/dev --build-arg BUILD=$CI_PIPELINE_IID --build-arg METEOR_SETTINGS="$(cat src/tools/settings.json)" .
+    docker build --rm -f docker/Dockerfile --cache-from ${CI_REGISTRY_IMAGE}/dev:$DEV -t $CI_REGISTRY_IMAGE -t $CI_REGISTRY_IMAGE/dev --build-arg BUILD=$CI_PIPELINE_IID --build-arg BUILD_DATE="$(date --utc +%FT%TZ)" --build-arg METEOR_SETTINGS="$(cat src/tools/settings.json)" --build-arg VCS_REF="$(git rev-parse --short HEAD)" .
     docker save $CI_REGISTRY_IMAGE -o image.tar
     docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
     docker tag $CI_REGISTRY_IMAGE/dev $CI_REGISTRY_IMAGE/dev:$DEV
     docker push $CI_REGISTRY_IMAGE/dev
 
 push_aws:
-  <<: *build_defaults
+  <<: *deploy_defaults
   stage: push
   cache:
     paths: 
@@ -51,9 +57,9 @@ push_aws:
   before_script:
     # authenticate with the AWS ECR registry
     - $(aws ecr get-login --no-include-email --region us-east-1)
+    - docker load -i image.tar
   script: |
     echo "Pushing app to AWS Elastic Container Registry"
-    docker load -i image.tar || true
     docker tag $CI_REGISTRY_IMAGE $AWS_IMAGE_URI
     docker tag $AWS_IMAGE_URI $AWS_IMAGE_URI:$CI_PIPELINE_IID
     docker push $AWS_IMAGE_URI
@@ -63,7 +69,7 @@ push_gitlab:
   stage: push
   before_script:
     - DEV=$(echo $GITLAB_USER_NAME | tr '[:upper:]' '[:lower:]')
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
+    - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
     - docker pull $CI_REGISTRY_IMAGE/dev:$DEV || true
   script: |
     echo "Pushing app to Gitlab registry"
@@ -79,7 +85,7 @@ push_dockerhub:
       - image.tar
     policy: pull
   before_script:
-    - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+    - echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USERNAME --password-stdin
     - docker load -i image.tar || true
   script: 
     - echo "Pushing app to Dockerhub registry"
@@ -88,9 +94,29 @@ push_dockerhub:
     - docker push $DOCKERHUB_IMAGE_NAME
   only:
   - master
+  - develop
+  - infrastructure
+
+push_quay:
+  <<: *build_defaults
+  stage: push
+  cache:
+    paths: 
+      - image.tar
+    policy: pull
+  before_script:
+    # - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
+    # - docker pull $CI_REGISTRY_IMAGE || true
+    - echo $QUAY_PASSWORD | docker login -u $QUAY_USERNAME --password-stdin quay.io
+    - docker load -i image.tar || true
+  script: |
+    echo "Pushing image to Quay registry..."
+    docker tag $CI_REGISTRY_IMAGE $QUAY_IMAGE_NAME
+    docker tag $QUAY_IMAGE_NAME $QUAY_IMAGE_NAME:$CI_PIPELINE_IID
+    docker push $QUAY_IMAGE_NAME
 
 deploy_dev:
-  image: antmounds/cd-builder
+  <<: *deploy_defaults
   stage: deploy
   environment:
     name: dev
@@ -108,7 +134,7 @@ deploy_dev:
     - develop
 
 deploy_new:
-  image: antmounds/cd-builder
+  <<: *deploy_defaults
   stage: deploy
   environment:
     name: staging
@@ -126,7 +152,7 @@ deploy_new:
     - master
 
 deploy_app:
-  image: antmounds/cd-builder
+  <<: *deploy_defaults
   stage: deploy
   environment:
     name: production
@@ -145,7 +171,7 @@ deploy_app:
     - master
 
 deploy_infrastructure:
-  image: antmounds/cd-builder
+  <<: *deploy_defaults
   stage: deploy
   variables:
     AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID

@@ -1,6 +1,6 @@
 FROM ubuntu
 
-LABEL app="Antennae" license="GPLv3" maintainer="gitlab.com/Antmounds" repo="https://gitlab.com/Antmounds/Antennae"
+LABEL app="Antennae" license="GPLv3" maintainer="gitlab.com/Antmounds" org.label-schema.build-date=$BUILD-DATE org.label-schema.name="Antennae" org.label-schema.description="Free, open-source, mobile-ready, face-recognition, check-in and loyalty app" org.label-schema.url="http://getAntennae.com" org.label-schema.vcs-url="https://gitlab.com/Antmounds/Antennae" org.label-schema.vendor="Antmounds" org.label-schema.version="0.9.0" org.label-schema.schema-version="1.0"
 
 RUN apt-get update && apt-get install -y \
         apt-transport-https \
