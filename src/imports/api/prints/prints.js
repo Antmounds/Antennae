@@ -45,12 +45,13 @@ Prints.Schema = new SimpleSchema({
     type: String,
     label: "Print img",
     optional: true,
-    defaultValue: "img/face-id-100.png"
+    defaultValue: "/img/face-id-100.png"
   },
   "print_details": {
-    type: String,
+    type: Object,
     label: "Print details",
-    optional: true
+    optional: true,
+    blackbox: true
   },
   "print_adder": {
     type: String,

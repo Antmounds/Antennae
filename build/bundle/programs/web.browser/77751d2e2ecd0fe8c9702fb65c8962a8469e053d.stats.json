@@ -3,8 +3,8 @@
     "name": "standard-minifier-js",
     "version": "2.3.4"
   },
-  "totalMinifiedBytes": 1657966,
-  "totalMinifiedGzipBytes": 484333,
+  "totalMinifiedBytes": 1666111,
+  "totalMinifiedGzipBytes": 485142,
   "minifiedBytesByPackage": {
     "packages/meteor.js": 9433,
     "packages/meteor-base.js": 31,
@@ -80,7 +80,7 @@
           },
           "core-js": {
             "modules": {
-              "es6.object.is.js": 73,
+              "es7.object.get-own-property-descriptors.js": 279,
               "_export.js": 530,
               "_global.js": 188,
               "_core.js": 80,
@@ -99,6 +99,25 @@
               "_uid.js": 129,
               "_ctx.js": 303,
               "_a-function.js": 113,
+              "_own-keys.js": 196,
+              "_object-gopn.js": 163,
+              "_object-keys-internal.js": 261,
+              "_to-iobject.js": 94,
+              "_iobject.js": 143,
+              "_cof.js": 86,
+              "_defined.js": 105,
+              "_array-includes.js": 291,
+              "_to-length.js": 113,
+              "_to-integer.js": 102,
+              "_to-absolute-index.js": 121,
+              "_shared-key.js": 107,
+              "_shared.js": 124,
+              "_enum-bug-keys.js": 133,
+              "_object-gops.js": 47,
+              "_object-gopd.js": 313,
+              "_object-pie.js": 42,
+              "_create-property.js": 134,
+              "es6.object.is.js": 73,
               "_same-value.js": 94,
               "es6.function.name.js": 215,
               "es6.number.is-finite.js": 132,
@@ -106,13 +125,8 @@
               "es7.array.flatten.js": 336,
               "_flatten-into-array.js": 409,
               "_is-array.js": 94,
-              "_cof.js": 86,
-              "_to-length.js": 113,
-              "_to-integer.js": 102,
               "_wks.js": 190,
-              "_shared.js": 124,
               "_to-object.js": 81,
-              "_defined.js": 105,
               "_array-species-create.js": 101,
               "_array-species-constructor.js": 257,
               "_add-to-unscopables.js": 136,
@@ -120,21 +134,7 @@
               "es7.object.values.js": 115,
               "_object-to-array.js": 231,
               "_object-keys.js": 127,
-              "_object-keys-internal.js": 261,
-              "_to-iobject.js": 94,
-              "_iobject.js": 143,
-              "_array-includes.js": 291,
-              "_to-absolute-index.js": 121,
-              "_shared-key.js": 107,
-              "_enum-bug-keys.js": 133,
-              "_object-pie.js": 42,
               "es7.object.entries.js": 116,
-              "es7.object.get-own-property-descriptors.js": 279,
-              "_own-keys.js": 196,
-              "_object-gopn.js": 163,
-              "_object-gops.js": 47,
-              "_object-gopd.js": 313,
-              "_create-property.js": 134,
               "es7.string.pad-start.js": 237,
               "_string-pad.js": 289,
               "_string-repeat.js": 237,
@@ -150,12 +150,12 @@
     "packages/ecmascript.js": 30,
     "packages/ecmascript-runtime.js": 38,
     "packages/babel-runtime.js": [
-      1484,
+      2076,
       {
         "node_modules": {
           "meteor": {
             "babel-runtime": {
-              "babel-runtime.js": 604,
+              "babel-runtime.js": 1196,
               "node_modules": {
                 "meteor-babel-helpers": {
                   "package.json": 80,
@@ -230,12 +230,12 @@
     ],
     "packages/es5-shim.js": 28,
     "packages/ecmascript-runtime-client.js": [
-      832,
+      1047,
       {
         "node_modules": {
           "meteor": {
             "ecmascript-runtime-client": {
-              "modern.js": 468
+              "modern.js": 683
             }
           }
         }
@@ -521,7 +521,7 @@
     "packages/observe-sequence.js": 2928,
     "packages/deps.js": 111,
     "packages/htmljs.js": 10030,
-    "packages/blaze.js": 38688,
+    "packages/blaze.js": 39111,
     "packages/accounts-base.js": [
       12554,
       {
@@ -544,21 +544,33 @@
     "packages/templating-runtime.js": 3045,
     "packages/templating.js": 103,
     "packages/reactive-dict.js": [
-      3799,
+      3924,
       {
         "node_modules": {
           "meteor": {
             "reactive-dict": {
-              "migration.js": 736,
-              "reactive-dict.js": 2543
+              "migration.js": 778,
+              "reactive-dict.js": 2649
             }
           }
         }
       }
     ],
-    "packages/session.js": 264,
+    "packages/session.js": 241,
     "packages/sha.js": 2521,
-    "packages/srp.js": 18955,
+    "packages/srp.js": [
+      19306,
+      {
+        "node_modules": {
+          "meteor": {
+            "srp": {
+              "biginteger.js": 17596,
+              "srp.js": 1214
+            }
+          }
+        }
+      }
+    ],
     "packages/accounts-password.js": [
       2756,
       {
@@ -677,7 +689,7 @@
     ],
     "app/global-imports.js": 1274,
     "app/app.js": [
-      54643,
+      61105,
       {
         "imports": {
           "ui": {
@@ -693,26 +705,26 @@
               "checkin.html": 77,
               "template.checkin.js": 7733,
               "collection.html": 80,
-              "template.collection.js": 2574,
+              "template.collection.js": 2644,
               "collections.html": 81,
               "template.collections.js": 3861,
               "history.html": 77,
-              "template.history.js": 2581,
+              "template.history.js": 2784,
               "home.html": 74,
-              "template.home.js": 4774,
+              "template.home.js": 4018,
               "login.html": 75,
               "template.login.js": 144,
               "search.html": 76,
-              "template.search.js": 148,
+              "template.search.js": 5044,
               "settings.html": 78,
               "template.settings.js": 1234,
               "checkin.js": 1216,
-              "collection.js": 3375,
+              "collection.js": 3390,
               "collections.js": 1967,
-              "history.js": 745,
+              "history.js": 1319,
               "home.js": 1842,
               "login.js": 464,
-              "search.js": 468,
+              "search.js": 1898,
               "settings.js": 476
             }
           },
@@ -721,15 +733,15 @@
               "collections.js": 1071
             },
             "prints": {
-              "prints.js": 1301
+              "prints.js": 1314
             },
             "searches": {
-              "searches.js": 1249
+              "searches.js": 1269
             }
           },
           "startup": {
             "client": {
-              "index.js": 1649,
+              "index.js": 1646,
               "routes.js": 1945
             },
             "accounts-config.js": 446

@@ -9,7 +9,7 @@ import './search.html';
 
 Template.search.created = function(){
 	console.log(`${this.view.name} created`);
-	var self = this;    
+	$('.tooltipped').tooltip({enterDelay: 10, inDuration: 0});
 	//self.curSearches = new ReactiveDict(null);
 
 	// self.autorun(() => {
@@ -24,11 +24,56 @@ Template.search.rendered = function(){
 };
 
 Template.search.helpers({
+  search() {
+    let s = Session.get('search');//Template.instance().search.get();
+    // console.log(s);
+    return s;
+  },
+});
 
-  //searches(){
-  	//let searches = Searches.find({}, { sort: { created: -1 } });
-  	// console.log(searches.fetch());
-  	//Tracker.onInvalidate(() => console.trace());
-  	//return searches;
-  //},
+Template.search.events({
+  'change #newPost'(event, instance) {
+  	event.preventDefault();
+  	if(event.target.files && event.target.files[0]){
+      if(event.target.files[0].size > 5000000){
+        alert("image too large! Max size: 5MB");
+        // console.log(event.target.files);
+        return false;
+      };
+  		let reader = new FileReader();
+
+  		reader.onload = function(e) {
+        //$("#postImg").attr('src', e.target.result);
+        //Session.set("pic", e.target.result);
+        let data = e.target.result;
+        //console.log(data);
+        Meteor.call('search.face', data, (error, result) => {
+          if(error){
+            let e = JSON.stringify(error, null, 4);
+            console.log(e);
+            alert(error.message);
+          }else{
+            console.log(result);
+            let search = {
+              img: data,
+              tags: result[1] ? result[1].Labels : false,//["Mountain", "lake", "forest", "stream"]
+              faceDetails: result[2] && result[2].FaceDetails[0] ? `${result[2].FaceDetails[0].AgeRange.Low}-${result[2].FaceDetails[0].AgeRange.High} yr old ${(result[2].FaceDetails[0].Beard.Value ? 'bearded ' : '')}${result[2].FaceDetails[0].Gender.Value} ${(result[2].FaceDetails[0].Mustache.Value ? 'with mustache ' : '')}who appears ${result[2].FaceDetails[0].Emotions[0].Type}. They are ${(result[2].FaceDetails[0].Eyeglasses.Value||result[2].FaceDetails[0].Eyeglasses.Value ? '' : 'not ')}wearing ${(result[2].FaceDetails[0].Eyeglasses.Value||result[2].FaceDetails[0].Eyeglasses.Value ? (result[2].FaceDetails[0].Eyeglasses.Value ? 'eye' : 'sun') : '')}glasses and are ${(result[2].FaceDetails[0].Smile.Value ? '' : 'not ')}smiling with their mouth ${(result[2].FaceDetails[0].MouthOpen.Value ? 'open' : 'closed')} and eyes ${(result[2].FaceDetails[0].EyesOpen.Value ? 'open' : 'closed')}.` : false,
+              person: result[3],
+              celebrity: result[4] && result[4].CelebrityFaces[0] ? result[4].CelebrityFaces[0] : false,
+              displayName: result[3] && result[3].FaceMatches[0] && result[4] && result[4].CelebrityFaces[0] ? `${result[3].FaceMatches[0].Face.ExternalImageId} (result[4].CelebrityFaces[0].Name)` : (result[3] && result[3].FaceMatches[0] ? result[3].FaceMatches[0].Face.ExternalImageId : false) || (result[4] && result[4].CelebrityFaces[0] ? result[4].CelebrityFaces[0].Name : false) || false
+            };
+            console.log(search);
+            //let m = instance.search.get();
+            //m.unshift(moment);
+            //sessionStorage.setItem('moment', JSON.stringify(m));
+            //instance.search.set(search);
+            Session.set('search', search);
+            //localTimeline.insert(moment);
+          }
+        });
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
+  	}
+  },
 });

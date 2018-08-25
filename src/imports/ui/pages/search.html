@@ -1,5 +1,75 @@
 <template name="search">
+	<form id="newPost" class="newPost">
+		<div class="fixed-action-btn">
+			<a class="btn-floating btn-large green" onClick="selectPic.click()">
+				<i class="large material-icons">add_a_photo</i>
+				<input id="selectPic" type="file" accept="image/*" capture="user">
+		  	</a>
+		  <!-- <ul>
+		    <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+		    <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+		    <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+		    <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+		  </ul> -->
+		</div>
+	</form>
+	{{#unless search}}
 	<h1>Search</h1>
+	<p>Take or upload a picture for immediate face recognition.</p>
+	{{else}}
+	<div class="row">
+		<div class="col s12 m6">
+		  <div class="card">
+		  	{{#if search.faceDetails}}
+	          <div class="valign-wrapper">
+	            <div class="col s2 m2">
+	            	<i class="medium material-icons">account_circle</i>
+	              <!-- <img src="img/avatar5.png" alt="" width="50px" height="50px" class="circle responsive-img"> --> <!-- notice the "circle" class -->
+	            </div>
+	            <div class="col s10 m10">
+	              <span class="black-text">
+	                {{search.faceDetails}}
+	              </span>
+	            </div>
+	          </div>
+		  	{{/if}}
+		    <div class="card-image">
+		      <img id="postImg" src="{{search.img}}" width="auto" height="auto" class="" alt="search image">
+		      <span class="card-title">{{#each search.tags}}<div class="chip tooltipped" title="{{this.Confidence}}" data-position="top" data-tooltip="{{this.Confidence}}">{{this.Name}}</div> {{/each}}</span>
+		    </div>
+		    <!-- <div class="card-content">
+		      <p>I am a very simple card. I am good at containing small bits of information.
+		      I am convenient because I require little markup to use effectively.</p>
+		    </div> -->
+		    <!-- <div class="card-action">
+		      <a href="#">Like</a>
+		      <a href="#">Report</a>
+		    </div> -->
+		  </div>
+		</div>
+
+
+  <div class="col s12 m6">
+    <div class="card horizontal">
+      <div class="card-image">
+        <img class="responsive-img" src="{{search.img}}" width="100px" style="max-width: 100px;" alt="search image">
+        <img class="responsive-img" src="{{search.img}}" width="100px" style="max-width: 100px;" alt="search image">
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+        	<span class="right" title="{{search.created}}">{{timeAgo search.created}}</span>
+          <p>{{#if search.displayName}}<span class="green-text">{{search.displayName}}</span>{{else}}<span class="red-text">UNKNOWN</span>{{/if}}<br />{{search.faceDetails}}</p>
+          <div class="chip tooltipped" title="{{this.Confidence}}" data-position="top" data-tooltip="{{this.Confidence}}">Social Media</div>
+        </div>
+        <div class="card-action">
+          <a href="#">Save face</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+	</div>
+	{{/unless}}
 
 
 

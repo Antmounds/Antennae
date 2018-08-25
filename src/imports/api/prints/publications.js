@@ -3,12 +3,15 @@ import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import { Prints } from './prints.js';
 
 
-Meteor.publish('prints.get', function() {
-	// check(collectionId,String);
-	// collectionId = collectionId || {};
+Meteor.publish('prints.get', function(collectionId) {
+	collectionId = collectionId || "";
+	check(collectionId,String);
+	let selector = {
+		// print_collection: collectionId
+	};
   	// console.log(Collections.find(collectionId).count());
 	return Prints.find(
-		{}, 
+		selector, 
 	  { 
 	  	sort: { created: -1 } 
 	}

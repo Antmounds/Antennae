@@ -3,9 +3,12 @@
    "essential": true,
     "image": "${image_url}",
     "name": "${container_name}",
+    "cpu": 0,
+    "memoryReservation": 200,
     "portMappings": [
       {
-        "containerPort": 3000
+        "containerPort": 3000,
+        "protocol": "tcp"
       }
     ],
     "environment": [
