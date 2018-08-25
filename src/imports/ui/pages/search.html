@@ -58,7 +58,7 @@
       <div class="card-stacked">
         <div class="card-content">
         	<span class="right" title="{{search.created}}">{{timeAgo search.created}}</span>
-          <p>{{#if search.person.FaceMatches.[0]}}<span class="green-text">{{search.person.FaceMatches.[0].Face.ExternalImageId}}</span>{{else}}<span class="red-text">UNKNOWN</span>{{/if}}<br />{{search.faceDetails}}</p>
+          <p>{{#if search.displayName}}<span class="green-text">{{search.displayName}}</span>{{else}}<span class="red-text">UNKNOWN</span>{{/if}}<br />{{search.faceDetails}}</p>
           <div class="chip tooltipped" title="{{this.Confidence}}" data-position="top" data-tooltip="{{this.Confidence}}">Social Media</div>
         </div>
         <div class="card-action">
