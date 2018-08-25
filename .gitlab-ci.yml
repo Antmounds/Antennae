@@ -44,7 +44,7 @@ build_app:
     docker push $CI_REGISTRY_IMAGE/dev
 
 push_aws:
-  <<: *build_defaults
+  <<: *deploy_defaults
   stage: push
   cache:
     paths: 
@@ -56,9 +56,9 @@ push_aws:
   before_script:
     # authenticate with the AWS ECR registry
     - $(aws ecr get-login --no-include-email --region us-east-1)
+    - docker load -i image.tar
   script: |
     echo "Pushing app to AWS Elastic Container Registry"
-    docker load -i image.tar || true
     docker tag $CI_REGISTRY_IMAGE $AWS_IMAGE_URI
     docker tag $AWS_IMAGE_URI $AWS_IMAGE_URI:$CI_PIPELINE_IID
     docker push $AWS_IMAGE_URI
@@ -99,10 +99,15 @@ push_dockerhub:
 push_quay:
   <<: *build_defaults
   stage: push
+  cache:
+    paths: 
+      - image.tar
+    policy: pull
   before_script:
-    - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
-    - docker pull $CI_REGISTRY_IMAGE || true
+    # - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com
+    # - docker pull $CI_REGISTRY_IMAGE || true
     - echo $QUAY_PASSWORD | docker login -u $QUAY_USERNAME --password-stdin quay.io
+    - docker load -i image.tar || true
   script: |
     echo "Pushing image to Quay registry..."
     docker tag $CI_REGISTRY_IMAGE $QUAY_IMAGE_NAME
