@@ -1,17 +1,28 @@
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import AWS from 'aws-sdk';
 
+import { Collections } from '../collections/collections.js';
+import { Prints } from '../../api/prints/prints.js';
 import { Searches } from './searches.js';
 
 AWS.config.region = 'us-east-1';
 var rekognition = new AWS.Rekognition();
 
 Meteor.methods({
-	"search.face"(picData){
+	"search.face"(picData,matchThreshold){
 		//return 1;
+		// if(!Meteor.user){
+		// 	throw new Meteor.Error('not-logged-in','must be logged-in to perform search');
+		// 	return false;
+		// }
+		check(matchThreshold, Number);
 		console.log("ANALYZING IMAGE...");
 		var t0 = new Date().getTime();
 		let imgBytes = new Buffer.from(picData.split(",")[1], "base64");
+		// let colId = Meteor.user().profile.collections;
+		let colIds = Collections.find({collection_type: 'face'}, {fields: {collection_id: 1}}).fetch();
+		console.log(colIds)
+		// let matchThreshold = matchThreshold;
 		let moderationParams = {
 			"Image": { 
 				"Bytes": imgBytes,
@@ -31,14 +42,6 @@ Meteor.methods({
 			},
   			"Attributes": ["ALL"],
 		};
-		let rekognitionParams = {
-			"CollectionId": "AntPay",
-			"FaceMatchThreshold": 98,
-			"MaxFaces": 5,
-			"Image": { 
-				"Bytes": imgBytes,
-			},
-		};
 		let celebrityParams = {
 			"Image": { 
 				"Bytes": imgBytes,
@@ -48,35 +51,61 @@ Meteor.methods({
 		let moderationRequest = rekognition.detectModerationLabels(moderationParams);
 		let labelRequest = rekognition.detectLabels(labelParams);
 		let faceRequest = rekognition.detectFaces(faceParams);
-		let rekognitionRequest = rekognition.searchFacesByImage(rekognitionParams);
 		let celebrityRequest = rekognition.recognizeCelebrities(celebrityParams);
 		// create promises
-		let promise1 = moderationRequest.promise();
-		let promise2 = labelRequest.promise();
-		let promise3 = faceRequest.promise();
-		let promise4 = rekognitionRequest.promise();
-		let promise5 = celebrityRequest.promise();
+		let allPromises = [];
+		allPromises.push(moderationRequest.promise().catch(error => { throw new Meteor.Error(error.code, error.message, error); return error; }));
+		allPromises.push(labelRequest.promise().catch(error => { throw new Meteor.Error(error.code, error.message, error); return error; }));
+		allPromises.push(faceRequest.promise().catch(error => { throw new Meteor.Error(error.code, error.message, error); return error; }));
+		allPromises.push(celebrityRequest.promise().catch(error => { throw new Meteor.Error(error.code, error.message, error); return error; }));
+		_.each(colIds, (colId) => {
+			let rekognitionParams = {
+				"CollectionId": colId.collection_id,
+				"FaceMatchThreshold": matchThreshold,
+				"MaxFaces": 2,
+				"Image": { 
+					"Bytes": imgBytes,
+				},
+			};
+			console.log(rekognitionParams);
+			let rekognitionRequest = rekognition.searchFacesByImage(rekognitionParams);
+			allPromises.push(rekognitionRequest.promise().catch(error => { throw new Meteor.Error(error.code, error.message, error); return error; }));
+			console.log(colId.collection_id);
+		});// rekognitionRequest.promise();
 		// Fulfill promises in parallel
-		let response = Promise.all([
-			promise1.catch(error => { throw new Meteor.Error(error.code, error.message, error);return error; }),
-			promise2.catch(error => { throw new Meteor.Error(error.code, error.message, error);return error; }),
-			promise3.catch(error => { throw new Meteor.Error(error.code, error.message, error);return error; }),
-			promise4.catch(error => { throw new Meteor.Error(error.code, error.message, error);return error; }),
-			promise5.catch(error => { throw new Meteor.Error(error.code, error.message, error);return error; }),
-		]).then(values => {
+		let response = Promise.all(
+			allPromises
+		).then(values => {
+			console.log(JSON.stringify(values));
 			console.log(values[0]);
 			console.log(values[1]);
 			console.log(values[2]);
 			console.log(values[3]);
-			console.log(values[4]);
+			//console.log(values[4]);
+			let i = 4;
+			let persons = [];
+			while(values[i]){
+				console.log(values[i]);
+				if (values[i].FaceMatches[0]){
+					let tag = {
+						collection: Prints.findOne({print_id: values[i].FaceMatches[0].Face.FaceId}, {fields: {print_collection: 1}}),
+						image_id: values[i].FaceMatches[0].Face.ExternalImageId,
+						face_id: values[i].FaceMatches[0].Face.FaceId,
+						similarity: values[i].FaceMatches[0].Similarity,
+					};
+					persons.push(tag);
+					console.log(tag);
+				};
+				i++;
+			};
 			let t1 = new Date().getTime();
 			console.log(`Response took ${t1 - t0} ms`);
 			let search_results = {
 					moderation: values[0].ModerationLabels,
 					labels: values[1].Labels,
 					faceDetails: values[2].FaceDetails,
-					person: values[3].FaceMatches[0],
-					celebrity: values[4].CelebrityFaces
+					celebrity: values[3].CelebrityFaces,
+					persons: persons, //.FaceMatches[0],
 			};
 			let search = {
 					// search_image: picData,
@@ -84,7 +113,7 @@ Meteor.methods({
 			};
 			let saveSearch = Searches.insert(search);
 			console.log(saveSearch);
-			return values;
+			return search_results;
 		}).catch(error => {
 			console.log('caught error!');
 			console.log(error);

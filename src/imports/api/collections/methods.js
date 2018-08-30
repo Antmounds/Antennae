@@ -10,6 +10,11 @@ Meteor.methods({
 	"collection.save"(newCol){
 		console.log(newCol);
 		let col = Collections.insert(newCol);
+		let collectionParams = {
+  			CollectionId: newCol.collection_id
+		};
+		let collectionRequest = rekognition.createCollection(collectionParams).promise().catch(error => { throw new Meteor.Error(error.code, error.message, error); return error; });
+		collectionRequest.then(values => {return values});
 		if(col){
 			console.log(`added collection: ${col}`);
 		}else{

@@ -1,6 +1,8 @@
 # Antennae
 [![pipeline status](https://gitlab.com/Antmounds/Antennae/badges/develop/pipeline.svg)](https://gitlab.com/Antmounds/Antennae/commits/develop) [![CircleCI](https://circleci.com/gh/Antmounds/antennae.svg?style=svg)](https://circleci.com/gh/Antmounds/antennae) [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0) [![Discord Chat](https://img.shields.io/discord/299962468581638144.svg?logo=discord)](https://discord.gg/dw3Dam2)
 
+![Dockerhub stats](http://dockeri.co/image/antmounds/antennae "Official Dockerhub image")
+
 Out-the-box face recognition web app for desktop and mobile. *Trust but verify*
 
 
@@ -82,6 +84,9 @@ This will create the following resources:
 Pull requests, forks and stars are mucho appreciated and encouraged. See [CONTRIBUTING.md](https://bitbucket.org/Antmounds/antennae.git#CONTRIBUTING) for how to get involved in this project.
 
 - #### Get official Antmounds gear!
+	<a href="https://streamlabs.com/Antmounds/#/merch">
+		<img src="https://cdn.streamlabs.com/merch/panel8.png" width="160">
+	</a>
 	<a href="https://shop.spreadshirt.com/Antmounds">
 		<img src="https://image.spreadshirtmedia.com/content/asset/sprd-logo_horizontal.svg" width="160">
 	</a>

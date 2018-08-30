@@ -47,6 +47,7 @@ Template.registerHelper('stringify', function(data) {
 
 // Startup checks
 Meteor.startup(() => {
+  	Session.set('matchThreshold', 98);
 	console.log(sessionStorage.getItem('faceRecognitionConsent'));
 	if(!sessionStorage.getItem('faceRecognitionConsent')){
 		Swal({

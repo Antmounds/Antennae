@@ -2,7 +2,9 @@
 	<nav>
 		<div class="nav-wrapper brown">
 			<div class="container">
+				<!-- {{#if currentUser}} -->
 				<a href="#" data-activates="slide-out" class="button-collapse left"><i class="material-icons">menu</i></a>
+				<!-- {{/if}} -->
 				<a href="/" class="brand-logo">Antennae</a>
 				<!-- <a href="/" class="page-title center-align">Antennae</a> -->
 	  			<!-- <a href="profile" class="right"><i class="material-icons">person</i></a>
@@ -26,6 +28,7 @@
 				  <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
 				</div>
 			</li> -->
+			<!-- {{#if currentUser}} -->
 			<li><a href="/home">Dashboard</a></li>
 			<li><a href="/search">Search</a></li>
 			<li><a href="/checkin">Check-in</a></li>
@@ -34,6 +37,10 @@
 			<li><div class="divider"></div></li>
 			<!-- <li><a class="subheader">About</a></li> -->
 			<li><a class="waves-effect" href="/settings">Settings</a></li>
+			<!-- <li><a id="logout" class="waves-effect" href="">Logout</a></li> -->
+			<!-- {{else}} -->
+			<!-- <li><a href="/login">Login</a></li> -->
+			<!-- {{/if}} -->
 			<!-- <footer class="page-footer">version 1.0.2 build 200</footer> -->
 			<br />
 			<br />

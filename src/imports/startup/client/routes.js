@@ -12,6 +12,7 @@
  */
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
+import { Meteor } from 'meteor/meteor';
 
 // Import components
 // import layouts;
@@ -26,6 +27,7 @@ import '../../ui/pages/collections.js';
 import '../../ui/pages/history.js';
 import '../../ui/pages/home.js';
 import '../../ui/pages/login.js';
+import '../../ui/pages/register.js';
 import '../../ui/pages/search.js';
 import '../../ui/pages/settings.js';
 
@@ -33,6 +35,10 @@ import '../../ui/pages/settings.js';
 FlowRouter.triggers.enter(function(context){
   // $("ul.tabs").tabs();
   $('body').addClass('grey lighten-2');
+  //console.log(Meteor.user());
+  //if(!Meteor.user()){
+    //FlowRouter.go('login');
+  //}
 });
 
 FlowRouter.route('/', {
@@ -40,6 +46,10 @@ FlowRouter.route('/', {
   action() {
     console.log("Loading home");
     document.title = 'Home | Antennae';
+    gtag('config', 'UA-123118742-1', {
+      'page_title' : document.title,
+      'page_path': FlowRouter.current().path
+    });
     BlazeLayout.render('app_body', {content: 'home'});
   }
 });
@@ -49,6 +59,10 @@ FlowRouter.route('/checkin', {
   action() {
     console.log("Loading checkin");
     document.title = 'Check-in | Antennae';
+    gtag('config', 'UA-123118742-1', {
+      'page_title' : document.title,
+      'page_path': FlowRouter.current().path
+    });
     BlazeLayout.render('app_body', {content: 'checkin'});
   }
 });
@@ -58,6 +72,10 @@ FlowRouter.route("/collection/:collection_id", {
   action() {
     console.log("Loading a collection");
     document.title = "Collection | Antennae";
+    gtag('config', 'UA-123118742-1', {
+      'page_title' : document.title,
+      'page_path': FlowRouter.current().path
+    });
     BlazeLayout.render('app_sub_body', {content: 'collection'});
   }
 });
@@ -67,6 +85,10 @@ FlowRouter.route('/collections', {
   action() {
     console.log("Loading collections");
     document.title = 'Collections | Antennae';
+    gtag('config', 'UA-123118742-1', {
+      'page_title' : document.title,
+      'page_path': FlowRouter.current().path
+    });
     BlazeLayout.render('app_body', {content: 'collections'});
   }
 });
@@ -76,6 +98,10 @@ FlowRouter.route('/history', {
   action() {
     console.log("Loading history");
     document.title = 'History | Antennae';
+    gtag('config', 'UA-123118742-1', {
+      'page_title' : document.title,
+      'page_path': FlowRouter.current().path
+    });
     BlazeLayout.render('app_body', {content: 'history'});
   }
 });
@@ -89,11 +115,28 @@ FlowRouter.route('/login', {
   }
 });
 
+FlowRouter.route('/register', {
+  name: 'register',
+  action() {
+    console.log("Loading register");
+    document.title = 'Register | Antennae';
+    gtag('config', 'UA-123118742-1', {
+      'page_title' : document.title,
+      'page_path': FlowRouter.current().path
+    });
+    BlazeLayout.render('app_body', {content: 'register'});
+  }
+});
+
 FlowRouter.route('/search', {
   name: 'search',
   action() {
     console.log("Loading search");
-    document.title = 'Collections | Antennae';
+    document.title = 'Search | Antennae';
+    gtag('config', 'UA-123118742-1', {
+      'page_title' : document.title,
+      'page_path': FlowRouter.current().path
+    });
     BlazeLayout.render('app_body', {content: 'search'});
   }
 });
@@ -102,7 +145,11 @@ FlowRouter.route('/settings', {
   name: 'settings',
   action() {
     console.log("Loading settings");
-    document.title = 'Collections | Antennae';
+    document.title = 'Settings | Antennae';
+    gtag('config', 'UA-123118742-1', {
+      'page_title' : document.title,
+      'page_path': FlowRouter.current().path
+    });
     BlazeLayout.render('app_body', {content: 'settings'});
   }
 });

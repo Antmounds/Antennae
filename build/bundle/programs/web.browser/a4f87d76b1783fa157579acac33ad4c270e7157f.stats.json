@@ -3,8 +3,8 @@
     "name": "standard-minifier-js",
     "version": "2.3.4"
   },
-  "totalMinifiedBytes": 1666111,
-  "totalMinifiedGzipBytes": 485142,
+  "totalMinifiedBytes": 1675678,
+  "totalMinifiedGzipBytes": 486883,
   "minifiedBytesByPackage": {
     "packages/meteor.js": 9433,
     "packages/meteor-base.js": 31,
@@ -689,16 +689,16 @@
     ],
     "app/global-imports.js": 1274,
     "app/app.js": [
-      61105,
+      70672,
       {
         "imports": {
           "ui": {
             "layouts": {
               "body.html": 74,
-              "template.body.js": 8652,
+              "template.body.js": 9055,
               "sub_body.html": 78,
               "template.sub_body.js": 1130,
-              "body.js": 1347,
+              "body.js": 1553,
               "sub_body.js": 590
             },
             "pages": {
@@ -707,15 +707,17 @@
               "collection.html": 80,
               "template.collection.js": 2644,
               "collections.html": 81,
-              "template.collections.js": 3861,
+              "template.collections.js": 3733,
               "history.html": 77,
               "template.history.js": 2784,
               "home.html": 74,
               "template.home.js": 4018,
               "login.html": 75,
-              "template.login.js": 144,
+              "template.login.js": 2743,
+              "register.html": 78,
+              "template.register.js": 2648,
               "search.html": 76,
-              "template.search.js": 5044,
+              "template.search.js": 5257,
               "settings.html": 78,
               "template.settings.js": 1234,
               "checkin.js": 1216,
@@ -723,9 +725,10 @@
               "collections.js": 1967,
               "history.js": 1319,
               "home.js": 1842,
-              "login.js": 464,
-              "search.js": 1898,
-              "settings.js": 476
+              "login.js": 1225,
+              "register.js": 1282,
+              "search.js": 2196,
+              "settings.js": 662
             }
           },
           "api": {
@@ -741,8 +744,8 @@
           },
           "startup": {
             "client": {
-              "index.js": 1646,
-              "routes.js": 1945
+              "index.js": 1673,
+              "routes.js": 2883
             },
             "accounts-config.js": 446
           }

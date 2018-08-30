@@ -58,12 +58,14 @@
       <div class="card-stacked">
         <div class="card-content">
         	<span class="right" title="{{search.created}}">{{timeAgo search.created}}</span>
-          <p>{{#if search.displayName}}<span class="green-text">{{search.displayName}}</span>{{else}}<span class="red-text">UNKNOWN</span>{{/if}}<br />{{search.faceDetails}}</p>
-          <div class="chip tooltipped" title="{{this.Confidence}}" data-position="top" data-tooltip="{{this.Confidence}}">Social Media</div>
+          <p>{{#if search.displayName}}<br /><span class="green-text">{{search.displayName}}</span>{{else}}<span class="red-text">UNKNOWN</span>{{/if}}<br />{{search.faceDetails}}</p>
+          {{#each search.persons}}
+          <div class="chip tooltipped" title="{{this.similarity}}" data-position="top" data-tooltip="{{this.similarity}}">{{this.collection.print_collection}}</div>
+          {{/each}}
         </div>
-        <div class="card-action">
+        <!-- <div class="card-action">
           <a href="#">Save face</a>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

@@ -11,7 +11,7 @@ Meteor.methods({
 	"print.save"(newPrint){
 		newPrint.print_adder = this.userId || "null";
 		newPrint.print_collection = Collections.findOne(newPrint.collection).collection_id || "people";
-		newPrint.print_name = newPrint.name;
+		newPrint.print_name = newPrint.name.replace(/ /g,"_");
 		newPrint.print_img = newPrint.img;
 		// console.log(newPrint);
 		if(!newPrint){

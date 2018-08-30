@@ -34,6 +34,32 @@ Template.app_body.helpers({
   },
 });
 
+Template.app_body.events({
+
+  'submit #loginForm': function( event, template ) {
+    event.preventDefault();
+  // console.log(event);
+  },
+
+  'click #logout': function( event, template ) {
+    event.preventDefault();
+
+    Meteor.logout(function(err) {
+      console.log('logged out: ' + err);
+      FlowRouter.go('login');
+      // callback
+      // Session.set("ses",false);
+    });
+  },
+
+  //searches(){
+    //let searches = Searches.find({}, { sort: { created: -1 } });
+    // console.log(searches.fetch());
+    //Tracker.onInvalidate(() => console.trace());
+    //return searches;
+  //},
+});
+
 Template.hello.created = function(){
   console.log(`${this.view.name} created`);
   // counter starts at 0

@@ -47,7 +47,7 @@ Template.search.events({
         //Session.set("pic", e.target.result);
         let data = e.target.result;
         //console.log(data);
-        Meteor.call('search.face', data, (error, result) => {
+        Meteor.call('search.face', data, Session.get('matchThreshold'), (error, result) => {
           if(error){
             let e = JSON.stringify(error, null, 4);
             console.log(e);
@@ -56,11 +56,12 @@ Template.search.events({
             console.log(result);
             let search = {
               img: data,
-              tags: result[1] ? result[1].Labels : false,//["Mountain", "lake", "forest", "stream"]
-              faceDetails: result[2] && result[2].FaceDetails[0] ? `${result[2].FaceDetails[0].AgeRange.Low}-${result[2].FaceDetails[0].AgeRange.High} yr old ${(result[2].FaceDetails[0].Beard.Value ? 'bearded ' : '')}${result[2].FaceDetails[0].Gender.Value} ${(result[2].FaceDetails[0].Mustache.Value ? 'with mustache ' : '')}who appears ${result[2].FaceDetails[0].Emotions[0].Type}. They are ${(result[2].FaceDetails[0].Eyeglasses.Value||result[2].FaceDetails[0].Eyeglasses.Value ? '' : 'not ')}wearing ${(result[2].FaceDetails[0].Eyeglasses.Value||result[2].FaceDetails[0].Eyeglasses.Value ? (result[2].FaceDetails[0].Eyeglasses.Value ? 'eye' : 'sun') : '')}glasses and are ${(result[2].FaceDetails[0].Smile.Value ? '' : 'not ')}smiling with their mouth ${(result[2].FaceDetails[0].MouthOpen.Value ? 'open' : 'closed')} and eyes ${(result[2].FaceDetails[0].EyesOpen.Value ? 'open' : 'closed')}.` : false,
-              person: result[3],
-              celebrity: result[4] && result[4].CelebrityFaces[0] ? result[4].CelebrityFaces[0] : false,
-              displayName: result[3] && result[3].FaceMatches[0] && result[4] && result[4].CelebrityFaces[0] ? `${result[3].FaceMatches[0].Face.ExternalImageId} (result[4].CelebrityFaces[0].Name)` : (result[3] && result[3].FaceMatches[0] ? result[3].FaceMatches[0].Face.ExternalImageId : false) || (result[4] && result[4].CelebrityFaces[0] ? result[4].CelebrityFaces[0].Name : false) || false
+              tags: result ? result.labels : false,//["Mountain", "lake", "forest", "stream"]
+              faceDetails: result && result.faceDetails[0] ? `${result.faceDetails[0].AgeRange.Low}-${result.faceDetails[0].AgeRange.High} yr old ${(result.faceDetails[0].Beard.Value ? 'bearded ' : '')}${result.faceDetails[0].Gender.Value} ${(result.faceDetails[0].Mustache.Value ? 'with mustache ' : '')}who appears ${result.faceDetails[0].Emotions[0].Type}. They are ${(result.faceDetails[0].Eyeglasses.Value||result.faceDetails[0].Eyeglasses.Value ? '' : 'not ')}wearing ${(result.faceDetails[0].Eyeglasses.Value||result.faceDetails[0].Eyeglasses.Value ? (result.faceDetails[0].Eyeglasses.Value ? 'eye' : 'sun') : '')}glasses and are ${(result.faceDetails[0].Smile.Value ? '' : 'not ')}smiling with their mouth ${(result.faceDetails[0].MouthOpen.Value ? 'open' : 'closed')} and eyes ${(result.faceDetails[0].EyesOpen.Value ? 'open' : 'closed')}.` : false,
+              persons: result.persons,
+              celebrity: result && result.celebrity ? result.celebrity : false,
+              displayName: result.persons[0] && result.persons[0].image_id && result.celebrity && result.celebrity[0] ? `${result.persons[0].image_id} (${result.celebrity[0].Name})` : (result.persons[0] && result.persons[0].image_id ? result.persons[0].image_id : false) || (result && result.celebrity[0] ? result.celebrity[0].Name : false) || false,
+              collections: "AntPay"
             };
             console.log(search);
             //let m = instance.search.get();

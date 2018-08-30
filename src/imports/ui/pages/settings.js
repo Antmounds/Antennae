@@ -32,3 +32,12 @@ Template.settings.helpers({
   	//return searches;
   //},
 });
+
+Template.settings.events({
+  'change #similarityLevel'(event, instance) {
+  	event.preventDefault();
+  	Session.set('matchThreshold', Number(event.currentTarget.value));
+  	console.log(event);
+  	Materialize.toast(event.currentTarget.value,5000);
+  },
+});
