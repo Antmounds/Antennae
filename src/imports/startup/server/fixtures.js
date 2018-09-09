@@ -35,13 +35,14 @@ Meteor.startup(() => {
         let promise = faceRequest.promise();
         let faces = promise.then(result => {
           if(result && result.Faces.length > 0){
-            console.log(`collection has ${result.Faces.length} faces`);
+            console.log(`${colId} collection has ${result.Faces.length} faces`);
             _.each(result.Faces, function(face){
               let awsFace = {
                 print_id: face.FaceId,
                 print_name: face.ExternalImageId || face.ImageId,
                 print_type: "face",
                 print_collection: colId,
+                print_collection_id: Collections.findOne({collection_id: colId})._id,
                 print_details: face,
                 print_adder: "root"
               };
@@ -56,21 +57,22 @@ Meteor.startup(() => {
     return result;
   });
 
-  if (Prints.find().count() < 15) {
-    console.log("seeding prints...");
-    let seedPrints = []
-    _.times(5, ()=>{
-      let print = {
-        print_adder: this.userId || "deded",
-        print_collection: "people",
-        print_name: faker.helpers.userCard().name,
-        print_id: faker.random.uuid(),
-        print_img: faker.image.avatar()
-      };
-      let printId = Prints.insert(print);
-      seedPrints.push(printId);
-    });
-    console.log(seedPrints);
+  // if (Prints.find().count() < 15) {
+  //   console.log("seeding prints...");
+  //   let seedPrints = []
+  //   _.times(5, ()=>{
+  //     let print = {
+  //       print_adder: this.userId || "root",
+  //       print_collection: "people",
+  //       print_collection_id: "people",
+  //       print_name: faker.helpers.userCard().name,
+  //       print_id: faker.random.uuid(),
+  //       print_img: faker.image.avatar()
+  //     };
+  //     let printId = Prints.insert(print);
+  //     seedPrints.push(printId);
+  //   });
+  //   console.log(seedPrints);
 
-  };
+  // };
 });

@@ -94,6 +94,20 @@ Template.collections.helpers({
   	return data;
   },
 
+  printCount(colId){
+  	console.log(colId);
+  	Meteor.call('print.count', colId, (error, result) => {
+		if(error){
+			let e = JSON.stringify(error, null, 4);
+			console.log(e);
+			alert(error.message);
+		}else{
+			console.log(result);
+			return result;
+		};
+	});
+  },
+
   privateCollections(){
   	if(Collections.find({private: true}).fetch().length>0){
   		let cols = Collections.find({private: true}, { sort: { created: -1 } });

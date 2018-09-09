@@ -9,8 +9,14 @@ var rekognition = new AWS.Rekognition();
 
 Meteor.methods({
 	"print.save"(newPrint){
+		let col = Collections.findOne(newPrint.collection);
+		console.log(col);
+		if(!col){
+			throw new Meteor.Error('no-collection','No collection found with given id!');
+		};
 		newPrint.print_adder = this.userId || "null";
-		newPrint.print_collection = Collections.findOne(newPrint.collection).collection_id || "people";
+		newPrint.print_collection = col.collection_id || "people";
+		newPrint.print_collection_id = col._id;
 		newPrint.print_name = newPrint.name.replace(/ /g,"_");
 		newPrint.print_img = newPrint.img;
 		// console.log(newPrint);
@@ -30,7 +36,7 @@ Meteor.methods({
         let faceRequest = rekognition.indexFaces(faceParams);
         let promise = faceRequest.promise();
         let indexFace = promise.then(result => {
-        	console.log(result);
+        	// console.log(result);
         	newPrint.print_id = result.FaceRecords[0].Face.FaceId;
 			let print = Prints.insert(newPrint);
         	console.log(`inserted: ${print}`);
@@ -49,7 +55,19 @@ Meteor.methods({
 			console.log(`deleted face: ${printId}`);
 			return `deleted face: ${printId}`;
 		};
-	}
+	},
+
+	"print.count"(data){
+			console.log(data);
+		// return 55;
+		let colId =  data || "";
+		check(colId,String);
+		if(colId){
+			let printCount = Prints.find({print_collection_id: colId}).count();
+			console.log(printCount);
+			return printCount;
+		};
+	},
 })
 
 // Define a rule to limit method calls

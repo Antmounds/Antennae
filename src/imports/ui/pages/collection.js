@@ -21,7 +21,7 @@ Template.collection.created = function(){
 
 	self.autorun(() => {
 		self.getColId = FlowRouter.getParam('collection_id');
-		self.printHandle = self.subscribe("prints.get");
+		self.printHandle = self.subscribe("prints.get", self.getColId);
 		self.colHandle = self.subscribe("collections.get", self.getColId);
 		console.log(`Collections & Prints are ${self.subscriptionsReady() ? 'ready' : 'not ready'}`);
 	});

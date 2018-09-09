@@ -27,7 +27,7 @@ console.log('index.js: ' + server_mode + "-->" + JSON.stringify(Meteor.settings)
 Meteor.methods({
 
 	info(){
-		return `version: 0.9.0 - build: ${process.env.BUILD || 'dev'} - hostname: ${os.hostname()}`;
+		return `version: 0.9.1 - build: ${process.env.BUILD || 'dev'} - hostname: ${os.hostname()}`;
 	},
 
 	async getData(){    
@@ -36,8 +36,8 @@ Meteor.methods({
 			const results = await HTTP.call('GET', 'http://jsonplaceholder.typicode.com/posts');	
 			console.log(JSON.stringify(results.data[0]));	
 			console.log(JSON.stringify(results.headers));
-			response.code = true;		
-			response.data = results;	
+			response.code = true;
+			response.data = results;
 		} catch(e){
 			response = false;
 			console.log(e);

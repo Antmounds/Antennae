@@ -41,6 +41,11 @@ Prints.Schema = new SimpleSchema({
     optional: false,
     defaultValue: "people"
   },
+  "print_collection_id": {
+    type: String,
+    label: "Print collection ID",
+    optional: false
+  },
   "print_img": {
     type: String,
     label: "Print img",
@@ -88,6 +93,7 @@ Prints.publicFields = {
   print_name: 1,
   print_type: 1,
   print_collection: 1,
+  print_collection_id: 1,
   print_img: 1,
   print_details: 1,
   print_adder: 1,

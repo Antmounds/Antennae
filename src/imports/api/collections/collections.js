@@ -18,7 +18,7 @@ Collections.Schema = new SimpleSchema({
     type: String,
     label: "Collection ID",
     optional: false,
-    defaultValue: "Collection ID",
+    defaultValue: "MyCollection",
     index: true,
     unique: true
   },

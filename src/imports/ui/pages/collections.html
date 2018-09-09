@@ -33,13 +33,13 @@
 			<ul class="collection with-header">
 				<li class="collection-header">
 					<h5>Collections</h5>
-					<p>Public and private faceprint databases</p>
+					<!-- <p>Public and private faceprint databases</p> -->
 				</li>
-				{{#if privateCollections}}
+				<!-- {{#if privateCollections}}
 				<li class="collection-header">
 					<p class="center-align"><strong>PRIVATE</strong></p>
 				</li>
-				{{/if}}
+				{{/if}} -->
 				{{#each privateCollections}}
 				<li id="{{_id}}" class="collection-item avatar">
 					<!-- <div class="switch right">
@@ -52,31 +52,31 @@
 					</div> -->
 					<i class="material-icons circle">face</i>
 					<a id="goToCollection" href="collection" class="title">{{collection_name}}</a>
-					<p>4500 prints <br>
+					<p>{{printCount this._id}} prints <br>
 					</p>
 					<!-- <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a> -->
 				</li>
 				{{/each}}
-				<li class="collection-header">
+				<!-- <li class="collection-header">
 					<p class="center-align"><strong>PUBLIC</strong></p>
 				</li>
 				{{#each publicCollections}}
 				<li id="{{id}}" class="collection-item avatar">
-					<!-- <div class="switch right">
+					<div class="switch right">
 						<label>
 							Off
 							<input {{enabled}} type="checkbox">
 							<span class="lever"></span>
 							On
 						</label>
-					</div> -->
+					</div>
 					<i class="material-icons circle">face</i>
 					<span class="title">{{name}}</span>
 					<p>4500 prints <br>
 					</p>
-					<!-- <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a> -->
+					<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
 				</li>
-				{{/each}}
+				{{/each}} -->
 			</ul>
 		</div>
 	</div>

@@ -9,12 +9,12 @@ var rekognition = new AWS.Rekognition();
 Meteor.methods({
 	"collection.save"(newCol){
 		console.log(newCol);
-		let col = Collections.insert(newCol);
 		let collectionParams = {
   			CollectionId: newCol.collection_id
 		};
 		let collectionRequest = rekognition.createCollection(collectionParams).promise().catch(error => { throw new Meteor.Error(error.code, error.message, error); return error; });
 		collectionRequest.then(values => {return values});
+		let col = Collections.insert(newCol);
 		if(col){
 			console.log(`added collection: ${col}`);
 		}else{
@@ -26,10 +26,27 @@ Meteor.methods({
 
 	"collection.delete"(colId){
 		check(colId,String);
-		if(colId){
-			let print = Collections.remove(colId);
-			console.log(`deleted collection: ${colId}`);
-			return `deleted collection: ${colId}`;
+		let col = Collections.findOne(colId);
+		console.log(col);
+		if(!col){
+			throw new Meteor.Error('no-collection','No collection found with given id!');
+		}else{
+			let params = {
+				CollectionId: col.collection_id
+			};
+			let collectionRequest = rekognition.deleteCollection(params).promise().catch(error => { throw new Meteor.Error(error.code, error.message, error); return error; });
+			collectionRequest.then(values => {return values});
+			let oldCol = Collections.remove(col._id);
+			if(oldCol){
+				console.log(`removed collection: ${oldCol}`);
+			}else{
+	            console.log(colId);
+	            throw new Meteor.Error('remove-collection-error',`error removing collection: ${colId}`)		
+			};
+			return `removed collection: ${colId}`;
+				// let print = Collections.remove(colId);
+				// console.log(`deleted collection: ${colId}`);
+				// return `deleted collection: ${colId}`;
 		};
 	}
 })

@@ -6,10 +6,8 @@ import { Prints } from './prints.js';
 Meteor.publish('prints.get', function(collectionId) {
 	collectionId = collectionId || "";
 	check(collectionId,String);
-	let selector = {
-		// print_collection: collectionId
-	};
-  	// console.log(Collections.find(collectionId).count());
+	let selector = collectionId ? {print_collection_id: collectionId} : {};
+  	console.log(selector);
 	return Prints.find(
 		selector, 
 	  { 

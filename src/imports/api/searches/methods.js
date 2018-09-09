@@ -9,12 +9,13 @@ AWS.config.region = 'us-east-1';
 var rekognition = new AWS.Rekognition();
 
 Meteor.methods({
-	"search.face"(picData,matchThreshold){
+	"search.face"(picData,matchThreshold=98){
 		//return 1;
 		// if(!Meteor.user){
 		// 	throw new Meteor.Error('not-logged-in','must be logged-in to perform search');
 		// 	return false;
 		// }
+		// let matchThreshold = matchThreshold;
 		check(matchThreshold, Number);
 		console.log("ANALYZING IMAGE...");
 		var t0 = new Date().getTime();
@@ -22,7 +23,6 @@ Meteor.methods({
 		// let colId = Meteor.user().profile.collections;
 		let colIds = Collections.find({collection_type: 'face'}, {fields: {collection_id: 1}}).fetch();
 		console.log(colIds)
-		// let matchThreshold = matchThreshold;
 		let moderationParams = {
 			"Image": { 
 				"Bytes": imgBytes,
