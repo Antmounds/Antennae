@@ -13,6 +13,12 @@ Searches.deny({
 });
 
 Searches.Schema = new SimpleSchema({
+  "station_name": {
+    type: String,
+    label: "Station search performed at",
+    optional: true,
+    defaultValue: "Station 1"
+  },
   // schema rules
   "search_type": {
     type: [String],
@@ -82,7 +88,7 @@ if(Meteor.isServer){
 }
 
 Searches.publicFields = {
-  search_id: 1,
+  station_name: 1,
   search_type: 1,
   search_collections: 1,
   search_image: 1,

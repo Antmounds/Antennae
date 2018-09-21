@@ -1,5 +1,14 @@
 {
- "name": "App",
+ "name": "Antennae",
+ "short_name": "Antennae",
+ "background_color": "#e0e0e0",
+ "description": "Free and open-source, face recognition check-in, loyalty and security app.",
+ "display": "standalone",
+ "lang": "en-US",
+ "orientation": "portrait",
+ "scope": "/",
+ "start_url": "/",
+ "theme_color": "#795548",
  "icons": [
   {
    "src": "\/android-icon-36x36.png",
@@ -36,6 +45,12 @@
    "sizes": "192x192",
    "type": "image\/png",
    "density": "4.0"
+  },
+  {
+   "src": "\/android-icon-512x512.png",
+   "sizes": "512x512",
+   "type": "image\/png",
+   "density": "3.0"
   }
  ]
 }

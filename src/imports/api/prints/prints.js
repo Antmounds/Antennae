@@ -35,16 +35,11 @@ Prints.Schema = new SimpleSchema({
     allowedValues: ["face", "voice", "finger"],
     defaultValue: "face"
   },
-  "print_collection": {
-    type: String,
-    label: "Print collection",
-    optional: false,
-    defaultValue: "people"
-  },
   "print_collection_id": {
     type: String,
-    label: "Print collection ID",
-    optional: false
+    label: "Print collection mongo _id",
+    optional: false,
+    defaultValue: "people"
   },
   "print_img": {
     type: String,
@@ -92,7 +87,6 @@ Prints.publicFields = {
   print_id: 1,
   print_name: 1,
   print_type: 1,
-  print_collection: 1,
   print_collection_id: 1,
   print_img: 1,
   print_details: 1,

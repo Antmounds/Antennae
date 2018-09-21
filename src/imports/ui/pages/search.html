@@ -17,60 +17,93 @@
 	<h1>Search</h1>
 	<p>Take or upload a picture for immediate face recognition.</p>
 	{{else}}
-	<div class="row">
-		<div class="col s12 m6">
-		  <div class="card">
-		  	{{#if search.faceDetails}}
-	          <div class="valign-wrapper">
-	            <div class="col s2 m2">
-	            	<i class="medium material-icons">account_circle</i>
-	              <!-- <img src="img/avatar5.png" alt="" width="50px" height="50px" class="circle responsive-img"> --> <!-- notice the "circle" class -->
-	            </div>
-	            <div class="col s10 m10">
-	              <span class="black-text">
-	                {{search.faceDetails}}
-	              </span>
-	            </div>
-	          </div>
-		  	{{/if}}
-		    <div class="card-image">
-		      <img id="postImg" src="{{search.img}}" width="auto" height="auto" class="" alt="search image">
-		      <span class="card-title">{{#each search.tags}}<div class="chip tooltipped" title="{{this.Confidence}}" data-position="top" data-tooltip="{{this.Confidence}}">{{this.Name}}</div> {{/each}}</span>
+		{{#if isSearching}}
+		<div class="valign-wrapper" style="display: flex;align-items: center;justify-content: center;height:400px;">
+			<div class="preloader-wrapper big active">
+		      <div class="spinner-layer spinner-blue">
+		        <div class="circle-clipper left">
+		          <div class="circle"></div>
+		        </div><div class="gap-patch">
+		          <div class="circle"></div>
+		        </div><div class="circle-clipper right">
+		          <div class="circle"></div>
+		        </div>
+		      </div>
+
+		      <div class="spinner-layer spinner-red">
+		        <div class="circle-clipper left">
+		          <div class="circle"></div>
+		        </div><div class="gap-patch">
+		          <div class="circle"></div>
+		        </div><div class="circle-clipper right">
+		          <div class="circle"></div>
+		        </div>
+		      </div>
+
+		      <div class="spinner-layer spinner-yellow">
+		        <div class="circle-clipper left">
+		          <div class="circle"></div>
+		        </div><div class="gap-patch">
+		          <div class="circle"></div>
+		        </div><div class="circle-clipper right">
+		          <div class="circle"></div>
+		        </div>
+		      </div>
+
+		      <div class="spinner-layer spinner-green">
+		        <div class="circle-clipper left">
+		          <div class="circle"></div>
+		        </div><div class="gap-patch">
+		          <div class="circle"></div>
+		        </div><div class="circle-clipper right">
+		          <div class="circle"></div>
+		        </div>
+		      </div>
 		    </div>
-		    <!-- <div class="card-content">
-		      <p>I am a very simple card. I am good at containing small bits of information.
-		      I am convenient because I require little markup to use effectively.</p>
-		    </div> -->
-		    <!-- <div class="card-action">
-		      <a href="#">Like</a>
-		      <a href="#">Report</a>
-		    </div> -->
-		  </div>
 		</div>
+	    {{else}}
+		<div class="row">
+			<div class="col s12 m6">
+			  <div class="card">
+			    <div class="card-image">
+			      <img id="postImg" src="{{search.img}}" width="auto" height="auto" class="" alt="search image">
+			      <span class="card-title">{{#each search.tags}}<div class="chip tooltipped" title="{{this.Confidence}}" data-position="top" data-tooltip="{{this.Confidence}}">{{this.Name}}</div> {{/each}}</span>
+			    </div>
+			    <!-- <div class="card-content">
+			      <p>I am a very simple card. I am good at containing small bits of information.
+			      I am convenient because I require little markup to use effectively.</p>
+			    </div> -->
+			    <!-- <div class="card-action">
+			      <a href="#">Like</a>
+			      <a href="#">Report</a>
+			    </div> -->
+			  </div>
+			</div>
 
 
-  <div class="col s12 m6">
-    <div class="card horizontal">
-      <div class="card-image">
-        <img class="responsive-img" src="{{search.img}}" width="100px" style="max-width: 100px;" alt="search image">
-        <img class="responsive-img" src="{{search.img}}" width="100px" style="max-width: 100px;" alt="search image">
-      </div>
-      <div class="card-stacked">
-        <div class="card-content">
-        	<span class="right" title="{{search.created}}">{{timeAgo search.created}}</span>
-          <p>{{#if search.displayName}}<br /><span class="green-text">{{search.displayName}}</span>{{else}}<span class="red-text">UNKNOWN</span>{{/if}}<br />{{search.faceDetails}}</p>
-          {{#each search.persons}}
-          <div class="chip tooltipped" title="{{this.similarity}}" data-position="top" data-tooltip="{{this.similarity}}">{{this.collection.print_collection}}</div>
-          {{/each}}
-        </div>
-        <!-- <div class="card-action">
-          <a href="#">Save face</a>
-        </div> -->
-      </div>
-    </div>
-  </div>
+			<div class="col s12 m6">
+				<div class="card horizontal">
+					<div class="card-image">
+						<img class="responsive-img" src="{{search.img}}" width="100px" style="max-width: 100px;" alt="search image">
+						<img class="responsive-img" src="{{search.img}}" width="100px" style="max-width: 100px;" alt="search image">
+					</div>
+					<div class="card-stacked">
+						<div class="card-content">
+							<span class="right" title="{{search.created}}">{{timeAgo search.created}}</span>
+							<p>{{#if search.displayName}}<br /><span class="green-text">{{search.displayName}}</span>{{else}}<span class="red-text">UNKNOWN</span>{{/if}}<br />{{search.faceDetails}}</p>
+							{{#each search.persons}}
+							<div class="chip tooltipped" title="{{this.similarity}}" data-position="top" data-tooltip="{{this.similarity}}">{{this.collection}}</div>
+							{{/each}}
+						</div>
+						<!-- <div class="card-action">
+						<a href="#">Save face</a>
+						</div> -->
+					</div>
+				</div>
+			</div>
 
-	</div>
+		</div>
+	    {{/if}}
 	{{/unless}}
 
 

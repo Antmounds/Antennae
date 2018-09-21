@@ -35,28 +35,80 @@
 					<h5>Collections</h5>
 					<!-- <p>Public and private faceprint databases</p> -->
 				</li>
+				{{#if privateCollections.subsNotReady}}
+				<div class="valign-wrapper" style="display: flex;align-items: center;justify-content: center;height:400px;">
+					<div class="preloader-wrapper big active">
+				      <div class="spinner-layer spinner-blue">
+				        <div class="circle-clipper left">
+				          <div class="circle"></div>
+				        </div><div class="gap-patch">
+				          <div class="circle"></div>
+				        </div><div class="circle-clipper right">
+				          <div class="circle"></div>
+				        </div>
+				      </div>
+
+				      <div class="spinner-layer spinner-red">
+				        <div class="circle-clipper left">
+				          <div class="circle"></div>
+				        </div><div class="gap-patch">
+				          <div class="circle"></div>
+				        </div><div class="circle-clipper right">
+				          <div class="circle"></div>
+				        </div>
+				      </div>
+
+				      <div class="spinner-layer spinner-yellow">
+				        <div class="circle-clipper left">
+				          <div class="circle"></div>
+				        </div><div class="gap-patch">
+				          <div class="circle"></div>
+				        </div><div class="circle-clipper right">
+				          <div class="circle"></div>
+				        </div>
+				      </div>
+
+				      <div class="spinner-layer spinner-green">
+				        <div class="circle-clipper left">
+				          <div class="circle"></div>
+				        </div><div class="gap-patch">
+				          <div class="circle"></div>
+				        </div><div class="circle-clipper right">
+				          <div class="circle"></div>
+				        </div>
+				      </div>
+				    </div>
+				</div>
+				{{else}}
 				<!-- {{#if privateCollections}}
 				<li class="collection-header">
 					<p class="center-align"><strong>PRIVATE</strong></p>
 				</li>
 				{{/if}} -->
-				{{#each privateCollections}}
-				<li id="{{_id}}" class="collection-item avatar">
-					<!-- <div class="switch right">
-						<label>
-							Off
-							<input {{enabled}} type="checkbox">
-							<span class="lever"></span>
-							On
-						</label>
-					</div> -->
-					<i class="material-icons circle">face</i>
-					<a id="goToCollection" href="collection" class="title">{{collection_name}}</a>
-					<p>{{printCount this._id}} prints <br>
-					</p>
-					<!-- <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a> -->
-				</li>
-				{{/each}}
+					{{#if privateCollections.count}}
+						{{#each privateCollections}}
+						<li id="{{_id}}" class="collection-item avatar">
+							<!-- <div class="switch right">
+								<label>
+									Off
+									<input {{enabled}} type="checkbox">
+									<span class="lever"></span>
+									On
+								</label>
+							</div> -->
+							<i class="material-icons circle">face</i>
+							<a id="goToCollection" href="collection" class="title">{{collection_name}}</a>
+							<p>{{print_count}} print(s) <br>
+							</p>
+							<!-- <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a> -->
+						</li>
+						{{/each}}
+					{{else}}
+						<li class="collection-item">
+							<h6>No collections found, add one using the button in the lower right.</h6>
+						</li>
+					{{/if}}
+				{{/if}}
 				<!-- <li class="collection-header">
 					<p class="center-align"><strong>PUBLIC</strong></p>
 				</li>

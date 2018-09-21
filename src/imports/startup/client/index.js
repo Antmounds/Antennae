@@ -48,11 +48,21 @@ Template.registerHelper('stringify', function(data) {
 // Startup checks
 Meteor.startup(() => {
   	Session.set('matchThreshold', 98);
+  	Session.set('stationName', 'Station 1');
+
+  	// register service worker
+  	if('serviceWorker' in navigator){
+  		navigator.serviceWorker
+  				 .register('/sw.js')
+  				 .then(()=>{console.log("Service Worker Registered");})
+  				 .catch((error)=>{console.log("Service Worker Failed to Register");});
+  	};
+
 	console.log(sessionStorage.getItem('faceRecognitionConsent'));
 	if(!sessionStorage.getItem('faceRecognitionConsent')){
 		Swal({
 			title: 'Face Recognition',
-			text: 'By using this app, you give Antennae permission to store and process your images for the purposes of facial recognition. No pictures are saved, only mathematical representations of facial features.',
+			text: 'By using this app, you give Antennae permission to process your images for the purposes of facial recognition. No pictures are saved, only mathematical representations of facial features.',
 			type: 'warning',
 			animation: true,
 			// customClass: 'animated tada',

@@ -10,6 +10,8 @@ import './search.html';
 Template.search.created = function(){
 	console.log(`${this.view.name} created`);
 	$('.tooltipped').tooltip({enterDelay: 10, inDuration: 0});
+  this.isSearching = new ReactiveVar( false );
+  Session.set('search', false);
 	//self.curSearches = new ReactiveDict(null);
 
 	// self.autorun(() => {
@@ -24,6 +26,11 @@ Template.search.rendered = function(){
 };
 
 Template.search.helpers({
+
+  isSearching(){
+    return Template.instance().isSearching.get();
+  },
+
   search() {
     let s = Session.get('search');//Template.instance().search.get();
     // console.log(s);
@@ -40,14 +47,21 @@ Template.search.events({
         // console.log(event.target.files);
         return false;
       };
+
+      Session.set('search', true);
+      instance.isSearching.set(true);
+
   		let reader = new FileReader();
 
   		reader.onload = function(e) {
         //$("#postImg").attr('src', e.target.result);
         //Session.set("pic", e.target.result);
-        let data = e.target.result;
+        let data = {};
+        data.img = e.target.result;
+        data.matchThreshold = Session.get('matchThreshold');
+        data.stationName = Session.get('stationName');
         //console.log(data);
-        Meteor.call('search.face', data, Session.get('matchThreshold'), (error, result) => {
+        Meteor.call('search.face', data, (error, result) => {
           if(error){
             let e = JSON.stringify(error, null, 4);
             console.log(e);
@@ -55,13 +69,12 @@ Template.search.events({
           }else{
             console.log(result);
             let search = {
-              img: data,
-              tags: result ? result.labels : false,//["Mountain", "lake", "forest", "stream"]
-              faceDetails: result && result.faceDetails[0] ? `${result.faceDetails[0].AgeRange.Low}-${result.faceDetails[0].AgeRange.High} yr old ${(result.faceDetails[0].Beard.Value ? 'bearded ' : '')}${result.faceDetails[0].Gender.Value} ${(result.faceDetails[0].Mustache.Value ? 'with mustache ' : '')}who appears ${result.faceDetails[0].Emotions[0].Type}. They are ${(result.faceDetails[0].Eyeglasses.Value||result.faceDetails[0].Eyeglasses.Value ? '' : 'not ')}wearing ${(result.faceDetails[0].Eyeglasses.Value||result.faceDetails[0].Eyeglasses.Value ? (result.faceDetails[0].Eyeglasses.Value ? 'eye' : 'sun') : '')}glasses and are ${(result.faceDetails[0].Smile.Value ? '' : 'not ')}smiling with their mouth ${(result.faceDetails[0].MouthOpen.Value ? 'open' : 'closed')} and eyes ${(result.faceDetails[0].EyesOpen.Value ? 'open' : 'closed')}.` : false,
+              img: data.img,
+              tags: result ? result.labels : false,
+              faceDetails: result && result.faceDetails[0] ? `${result.faceDetails[0].AgeRange.Low}-${result.faceDetails[0].AgeRange.High} yr old ${(result.faceDetails[0].Beard.Value ? 'bearded ' : '')}${result.faceDetails[0].Gender.Value} ${(result.faceDetails[0].Mustache.Value ? 'with mustache ' : '')}who appears ${result.faceDetails[0].Emotions[0].Type}${(result.celebrity[0] ? ` and looks like ${result.celebrity[0].Name} (${result.celebrity[0].MatchConfidence}%)` : '')}. They are ${(result.faceDetails[0].Eyeglasses.Value||result.faceDetails[0].Eyeglasses.Value ? '' : 'not ')}wearing ${(result.faceDetails[0].Eyeglasses.Value||result.faceDetails[0].Eyeglasses.Value ? (result.faceDetails[0].Eyeglasses.Value ? 'eye' : 'sun') : '')}glasses and are ${(result.faceDetails[0].Smile.Value ? '' : 'not ')}smiling with their mouth ${(result.faceDetails[0].MouthOpen.Value ? 'open' : 'closed')} and eyes ${(result.faceDetails[0].EyesOpen.Value ? 'open' : 'closed')}.` : false,
               persons: result.persons,
               celebrity: result && result.celebrity ? result.celebrity : false,
-              displayName: result.persons[0] && result.persons[0].image_id && result.celebrity && result.celebrity[0] ? `${result.persons[0].image_id} (${result.celebrity[0].Name})` : (result.persons[0] && result.persons[0].image_id ? result.persons[0].image_id : false) || (result && result.celebrity[0] ? result.celebrity[0].Name : false) || false,
-              collections: "AntPay"
+              displayName: result.persons[0] && result.persons[0].image_id ? `${result.persons[0].image_id}` : false
             };
             console.log(search);
             //let m = instance.search.get();
@@ -69,6 +82,7 @@ Template.search.events({
             //sessionStorage.setItem('moment', JSON.stringify(m));
             //instance.search.set(search);
             Session.set('search', search);
+            instance.isSearching.set(false);
             //localTimeline.insert(moment);
           }
         });

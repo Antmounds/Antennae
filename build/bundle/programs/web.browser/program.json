@@ -2,31 +2,31 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "247e56f5ed72fb6a94c487745f83d8636f106c53.js",
+      "path": "82087a4e947c53d9481feec324d1054b2e5a17f4.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/247e56f5ed72fb6a94c487745f83d8636f106c53.js?meteor_js_resource=true",
-      "size": 1675791,
-      "hash": "247e56f5ed72fb6a94c487745f83d8636f106c53"
+      "url": "/82087a4e947c53d9481feec324d1054b2e5a17f4.js?meteor_js_resource=true",
+      "size": 1690540,
+      "hash": "82087a4e947c53d9481feec324d1054b2e5a17f4"
     },
     {
-      "path": "247e56f5ed72fb6a94c487745f83d8636f106c53.stats.json",
+      "path": "82087a4e947c53d9481feec324d1054b2e5a17f4.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/247e56f5ed72fb6a94c487745f83d8636f106c53.stats.json?meteor_js_resource=true",
-      "size": 18596,
-      "hash": "58d7ad81b96040722ea7856f334c9725505b4487"
+      "url": "/82087a4e947c53d9481feec324d1054b2e5a17f4.stats.json?meteor_js_resource=true",
+      "size": 18639,
+      "hash": "0dc3c8e00a808e555c0241ae0925882b7fcad402"
     },
     {
-      "path": "603c52af6e844350b51d2b4fdabc91c35872239b.css",
+      "path": "333bccc3a5577861df5810cb9d67e5265dea4dc7.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/603c52af6e844350b51d2b4fdabc91c35872239b.css?meteor_css_resource=true",
-      "size": 133452,
-      "hash": "603c52af6e844350b51d2b4fdabc91c35872239b"
+      "url": "/333bccc3a5577861df5810cb9d67e5265dea4dc7.css?meteor_css_resource=true",
+      "size": 133585,
+      "hash": "333bccc3a5577861df5810cb9d67e5265dea4dc7"
     },
     {
       "path": "packages/materialize_materialize/fonts/roboto/Roboto-Bold.woff",
@@ -155,6 +155,15 @@
       "hash": "d3043782637cf83420ceae254efd92ed9898074f"
     },
     {
+      "path": "app/android-icon-512x512.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/android-icon-512x512.png",
+      "size": 26808,
+      "hash": "f9c3aad868d74f23db49d44cd2c0b21c607aff90"
+    },
+    {
       "path": "app/android-icon-72x72.png",
       "where": "client",
       "type": "asset",
@@ -171,6 +180,15 @@
       "url": "/android-icon-96x96.png",
       "size": 7059,
       "hash": "1fcd43cf7850fd1af8724435b70e10937d0c987b"
+    },
+    {
+      "path": "app/apple-icon-1024x1024.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/apple-icon-1024x1024.png",
+      "size": 70119,
+      "hash": "75f2a7c213daa0d0be1267b2ded776bed7acf8ee"
     },
     {
       "path": "app/apple-icon-114x114.png",
@@ -216,6 +234,33 @@
       "url": "/apple-icon-180x180.png",
       "size": 16057,
       "hash": "2a67f1c225be7fa898e4870b552bf139b0e808ba"
+    },
+    {
+      "path": "app/apple-icon-196x196.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/apple-icon-196x196.png",
+      "size": 9119,
+      "hash": "d5d7c3ec935d9a39023e173ba3abe018dc90df74"
+    },
+    {
+      "path": "app/apple-icon-256x256.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/apple-icon-256x256.png",
+      "size": 11693,
+      "hash": "76bba0a30fe5050faecf4396d3a6972be7d4e74b"
+    },
+    {
+      "path": "app/apple-icon-512x512.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/apple-icon-512x512.png",
+      "size": 26808,
+      "hash": "f9c3aad868d74f23db49d44cd2c0b21c607aff90"
     },
     {
       "path": "app/apple-icon-57x57.png",
@@ -317,13 +362,22 @@
       "hash": "158582ba901f19d85d792d7785766ad38bde0d5e"
     },
     {
+      "path": "app/logo-white.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/logo-white.png",
+      "size": 33236,
+      "hash": "46374d15aa66c880f5b4aa456eb9355f1b5262ea"
+    },
+    {
       "path": "app/manifest.json",
       "where": "client",
       "type": "asset",
       "cacheable": false,
       "url": "/manifest.json",
-      "size": 720,
-      "hash": "d103f4e3e3187d0d40a11d08e2483ac2e4605bc0"
+      "size": 1128,
+      "hash": "7739d7522f0a1ec7b8c99b8a16bf41a34e82beac"
     },
     {
       "path": "app/ms-icon-144x144.png",
@@ -344,6 +398,15 @@
       "hash": "af17cc8862dbf66229473e4aeba5a590f5c4921e"
     },
     {
+      "path": "app/ms-icon-310x150.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/ms-icon-310x150.png",
+      "size": 9100,
+      "hash": "18b7d8d30c17230fe8a620178142899ddc6e0c2f"
+    },
+    {
       "path": "app/ms-icon-310x310.png",
       "where": "client",
       "type": "asset",
@@ -360,6 +423,15 @@
       "url": "/ms-icon-70x70.png",
       "size": 4549,
       "hash": "d61906488d655f1e99a98b43ae8eeb9ea17a4570"
+    },
+    {
+      "path": "app/sw.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/sw.js",
+      "size": 1685,
+      "hash": "ce7baccc42aa403ce97a068b3b6b08a4d3d96cff"
     },
     {
       "path": "app/img/avatar5.png",
@@ -401,7 +473,7 @@
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "6b3ea04f24b1ccd2352018b08d5ed9312a71075d"
+      "hash": "c4c32272442c7dfd7acde80ffde7aba9ebad5255"
     }
   ]
 }

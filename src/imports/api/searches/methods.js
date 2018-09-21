@@ -9,17 +9,47 @@ AWS.config.region = 'us-east-1';
 var rekognition = new AWS.Rekognition();
 
 Meteor.methods({
-	"search.face"(picData,matchThreshold=98){
+	"getDashboardStats"(){
+		let dashboardStats = {};
+		dashboardStats.collections = Collections.find({}).count();
+		dashboardStats.faces = Prints.find().count();
+		// dashboardStats.faces = Collections.aggregate(
+		// 	   [
+		// 	     {
+		// 	       $group:
+		// 			{
+		// 				_id: "$collection_id",
+		// 				// face_count: { $sum: "$print_count" },
+		// 				count: { $sum: 1 }
+		// 			}
+		// 	     },
+		// 	     {
+		// 	     	$project:
+		// 	     	{
+		// 	     		_id: 1,
+		// 	     		count: 1
+		// 	     	}
+		// 	     }
+		// 	   ]
+		// 	);
+		dashboardStats.searches = Searches.find({}).count();
+		dashboardStats.matches = Searches.find({'search_results.persons': {$ne: []}}).count();
+		dashboardStats.matchPercent = (Math.round((dashboardStats.matches / dashboardStats.searches * 100) * 10) / 10) || 0;
+		console.log(dashboardStats.faces);
+		return dashboardStats;
+	},
+
+	"search.face"(searchData){
 		//return 1;
 		// if(!Meteor.user){
 		// 	throw new Meteor.Error('not-logged-in','must be logged-in to perform search');
 		// 	return false;
 		// }
 		// let matchThreshold = matchThreshold;
-		check(matchThreshold, Number);
+		check(searchData.matchThreshold, Number);
 		console.log("ANALYZING IMAGE...");
 		var t0 = new Date().getTime();
-		let imgBytes = new Buffer.from(picData.split(",")[1], "base64");
+		let imgBytes = new Buffer.from(searchData.img.split(",")[1], "base64");
 		// let colId = Meteor.user().profile.collections;
 		let colIds = Collections.find({collection_type: 'face'}, {fields: {collection_id: 1}}).fetch();
 		console.log(colIds)
@@ -61,7 +91,7 @@ Meteor.methods({
 		_.each(colIds, (colId) => {
 			let rekognitionParams = {
 				"CollectionId": colId.collection_id,
-				"FaceMatchThreshold": matchThreshold,
+				"FaceMatchThreshold": searchData.matchThreshold,
 				"MaxFaces": 2,
 				"Image": { 
 					"Bytes": imgBytes,
@@ -87,9 +117,10 @@ Meteor.methods({
 			while(values[i]){
 				console.log(values[i]);
 				if (values[i].FaceMatches[0]){
+					let colId = Prints.findOne({print_id: values[i].FaceMatches[0].Face.FaceId}, {fields: {print_collection_id: 1}}).print_collection_id;
 					let tag = {
-						collection: Prints.findOne({print_id: values[i].FaceMatches[0].Face.FaceId}, {fields: {print_collection: 1}}),
-						image_id: values[i].FaceMatches[0].Face.ExternalImageId,
+						collection: Collections.findOne(colId, {fields: {collection_name: 1}}).collection_name,
+						image_id: values[i].FaceMatches[0].Face.ExternalImageId.replace(/__/g," "),
 						face_id: values[i].FaceMatches[0].Face.FaceId,
 						similarity: values[i].FaceMatches[0].Similarity,
 					};
@@ -108,7 +139,8 @@ Meteor.methods({
 					persons: persons, //.FaceMatches[0],
 			};
 			let search = {
-					// search_image: picData,
+					// search_image: searchData.img,
+					station_name: searchData.stationName,
 					search_results: search_results
 			};
 			let saveSearch = Searches.insert(search);

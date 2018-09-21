@@ -18,7 +18,7 @@ Collections.Schema = new SimpleSchema({
     type: String,
     label: "Collection ID",
     optional: false,
-    defaultValue: "MyCollection",
+    defaultValue: "My_Collection",
     index: true,
     unique: true
   },
@@ -26,7 +26,7 @@ Collections.Schema = new SimpleSchema({
     type: String,
     label: "Collection Name",
     optional: false,
-    defaultValue: "MyCollection",
+    defaultValue: "My Collection",
     index: true
   },
   "collection_type": {
@@ -36,10 +36,16 @@ Collections.Schema = new SimpleSchema({
     allowedValues: ["face", "voice"],
     defaultValue: "face"
   },
+  "print_count": {
+    type: Number,
+    label: "Print count",
+    optional: true,
+    defaultValue: 0
+  },
   "private": {
     type: Boolean,
     label: "Collection privacy",
-    optional: false,
+    optional: true,
     defaultValue: true
   },
   "created": {
@@ -71,6 +77,7 @@ Collections.publicFields = {
   collection_id: 1,
   collection_name: 1,
   collection_type: 1,
+  print_count: 1,
   private: 1,
   created: 1,
   updated: 1

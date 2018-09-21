@@ -11,22 +11,38 @@ var rekognition = new AWS.Rekognition();
 
 Meteor.startup(() => {
 
-  console.log("getting aws collections...");
-  let colParams= {};
-  let colRequest = rekognition.listCollections(colParams);
+  console.log("syncing aws collections...");
+  let colParams = {};
+  let colRequest = rekognition.listCollections();
   let promise = colRequest.promise();
+// colParams = {
+//            "CollectionId": "macies"
+//         };
+//   let test =      rekognition.describeCollection(colParams).promise().catch(error => { throw new Meteor.Error(error.code, error.message, error); return error; }).then(result => {
+//           console.log(result);
+//           return result;
+//         });
+//     console.log(test);
   let cols = promise.then(result => {
     console.log(result);
     if(result && result.CollectionIds.length > 0){
       _.each(result.CollectionIds, function(colId){
         let awsCol = {
           collection_id: colId,
-          collection_name: colId,
-          collection_type: "face",
-          private: true
+          collection_name: colId.replace("__", " "),
+          collection_type: "face"
         };
-        let existingCol = Collections.upsert({collection_id: colId}, {$set: awsCol});
-        console.log(`upserted collection: ${JSON.stringify(existingCol)}`);
+        // describe collection to get face count
+        colParams = {
+           "CollectionId": colId
+        };
+        rekognition.describeCollection(colParams).promise().catch(error => { throw new Meteor.Error(error.code, error.message, error); return error; }).then(result => {
+          awsCol.print_count = result.FaceCount;
+          console.log(`${colId} collection has ${result.FaceCount} faces`);
+          console.log(awsCol);
+          let existingCol = Collections.upsert({collection_id: colId}, {$set: awsCol});
+          console.log(`upserted collection: ${JSON.stringify(existingCol)}`);
+        });
         // Now try getting existing faces for each collection
         let faceParams = {
           CollectionId: colId
@@ -35,20 +51,19 @@ Meteor.startup(() => {
         let promise = faceRequest.promise();
         let faces = promise.then(result => {
           if(result && result.Faces.length > 0){
-            console.log(`${colId} collection has ${result.Faces.length} faces`);
+            let collection_id = Collections.findOne({collection_id: colId})._id;
             _.each(result.Faces, function(face){
               let awsFace = {
                 print_id: face.FaceId,
-                print_name: face.ExternalImageId || face.ImageId,
+                print_name: face.ExternalImageId.replace("_", " ") || face.ImageId,
                 print_type: "face",
-                print_collection: colId,
-                print_collection_id: Collections.findOne({collection_id: colId})._id,
+                print_collection_id: collection_id,
                 print_details: face,
                 print_adder: "root"
               };
               Prints.simpleSchema().clean(awsFace);
               let existingFace = Prints.upsert({print_id: face.FaceId}, {$set: awsFace});
-              console.log(existingFace);
+              console.log(`upserted print: ${JSON.stringify(existingFace)}`);
             })
           }
         });

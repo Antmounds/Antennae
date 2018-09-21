@@ -34,22 +34,24 @@ Template.collection.rendered = function(){
 Template.collection.helpers({
 
   collection(){
-  	let col = {
-  		collection_name: "COLLECTION"
+  	if(Template.instance().subscriptionsReady()){
+  		return Collections.findOne();
+  	}else{
+  		return {collection_name: 'COLLECTION', subsNotReady: true};
   	};
-  	if(Collections.find().fetch().length > 0){
-  		col = Collections.findOne();
-  	};
-  	return col;
   },
 
   prints(){
-  	let prints = [{}];
-  	if(Prints.find().fetch().length > 0){
-  		prints = Prints.find({}, { sort: { created: -1 } });
-  	console.log(prints);
+  	if(Template.instance().subscriptionsReady()){
+  		return Prints.find({}, { sort: { created: -1 } });
+  	}else{
+  		return {subsNotReady: true};
   	};
-  	return prints;
+  	// let prints = Prints.find({}, { sort: { created: -1 } });
+  	// if(Prints.find().fetch().length > 0){
+  	// 	prints = Prints.find({}, { sort: { created: -1 } });
+  	// 	console.log(prints);
+  	// };
   },
 });
 
@@ -103,6 +105,7 @@ Template.collection.events({
 		            alert(error.message);
 		          }else{
 		            console.log(result);
+		            Tracker.flush();
 		            //let m = instance.search.get();
 		            //m.unshift(moment);
 		            //sessionStorage.setItem('moment', JSON.stringify(m));

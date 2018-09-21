@@ -25,7 +25,10 @@ Template.app_body.created = function(){
 
 Template.app_body.rendered = function(){
   console.log(`${this.view.name} rendered`);
-  $('.button-collapse').sideNav();
+  $('.button-collapse').sideNav({
+    closeOnClick: true,
+    draggable: true
+  });
 };
 
 Template.app_body.helpers({

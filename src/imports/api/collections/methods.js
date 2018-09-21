@@ -8,6 +8,9 @@ var rekognition = new AWS.Rekognition();
 
 Meteor.methods({
 	"collection.save"(newCol){
+		check(newCol.collection_name, String);
+		newCol.collection_id = newCol.collection_name.replace(/ /g,"__");
+		newCol.private = true;
 		console.log(newCol);
 		let collectionParams = {
   			CollectionId: newCol.collection_id

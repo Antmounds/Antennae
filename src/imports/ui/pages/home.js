@@ -7,6 +7,26 @@ import './home.html';
 
 Template.home.created = function(){
   console.log(`${this.view.name} created`);
+  // let dashboardStats = {};
+  // dashboardStats.collections = 5;
+  // dashboardStats.faces = 324;
+  // dashboardStats.searches = 793;
+  // dashboardStats.matches = 105;
+  // dashboardStats.matchPercent = Math.round((dashboardStats.matches / dashboardStats.searches * 100) * 10) / 10;
+  // Session.set('stats', dashboardStats);
+
+  this.dashboardStats = new ReactiveVar("");
+  Meteor.call('getDashboardStats', (error, result) => {
+    if(error){
+      let e = JSON.stringify(error, null, 4);
+      console.log(e);
+      alert(error.message);
+    }else{
+      console.log(result);
+      //this.app_info = new ReactiveVar(result);
+      this.dashboardStats.set(result);
+    }
+  });
   // counter starts at 0
   //sessionStorage.getItem('moment') || sessionStorage.setItem('moment', JSON.stringify([]));
   //this.search = new ReactiveVar(false);
@@ -18,6 +38,12 @@ Template.home.rendered = function(){
 };
 
 Template.home.helpers({
+  getDashboardStats() {
+    let stats = Template.instance().dashboardStats.get();//Session.get('stats');
+    console.log(stats);
+    return stats;
+  },
+
   search() {
     let s = Session.get('search');//Template.instance().search.get();
     console.log(s);

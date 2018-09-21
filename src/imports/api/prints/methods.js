@@ -14,10 +14,9 @@ Meteor.methods({
 		if(!col){
 			throw new Meteor.Error('no-collection','No collection found with given id!');
 		};
-		newPrint.print_adder = this.userId || "null";
-		newPrint.print_collection = col.collection_id || "people";
-		newPrint.print_collection_id = col._id;
-		newPrint.print_name = newPrint.name.replace(/ /g,"_");
+		newPrint.print_adder = this.userId || null;
+		newPrint.print_collection_id = col._id || null;
+		newPrint.print_name = newPrint.name.replace(/ /g,"__");
 		newPrint.print_img = newPrint.img;
 		// console.log(newPrint);
 		if(!newPrint){
@@ -26,7 +25,7 @@ Meteor.methods({
 		Prints.simpleSchema().clean(newPrint);
         // index a face into a collection
         let faceParams = {
-          CollectionId: newPrint.print_collection,
+          CollectionId: col.collection_id,
           ExternalImageId: newPrint.print_name,
 		  Image: { 
 			"Bytes": new Buffer.from(newPrint.print_img.split(",")[1], "base64"),
@@ -50,22 +49,31 @@ Meteor.methods({
 
 	"print.delete"(printId){
 		check(printId,String);
-		if(printId){
-			let print = Prints.remove(printId);
-			console.log(`deleted face: ${printId}`);
-			return `deleted face: ${printId}`;
-		};
-	},
-
-	"print.count"(data){
-			console.log(data);
-		// return 55;
-		let colId =  data || "";
-		check(colId,String);
-		if(colId){
-			let printCount = Prints.find({print_collection_id: colId}).count();
-			console.log(printCount);
-			return printCount;
+		let print = Prints.findOne(printId);
+		console.log(print);
+		if(!print){
+			throw new Meteor.Error('no-print','No print found with given id!');
+		}else{
+			let params = {
+				CollectionId: print.print_collection_id, 
+				FaceIds: [
+					print.print_id
+				]
+			};
+			let printRequest = rekognition.deleteFaces(params).promise().catch(error => { throw new Meteor.Error(error.code, error.message, error); return error; });
+			printRequest.then(values => {return values});
+			let oldPrint = Prints.remove(print._id);
+			if(oldPrint){
+				console.log(`deleted face: ${printId}`);
+			}else{
+	            console.log(printId);
+	            throw new Meteor.Error('remove-print-error',`error removing print: ${printId}`)		
+			};
+			return `removed print: ${printId}`;
+		// if(printId){
+		// 	let print = Prints.remove(printId);
+		// 	console.log(`deleted face: ${printId}`);
+		// 	return `deleted face: ${printId}`;
 		};
 	},
 })

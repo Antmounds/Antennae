@@ -5,13 +5,13 @@
     "start": "meteor run"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.54",
-    "aws-sdk": ">=2.247.1",
+    "@babel/runtime": "7.0.0-beta.55",
+    "aws-sdk": "^2.317.0",
     "babel-runtime": ">=6.26.0",
     "bcrypt": "^3.0.0",
     "fibers": "^2.0.2",
-    "jquery-validation": "^1.17.0",
-    "meteor-node-stubs": ">=0.3.2",
-    "sweetalert2": "^7.26.10"
+    "jquery-validation": "^1.18.0",
+    "meteor-node-stubs": "^0.4.1",
+    "sweetalert2": "^7.26.29"
   }
 }

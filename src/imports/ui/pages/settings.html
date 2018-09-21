@@ -1,15 +1,25 @@
 <template name="settings">
-	<h5>Settings</h5>
-	<br />
+	<h4>Settings</h4>
 	<br />
 	<br />
 
 	<form action="#">
-		<i class="right material-icons tooltipped" title="It's important to set a responsible similarity depending on application use" data-position="left" data-tooltip="For security and accurate identification, organizations, agencies and LEOs are advised to set a similarity level of at least 97%">help</i>
-		<label for="similarityLevel"><h6>Similarity</h6></label>
-		<p class="range-field">
-			<input type="range" id="similarityLevel" name="similarityLevel" value="97" min="30" max="100" step="1" />
-		</p>
+		<div class="row">
+			<i class="right material-icons tooltipped" title="For security and accurate identification, organizations, agencies and LEOs are advised to set a similarity level of at least 98%" data-position="left" data-tooltip="For security and accurate identification, organizations, agencies and LEOs are advised to set a similarity level of at least 98%">help</i>
+			<h6 class="right">{{similarityLevel}}%</h6>
+			<label for="similarityLevel"><h6>Similarity</h6></label>
+			<p class="range-field">
+				<input type="range" id="similarityLevel" name="similarityLevel" value="97" min="30" max="100" step="1" />
+			</p>
+		</div>
+
+		<div class="row">
+			<i class="right material-icons tooltipped" title="The station name will be displayed as the search location" data-position="left" data-tooltip="The station name will be displayed as the search location">help</i>
+			<label for="stationName"><h6>Station Name</h6></label>
+			<p class="range-field">
+				<input type="text" id="stationName" name="stationName" value="Station 1" />
+			</p>
+		</div>
 			<!-- <input type="range" id="similarityLevel" name="similarityLevel" value="97" min="30" max="100" step="1" list="tickmarks" />
 			<datalist id="tickmarks">
 				<option value="30" label="30%"></option>

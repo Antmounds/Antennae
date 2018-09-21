@@ -25,19 +25,25 @@ Template.settings.rendered = function(){
 
 Template.settings.helpers({
 
-  //searches(){
-  	//let searches = Searches.find({}, { sort: { created: -1 } });
-  	// console.log(searches.fetch());
-  	//Tracker.onInvalidate(() => console.trace());
-  	//return searches;
-  //},
+  similarityLevel(){
+  	return Session.get('matchThreshold');
+  },
 });
 
 Template.settings.events({
   'change #similarityLevel'(event, instance) {
   	event.preventDefault();
-  	Session.set('matchThreshold', Number(event.currentTarget.value));
-  	console.log(event);
-  	Materialize.toast(event.currentTarget.value,5000);
+  	let newSimilarityLevel = Number(event.currentTarget.value) || 98;
+  	console.log(newSimilarityLevel);
+  	Session.set('matchThreshold', newSimilarityLevel);
+  	Materialize.toast(`Similarity updated to ${newSimilarityLevel}%`,1000);
+  },
+
+  'change #stationName'(event, instance) {
+  	event.preventDefault();
+  	let newStationName = String(event.currentTarget.value) || 'Station 1';
+  	console.log(newStationName);
+  	Session.set('stationName', newStationName);
+  	Materialize.toast(`Station Name updated to ${newStationName}`,1000);
   },
 });

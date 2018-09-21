@@ -141,6 +141,7 @@ install("sha");
 install("srp");
 install("email");
 install("accounts-password");
+install("sakulstra:aggregate");
 install("livedata");
 install("hot-code-push");
 install("launch-screen");
@@ -232,7 +233,7 @@ module.useNode();
 ////////////////////////////////////////////////////////////////////////////////////////
                                                                                       //
 exports.name = "aws-sdk";
-exports.version = "2.247.1";
+exports.version = "2.317.0";
 exports.main = "lib/aws.js";
 
 ////////////////////////////////////////////////////////////////////////////////////////

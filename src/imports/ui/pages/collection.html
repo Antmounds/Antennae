@@ -7,24 +7,76 @@
 					
 					<h5>{{collection.collection_name}}<span class="right"><span class="green-text">{{prints.count}}</span> prints</span></h5>
 				</li>
-				{{#each prints}}
-				<li id="{{_id}}" class="collection-item">
-					<div class="row valign-wrapper">
-						<div class="col s2">
-						  <img id="img-{{_id}}" src="{{print_img}}" alt="face" class="circle responsive-img" width="auto" height="auto"> <!-- notice the "circle" class -->
-						</div>
-						<div class="col s10">
-						  <span class="black-text">
-								<p>
-									<a id="goToCollection" href="#" class="title">{{print_name}}</a><br />
-									{{print_id}}
-								</p>
-						  </span>
-						  <a id="btnDeleteFace" name="{{_id}}" class="btn btn-small right">delete</a>
-						</div>
-					</div>
-				</li>
-				{{/each}}
+				{{#if prints.subsNotReady}}
+				<div class="valign-wrapper" style="display: flex;align-items: center;justify-content: center;height:400px;">
+					<div class="preloader-wrapper big active">
+				      <div class="spinner-layer spinner-blue">
+				        <div class="circle-clipper left">
+				          <div class="circle"></div>
+				        </div><div class="gap-patch">
+				          <div class="circle"></div>
+				        </div><div class="circle-clipper right">
+				          <div class="circle"></div>
+				        </div>
+				      </div>
+
+				      <div class="spinner-layer spinner-red">
+				        <div class="circle-clipper left">
+				          <div class="circle"></div>
+				        </div><div class="gap-patch">
+				          <div class="circle"></div>
+				        </div><div class="circle-clipper right">
+				          <div class="circle"></div>
+				        </div>
+				      </div>
+
+				      <div class="spinner-layer spinner-yellow">
+				        <div class="circle-clipper left">
+				          <div class="circle"></div>
+				        </div><div class="gap-patch">
+				          <div class="circle"></div>
+				        </div><div class="circle-clipper right">
+				          <div class="circle"></div>
+				        </div>
+				      </div>
+
+				      <div class="spinner-layer spinner-green">
+				        <div class="circle-clipper left">
+				          <div class="circle"></div>
+				        </div><div class="gap-patch">
+				          <div class="circle"></div>
+				        </div><div class="circle-clipper right">
+				          <div class="circle"></div>
+				        </div>
+				      </div>
+				    </div>
+				</div>
+				{{else}}
+					{{#if prints.count}}
+						{{#each prints}}
+						<li id="{{_id}}" class="collection-item">
+							<div class="row valign-wrapper">
+								<div class="col s2">
+								  <img id="img-{{_id}}" src="{{print_img}}" alt="face" class="circle responsive-img" width="auto" height="auto"> <!-- notice the "circle" class -->
+								</div>
+								<div class="col s10">
+								  <span class="black-text">
+										<p>
+											<a id="goToCollection" href="#" class="title">{{print_name}}</a><br />
+											{{print_id}}
+										</p>
+								  </span>
+								  <a id="btnDeleteFace" name="{{_id}}" class="btn btn-small right">delete</a>
+								</div>
+							</div>
+						</li>
+						{{/each}}
+					{{else}}
+					<li class="collection-item">
+						<h5>No prints found, add one using the button below.</h5>
+					</li>
+					{{/if}}
+				{{/if}}
 			</ul>
 		</div>
 	</div>

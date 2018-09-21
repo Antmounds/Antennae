@@ -13,7 +13,7 @@ Template.collections.created = function(){
 	//self.curSearches = new ReactiveDict(null);
 
 	self.autorun(() => {
-		self.subscribe("collections.get");
+		self.colHandle = self.subscribe("collections.get");
 		console.log(`Collections are ${self.subscriptionsReady() ? 'ready' : 'not ready'}`);
 	});
 };
@@ -36,14 +36,11 @@ Template.collections.rendered = function(){
 			},
 		},
 		submitHandler(event) {
-			let colId = faker.helpers.slugify(template.find( "[name='collection_name']" ).value.toLowerCase());
 			let collection = {
-				collection_id: colId,
 				collection_name: template.find( "[name='collection_name']" ).value,
-				collection_type: 'face',
-				private: true //template.find( "[name='collection_name']" ).value,
+				collection_type: 'face'
 			};
-
+			$("[name='collection_name']").val("");
 			console.log(collection);
 			// console.log(Collections.simpleSchema().clean(collection));
 
@@ -79,45 +76,16 @@ Template.collections.rendered = function(){
 
 Template.collections.helpers({
 
- //  collections(){
- //  	if(Collections.find().count>0){
- //  		console.log(Collections.find());
-	// 	return Collections.find({}, { sort: { created: 1 } });
-	// }else{
- //  		console.log('no collections; loading samples')
-
-	// 	return false;
-	// }
- //  },
+  privateCollections(){
+  	if(Template.instance().subscriptionsReady()){
+  		return Collections.find({private: true}, { sort: { created: -1 } });
+  	}else{
+  		return {subsNotReady: true};
+  	};
+  },
 
   publicCollections(){
   	return data;
-  },
-
-  printCount(colId){
-  	console.log(colId);
-  	Meteor.call('print.count', colId, (error, result) => {
-		if(error){
-			let e = JSON.stringify(error, null, 4);
-			console.log(e);
-			alert(error.message);
-		}else{
-			console.log(result);
-			return result;
-		};
-	});
-  },
-
-  privateCollections(){
-  	if(Collections.find({private: true}).fetch().length>0){
-  		let cols = Collections.find({private: true}, { sort: { created: -1 } });
-  		// console.log(cols.fetch());
-		return cols;
-	}else{
-  		console.log('no collections; loading samples');
-
-		return false;
-	}
   },
 
   enabled(){
