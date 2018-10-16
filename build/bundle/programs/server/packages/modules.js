@@ -142,6 +142,8 @@ install("srp");
 install("email");
 install("accounts-password");
 install("sakulstra:aggregate");
+install("ostrio:cookies", "meteor/ostrio:cookies/cookies.js");
+install("ostrio:files", "meteor/ostrio:files/server.js");
 install("livedata");
 install("hot-code-push");
 install("launch-screen");

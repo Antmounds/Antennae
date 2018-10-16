@@ -98,7 +98,8 @@ resource "aws_iam_role_policy" "ecs-task" {
       "Sid": "",
       "Effect": "Allow",
       "Action": [
-        "rekognition:*"
+        "rekognition:*",
+        "s3:*"
       ],
       "Resource": "*"
     }

@@ -1,5 +1,5 @@
 # Antennae
-[![pipeline status](https://gitlab.com/Antmounds/Antennae/badges/develop/pipeline.svg)](https://gitlab.com/Antmounds/Antennae/commits/develop) [![CircleCI](https://circleci.com/gh/Antmounds/antennae.svg?style=svg)](https://circleci.com/gh/Antmounds/antennae) [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0) [![Discord Chat](https://img.shields.io/discord/299962468581638144.svg?logo=discord)](https://discord.gg/dw3Dam2)
+[![pipeline status](https://gitlab.com/Antmounds/Antennae/badges/develop/pipeline.svg)](https://gitlab.com/Antmounds/Antennae/commits/develop) [![CircleCI](https://circleci.com/gh/Antmounds/antennae.svg?style=svg)](https://circleci.com/gh/Antmounds/antennae) [![](https://images.microbadger.com/badges/image/antmounds/antennae.svg)](https://microbadger.com/images/antmounds/antennae "Get your own image badge on microbadger.com") [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0) [![Discord Chat](https://img.shields.io/discord/299962468581638144.svg?logo=discord)](https://discord.gg/VtFkvSv)
 
 ![Dockerhub stats](http://dockeri.co/image/antmounds/antennae "Official Dockerhub image")
 
@@ -81,7 +81,7 @@ This will create the following resources:
 * Follow the getting started guide for basic usage instructions
 
 ## Contributing
-Pull requests, forks and stars are mucho appreciated and encouraged. See [CONTRIBUTING.md](https://bitbucket.org/Antmounds/antennae.git#CONTRIBUTING) for how to get involved in this project.
+Pull requests, forks and stars are mucho appreciated and encouraged. See [CONTRIBUTING.md](https://gitlab.com/Antmounds/Antennae/blob/master/CONTRIBUTING.md) for how to get involved in this project.
 
 - #### Get official Antmounds gear!
 	<a href="https://streamlabs.com/Antmounds/#/merch">
@@ -97,8 +97,8 @@ Pull requests, forks and stars are mucho appreciated and encouraged. See [CONTRI
 	</a> 
 
 ## Get in touch
-* :speaking_head: Join the Antmounds [discord](https://discord.gg/VtFkvSv) server for more discussion on this project.
-* :tv: Watch LIVE development of this app on [YouTube](https://www.youtube.com/Antmounds), [Twitch.tv](https://twitch.tv/Antmounds) and [LiveEdu.tv](https://liveedu.tv/Antmounds)
+* :speaking_head: Join the Antmounds [discord](https://discord.gg/VtFkvSv) server for more discussion and support on this project.
+* :tv: Watch LIVE development of this app on [YouTube](https://www.youtube.com/Antmounds), [Twitch.tv](https://twitch.tv/Antmounds) and [Mixer](https://mixer.com/Antmounds)
 * :clipboard: Use the [issue tracker](https://gitlab.com/Antmounds/Antennae/issues) for bugs, feature requests and enhancements
 * :moneybag: For serious business inquiries contact [business@antmounds.com](business@antmounds.com)
 
@@ -106,13 +106,8 @@ Pull requests, forks and stars are mucho appreciated and encouraged. See [CONTRI
 * [Nick@antmounds](https://gitlab.com/Antmounds) - *initial development*
 
 ## License
-Copyright (C) 2018 Antmounds
+Copyright © 2018-present Antmounds.com, Inc. or its affiliates. All Rights Reserved.
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License, version 3,
-as published by the Free Software Foundation.
+>This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License, version 3, as published by the Free Software Foundation.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-[GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.en.html) for more details.
+>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.en.html) for more details.

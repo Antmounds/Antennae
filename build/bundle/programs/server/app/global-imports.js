@@ -14,6 +14,7 @@ _ = Package.underscore._;
 check = Package.check.check;
 Match = Package.check.Match;
 faker = Package['practicalmeteor:faker'].faker;
+FilesCollection = Package['ostrio:files'].FilesCollection;
 Meteor = Package.meteor.Meteor;
 global = Package.meteor.global;
 meteorEnv = Package.meteor.meteorEnv;

@@ -22,12 +22,12 @@ const os = require('os');
 
 
 server_mode = Meteor.isProduction ? "PRODUCTION" : "DEVELOPMENT";
-console.log('index.js: ' + server_mode + "-->" + JSON.stringify(Meteor.settings));
+// console.log('index.js: ' + server_mode + "-->" + JSON.stringify(Meteor.settings));
 
 Meteor.methods({
 
 	info(){
-		return `release: lite - version: 0.9 - build: ${process.env.BUILD || 'dev'} - hostname: ${os.hostname()}`;
+		return `release: ${process.env.VERSION || '0.X'}-lite - version: ${process.env.VERSION || '0.X'} - build: ${process.env.BUILD || 'dev'} - hostname: ${os.hostname()}`;
 	},
 
 	async getData(){    

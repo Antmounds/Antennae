@@ -2,22 +2,22 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "b34ee2de686e62dfc9b100f94bf644eac03d585d.js",
+      "path": "480f94e872b3783a688ab12054c6f527194deccb.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/b34ee2de686e62dfc9b100f94bf644eac03d585d.js?meteor_js_resource=true",
-      "size": 1839001,
-      "hash": "b34ee2de686e62dfc9b100f94bf644eac03d585d"
+      "url": "/480f94e872b3783a688ab12054c6f527194deccb.js?meteor_js_resource=true",
+      "size": 1881564,
+      "hash": "480f94e872b3783a688ab12054c6f527194deccb"
     },
     {
-      "path": "b34ee2de686e62dfc9b100f94bf644eac03d585d.stats.json",
+      "path": "480f94e872b3783a688ab12054c6f527194deccb.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/b34ee2de686e62dfc9b100f94bf644eac03d585d.stats.json?meteor_js_resource=true",
-      "size": 32162,
-      "hash": "7aa88f0a27275f34f52e8d3fd56d448bff5a59c6"
+      "url": "/480f94e872b3783a688ab12054c6f527194deccb.stats.json?meteor_js_resource=true",
+      "size": 32901,
+      "hash": "6a9fa4b323ab85ea9a1ad09e9a314bd7cf306fae"
     },
     {
       "path": "333bccc3a5577861df5810cb9d67e5265dea4dc7.css",
@@ -117,6 +117,15 @@
       "url": "/packages/materialize_materialize/fonts/roboto/Roboto-Thin.woff2",
       "size": 63056,
       "hash": "e744747fce24d0dd3e20365d2505f7b6703c504b"
+    },
+    {
+      "path": "packages/ostrio_files/worker.min.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/ostrio_files/worker.min.js",
+      "size": 625,
+      "hash": "6d127a96f8f989baa5999b29fe802006d746b553"
     },
     {
       "path": "app/android-icon-144x144.png",
@@ -473,7 +482,7 @@
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "c4c32272442c7dfd7acde80ffde7aba9ebad5255"
+      "hash": "3b3829053b486acd4944ef165003fbb980489de4"
     }
   ]
 }

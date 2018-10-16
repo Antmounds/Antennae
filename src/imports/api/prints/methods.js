@@ -32,6 +32,7 @@ Meteor.methods({
 		  },
           DetectionAttributes: ["ALL"]
         };
+        console.log(1);
         let faceRequest = rekognition.indexFaces(faceParams);
         let promise = faceRequest.promise();
         let indexFace = promise.then(result => {
@@ -50,38 +51,37 @@ Meteor.methods({
 	"print.delete"(printId){
 		check(printId,String);
 		let print = Prints.findOne(printId);
+		let col = Collections.findOne(print.print_collection_id);
 		console.log(print);
 		if(!print){
 			throw new Meteor.Error('no-print','No print found with given id!');
 		}else{
 			let params = {
-				CollectionId: print.print_collection_id, 
+				CollectionId: col.collection_id, 
 				FaceIds: [
 					print.print_id
 				]
 			};
 			let printRequest = rekognition.deleteFaces(params).promise().catch(error => { throw new Meteor.Error(error.code, error.message, error); return error; });
-			printRequest.then(values => {return values});
-			let oldPrint = Prints.remove(print._id);
-			if(oldPrint){
-				console.log(`deleted face: ${printId}`);
-			}else{
-	            console.log(printId);
-	            throw new Meteor.Error('remove-print-error',`error removing print: ${printId}`)		
-			};
+			printRequest.then(values => {
+				let oldPrint = Prints.remove(print._id);
+				if(oldPrint){
+					console.log(`deleted face: ${printId}`);
+				}else{
+		            console.log(printId);
+		            throw new Meteor.Error('remove-print-error',`error removing print: ${printId}`)		
+				};
+				return values
+			});
 			return `removed print: ${printId}`;
-		// if(printId){
-		// 	let print = Prints.remove(printId);
-		// 	console.log(`deleted face: ${printId}`);
-		// 	return `deleted face: ${printId}`;
 		};
 	},
 })
 
 // Define a rule to limit method calls
-// let runScanRule = {
-// 	type: 'method',
-// 	name: 'print.save'
-// };
-// Add the rule, allowing up to 1 scan every 10 seconds
-// DDPRateLimiter.addRule(runScanRule, 1, 10000);
+let deletePrintRule = {
+	type: 'method',
+	name: 'print.delete'
+};
+// Add the rule, allowing up to 1 scan every 1 seconds
+DDPRateLimiter.addRule(deletePrintRule, 1, 1000);

@@ -36,9 +36,10 @@ build_app:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
   script: |
     echo "Building image..."
+    VERSION="1.0"
     DEV=$(echo $GITLAB_USER_NAME | tr '[:upper:]' '[:lower:]')
     docker pull $CI_REGISTRY_IMAGE/dev:$DEV || true
-    docker build --rm -f docker/Dockerfile --cache-from ${CI_REGISTRY_IMAGE}/dev:$DEV -t $CI_REGISTRY_IMAGE -t $CI_REGISTRY_IMAGE/dev --build-arg BUILD=$CI_PIPELINE_IID --build-arg BUILD_DATE="$(date --utc +%FT%TZ)" --build-arg METEOR_SETTINGS="$(cat src/tools/settings.json)" --build-arg VCS_REF="$(git rev-parse --short HEAD)" .
+    docker build --rm -f docker/Dockerfile --cache-from ${CI_REGISTRY_IMAGE}/dev:$DEV -t $CI_REGISTRY_IMAGE -t $CI_REGISTRY_IMAGE/dev --build-arg BUILD=$CI_PIPELINE_IID --build-arg BUILD_DATE="$(date --utc +%FT%TZ)" --build-arg METEOR_SETTINGS="$(cat src/tools/settings.json)" --build-arg VCS_REF="$(git rev-parse --short HEAD)" --build-arg VERSION=$VERSION .
     docker save $CI_REGISTRY_IMAGE -o image.tar
     docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
     docker tag $CI_REGISTRY_IMAGE/dev $CI_REGISTRY_IMAGE/dev:$DEV

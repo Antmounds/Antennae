@@ -1,12 +1,14 @@
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import AWS from 'aws-sdk';
+import { Random } from 'meteor/random';
 
 import { Collections } from '../collections/collections.js';
-import { Prints } from '../../api/prints/prints.js';
+import { Prints } from '../prints/prints.js';
 import { Searches } from './searches.js';
 
 AWS.config.region = 'us-east-1';
 var rekognition = new AWS.Rekognition();
+var s3 = new AWS.S3();
 
 Meteor.methods({
 	"getDashboardStats"(){
@@ -39,7 +41,7 @@ Meteor.methods({
 		return dashboardStats;
 	},
 
-	"search.face"(searchData){
+	async "search.face"(searchData){
 		//return 1;
 		// if(!Meteor.user){
 		// 	throw new Meteor.Error('not-logged-in','must be logged-in to perform search');
@@ -50,31 +52,76 @@ Meteor.methods({
 		console.log("ANALYZING IMAGE...");
 		var t0 = new Date().getTime();
 		let imgBytes = new Buffer.from(searchData.img.split(",")[1], "base64");
+		let imgFileName = `uploads/images/${Random.id()}.jpg`;
+		let uploadBucket = "antennae";
+		let s3Params = {
+			ACL: 'private',
+			Body: imgBytes, 
+			Bucket: uploadBucket, 
+			ContentEncoding: 'base64',
+			ContentType: 'image/jpeg',
+			Key: imgFileName,
+			Metadata: {
+		  		'Content-Type': 'image/jpeg'
+		  	},
+		    Tagging: `Name=${imgFileName}&Application=Antennae&Owner=Antmounds`
+		 };
+		// console.log(s3Params);
+		let s3Results = await s3.putObject(s3Params).promise().catch(error => { throw new Meteor.Error(error.code, error.message, error); return error;
+		}).then( value => {
+			// console.log(value);
+			return value;
+		});
+		console.log(s3Results);
+		// get signed url for image valid for 1 day
+		s3Params = { 
+		  Bucket: uploadBucket, 
+		  Key: imgFileName,
+		  Expires: 86400 // 1-day url expiration
+		};
+		let s3SignedUrl = s3.getSignedUrl("getObject", s3Params);
+		console.log(s3SignedUrl);
 		// let colId = Meteor.user().profile.collections;
 		let colIds = Collections.find({collection_type: 'face'}, {fields: {collection_id: 1}}).fetch();
-		console.log(colIds)
+		console.log(colIds);
 		let moderationParams = {
 			"Image": { 
-				"Bytes": imgBytes,
+				// "Bytes": imgBytes,
+				"S3Object": {
+					"Bucket": uploadBucket, 
+					"Name": imgFileName
+				}
 			},
 			"MinConfidence": 50,
 		};
 		let labelParams = {
 			"Image": { 
-				"Bytes": imgBytes,
+				// "Bytes": imgBytes,
+				"S3Object": {
+					"Bucket": uploadBucket, 
+					"Name": imgFileName
+				}
 			},
 			"MaxLabels": 20,
 			"MinConfidence": 75,
 		};
 		let faceParams = {
 			"Image": { 
-				"Bytes": imgBytes,
+				// "Bytes": imgBytes,
+				"S3Object": {
+					"Bucket": uploadBucket, 
+					"Name": imgFileName
+				}
 			},
   			"Attributes": ["ALL"],
 		};
 		let celebrityParams = {
 			"Image": { 
-				"Bytes": imgBytes,
+				// "Bytes": imgBytes,
+				"S3Object": {
+					"Bucket": uploadBucket, 
+					"Name": imgFileName
+				}
 			},
 		};
 		// create request objects
@@ -91,17 +138,20 @@ Meteor.methods({
 		_.each(colIds, (colId) => {
 			let rekognitionParams = {
 				"CollectionId": colId.collection_id,
-				"FaceMatchThreshold": searchData.matchThreshold,
+				"FaceMatchThreshold": searchData.matchThreshold || 95,
 				"MaxFaces": 2,
 				"Image": { 
-					"Bytes": imgBytes,
+					"S3Object": {
+						"Bucket": uploadBucket, 
+						"Name": imgFileName
+					}
 				},
 			};
 			console.log(rekognitionParams);
 			let rekognitionRequest = rekognition.searchFacesByImage(rekognitionParams);
 			allPromises.push(rekognitionRequest.promise().catch(error => { throw new Meteor.Error(error.code, error.message, error); return error; }));
 			console.log(colId.collection_id);
-		});// rekognitionRequest.promise();
+		});
 		// Fulfill promises in parallel
 		let response = Promise.all(
 			allPromises
@@ -117,6 +167,7 @@ Meteor.methods({
 			while(values[i]){
 				console.log(values[i]);
 				if (values[i].FaceMatches[0]){
+					console.log(values[i].FaceMatches[0].Face.FaceId);
 					let colId = Prints.findOne({print_id: values[i].FaceMatches[0].Face.FaceId}, {fields: {print_collection_id: 1}}).print_collection_id;
 					let tag = {
 						collection: Collections.findOne(colId, {fields: {collection_name: 1}}).collection_name,
@@ -136,10 +187,11 @@ Meteor.methods({
 					labels: values[1].Labels,
 					faceDetails: values[2].FaceDetails,
 					celebrity: values[3].CelebrityFaces,
-					persons: persons, //.FaceMatches[0],
+					persons: persons,
+					url: s3SignedUrl
 			};
 			let search = {
-					// search_image: searchData.img,
+					search_image: s3SignedUrl,
 					station_name: searchData.stationName,
 					search_results: search_results
 			};
@@ -152,7 +204,7 @@ Meteor.methods({
 			throw new Meteor.Error(error.error, error.reason, error.details);
 		}).finally(() => {
 			console.log('finally');
-			console.log(this);
+			// console.log(this);
 		});
 		console.log(response);
 		let t1 = new Date().getTime();
@@ -173,7 +225,7 @@ Meteor.methods({
 // Define a rule to limit method calls
 let runScanRule = {
 	type: 'method',
-	name: 'moment.scan'
+	name: 'search.face'
 };
-// Add the rule, allowing up to 1 scan every 10 seconds
-DDPRateLimiter.addRule(runScanRule, 1, 10000);
+// Add the rule, allowing up to 1 scan every 5 seconds
+DDPRateLimiter.addRule(runScanRule, 1, 5000);
