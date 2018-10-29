@@ -58,7 +58,7 @@ Object.keys(methods).forEach(function (key) {
 
 /////////////////////////////////////////////////////////////////////////////
 
-},"node_modules":{"bcryptjs":{"package.json":function(require,exports){
+},"node_modules":{"bcryptjs":{"package.json":function(require,exports,module){
 
 /////////////////////////////////////////////////////////////////////////////
 //                                                                         //
@@ -66,9 +66,11 @@ Object.keys(methods).forEach(function (key) {
 //                                                                         //
 /////////////////////////////////////////////////////////////////////////////
                                                                            //
-exports.name = "bcryptjs";
-exports.version = "2.3.0";
-exports.main = "index.js";
+module.exports = {
+  "name": "bcryptjs",
+  "version": "2.3.0",
+  "main": "index.js"
+};
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -89,6 +91,7 @@ module.useNode();
     ".json"
   ]
 });
+
 var exports = require("/node_modules/meteor/npm-bcrypt/wrapper.js");
 
 /* Exports */

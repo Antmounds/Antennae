@@ -14,7 +14,7 @@ cd ../
 git clean -Xdf build
 
 # build the Docker image (this will use the Dockerfile in the root of the repo)
-docker build --rm -f docker/Dockerfile -t antennae --build-arg BUILD="dev-$(date '+%Y-%m-%d_%H:%M:%S')" --build-arg METEOR_SETTINGS="$(cat src/tools/settings.json)" --build-arg VERSION="0.9" .
+docker build --rm -f docker/Dockerfile -t antennae --build-arg BUILD="dev-$(date '+%Y-%m-%d_%H:%M:%S')" --build-arg METEOR_SETTINGS="$(cat src/tools/settings.json)" --build-arg VCS_REF="$(git rev-parse --short HEAD)" --build-arg RELEASE="lite" --build-arg VERSION="0.9" .
 
 # tag for AWS ECR
 docker tag antennae $IMAGE_URI:dev

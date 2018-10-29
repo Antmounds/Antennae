@@ -20,6 +20,14 @@ export default function setParameters (params) {
     })
   }
 
+  // params.extraParams is @deprecated
+  if (params.validationMessage) {
+    if (typeof params.extraParams !== 'object') {
+      params.extraParams = {}
+    }
+    params.extraParams.validationMessage = params.validationMessage
+  }
+
   // Determine if the custom target element is valid
   if (
     !params.target ||
@@ -28,6 +36,11 @@ export default function setParameters (params) {
   ) {
     warn('Target parameter is not valid, defaulting to "body"')
     params.target = 'body'
+  }
+
+  // Animation
+  if (typeof params.animation === 'function') {
+    params.animation = params.animation.call()
   }
 
   let popup
@@ -94,11 +107,6 @@ export default function setParameters (params) {
     if (growClass in swalClasses) {
       dom.addClass(container, swalClasses[growClass])
     }
-  }
-
-  // Animation
-  if (typeof params.animation === 'function') {
-    params.animation = params.animation.call()
   }
 
   // Close button

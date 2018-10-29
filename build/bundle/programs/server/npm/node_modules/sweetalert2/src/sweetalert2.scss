@@ -12,7 +12,7 @@ body {
       '.swal2-no-backdrop',
       '.swal2-toast-shown'
     ) {
-      overflow-y: hidden;
+      overflow: hidden; // not overflow-y because of Sarari, #1253
     }
   }
 
@@ -557,7 +557,7 @@ body {
     }
   }
 
-  .swal2-validationerror {
+  .swal2-validation-message {
     display: none;
     align-items: center;
     justify-content: $swal2-validationerror-justify-content;
@@ -874,5 +874,26 @@ body {
 
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@media print {
+  body {
+    &.swal2-shown {
+      @include not(
+        '.swal2-no-backdrop',
+        '.swal2-toast-shown'
+      ) {
+        overflow-y: scroll !important;
+
+        > [aria-hidden='true'] {
+          display: none;
+        }
+
+        .swal2-container {
+          position: initial !important;
+        }
+      }
+    }
   }
 }

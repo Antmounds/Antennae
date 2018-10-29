@@ -10,7 +10,7 @@
     },
     "ansi-regex": {
       "version": "0.2.1",
-      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-0.2.1.tgz",
+      "resolved": "http://registry.npmjs.org/ansi-regex/-/ansi-regex-0.2.1.tgz",
       "integrity": "sha1-DY6UaWej2BQ/k+JOKYUl/BsiNfk=",
       "dev": true
     },
@@ -27,7 +27,7 @@
     },
     "chalk": {
       "version": "0.5.1",
-      "resolved": "https://registry.npmjs.org/chalk/-/chalk-0.5.1.tgz",
+      "resolved": "http://registry.npmjs.org/chalk/-/chalk-0.5.1.tgz",
       "integrity": "sha1-Zjs6ZItotV0EaQ1JFnqoN4WPIXQ=",
       "dev": true,
       "requires": {
@@ -122,7 +122,7 @@
     },
     "readable-stream": {
       "version": "2.3.6",
-      "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.3.6.tgz",
+      "resolved": "http://registry.npmjs.org/readable-stream/-/readable-stream-2.3.6.tgz",
       "integrity": "sha512-tQtKA9WIAhBF3+VLAseyMqZeBjW0AHJoxOtYqSUZNJxauErmLbVm2FW1y+J/YA9dUrAC39ITejlZWhVIwawkKw==",
       "dev": true,
       "requires": {
