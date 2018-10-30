@@ -39,6 +39,7 @@
       "path": "packages/promise.js"
     },
     {
+      "node_modules": "npm/node_modules/meteor/ecmascript-runtime-client/node_modules",
       "path": "packages/ecmascript-runtime-client.js"
     },
     {
@@ -58,11 +59,12 @@
       "path": "packages/babel-runtime.js"
     },
     {
-      "path": "packages/url.js"
+      "node_modules": "npm/node_modules/meteor/fetch/node_modules",
+      "path": "packages/fetch.js"
     },
     {
-      "node_modules": "npm/node_modules/meteor/http/node_modules",
-      "path": "packages/http.js"
+      "node_modules": "npm/node_modules/meteor/inter-process-messaging/node_modules",
+      "path": "packages/inter-process-messaging.js"
     },
     {
       "path": "packages/dynamic-import.js"
@@ -169,9 +171,6 @@
       "path": "packages/webapp.js"
     },
     {
-      "path": "packages/autopublish.js"
-    },
-    {
       "node_modules": "npm/node_modules/meteor/ddp-server/node_modules",
       "sourceMap": "packages/ddp-server.js.map",
       "path": "packages/ddp-server.js"
@@ -184,10 +183,13 @@
       "path": "packages/allow-deny.js"
     },
     {
-      "path": "packages/binary-heap.js"
+      "node_modules": "npm/node_modules/meteor/mongo-decimal/node_modules",
+      "sourceMap": "packages/mongo-decimal.js.map",
+      "path": "packages/mongo-decimal.js"
     },
     {
-      "path": "packages/insecure.js"
+      "sourceMap": "packages/binary-heap.js.map",
+      "path": "packages/binary-heap.js"
     },
     {
       "node_modules": "npm/node_modules/meteor/mongo/node_modules",
@@ -216,24 +218,6 @@
     },
     {
       "path": "packages/accounts-ui.js"
-    },
-    {
-      "node_modules": "npm/node_modules/meteor/npm-bcrypt/node_modules",
-      "path": "packages/npm-bcrypt.js"
-    },
-    {
-      "path": "packages/sha.js"
-    },
-    {
-      "path": "packages/srp.js"
-    },
-    {
-      "node_modules": "npm/node_modules/meteor/email/node_modules",
-      "path": "packages/email.js"
-    },
-    {
-      "sourceMap": "packages/accounts-password.js.map",
-      "path": "packages/accounts-password.js"
     },
     {
       "sourceMap": "packages/reactive-dict.js.map",
@@ -284,6 +268,67 @@
       "path": "packages/materialize_materialize.js"
     },
     {
+      "path": "packages/aldeed_simple-schema.js"
+    },
+    {
+      "path": "packages/raix_eventemitter.js"
+    },
+    {
+      "path": "packages/aldeed_collection2-core.js"
+    },
+    {
+      "sourceMap": "packages/aldeed_schema-index.js.map",
+      "path": "packages/aldeed_schema-index.js"
+    },
+    {
+      "path": "packages/aldeed_schema-deny.js"
+    },
+    {
+      "path": "packages/aldeed_collection2.js"
+    },
+    {
+      "node_modules": "npm/node_modules/meteor/practicalmeteor_faker/node_modules",
+      "path": "packages/practicalmeteor_faker.js"
+    },
+    {
+      "node_modules": "npm/node_modules/meteor/npm-bcrypt/node_modules",
+      "path": "packages/npm-bcrypt.js"
+    },
+    {
+      "path": "packages/sha.js"
+    },
+    {
+      "sourceMap": "packages/srp.js.map",
+      "path": "packages/srp.js"
+    },
+    {
+      "node_modules": "npm/node_modules/meteor/email/node_modules",
+      "path": "packages/email.js"
+    },
+    {
+      "sourceMap": "packages/accounts-password.js.map",
+      "path": "packages/accounts-password.js"
+    },
+    {
+      "path": "packages/sakulstra_aggregate.js"
+    },
+    {
+      "sourceMap": "packages/ostrio_cookies.js.map",
+      "path": "packages/ostrio_cookies.js"
+    },
+    {
+      "node_modules": "npm/node_modules/meteor/ostrio_files/node_modules",
+      "sourceMap": "packages/ostrio_files.js.map",
+      "path": "packages/ostrio_files.js"
+    },
+    {
+      "path": "packages/url.js"
+    },
+    {
+      "node_modules": "npm/node_modules/meteor/http/node_modules",
+      "path": "packages/http.js"
+    },
+    {
       "path": "packages/livedata.js"
     },
     {
@@ -310,6 +355,10 @@
     },
     {
       "path": "packages/service-configuration.js"
+    },
+    {
+      "sourceMap": "packages/mdg_validation-error.js.map",
+      "path": "packages/mdg_validation-error.js"
     }
   ]
 }

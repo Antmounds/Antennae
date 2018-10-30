@@ -8,26 +8,26 @@ var meteorInstall = Package['modules-runtime'].meteorInstall;
 
 var require = meteorInstall({"node_modules":{"meteor":{"modules":{"server.js":function(require){
 
-////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                    //
-// packages/modules/server.js                                                         //
-//                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////
-                                                                                      //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                               //
+// packages/modules/server.js                                                                    //
+//                                                                                               //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                 //
 require("./install-packages.js");
 require("./process.js");
 require("./reify.js");
 
-////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"install-packages.js":function(require,exports,module){
 
-////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                    //
-// packages/modules/install-packages.js                                               //
-//                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////
-                                                                                      //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                               //
+// packages/modules/install-packages.js                                                          //
+//                                                                                               //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                 //
 function install(name, mainModule) {
   var meteorDir = {};
 
@@ -74,8 +74,8 @@ install("ecmascript-runtime-server", "meteor/ecmascript-runtime-server/runtime.j
 install("babel-compiler");
 install("ecmascript");
 install("babel-runtime", "meteor/babel-runtime/babel-runtime.js");
-install("url", "meteor/url/url_server.js");
-install("http", "meteor/http/httpcall_server.js");
+install("fetch", "meteor/fetch/server.js");
+install("inter-process-messaging", "meteor/inter-process-messaging/inter-process-messaging.js");
 install("dynamic-import", "meteor/dynamic-import/server.js");
 install("base64", "meteor/base64/base64.js");
 install("ejson", "meteor/ejson/ejson.js");
@@ -102,12 +102,11 @@ install("routepolicy", "meteor/routepolicy/main.js");
 install("boilerplate-generator", "meteor/boilerplate-generator/generator.js");
 install("webapp-hashing");
 install("webapp", "meteor/webapp/webapp_server.js");
-install("autopublish");
 install("ddp-server");
 install("ddp");
 install("allow-deny");
-install("binary-heap");
-install("insecure");
+install("mongo-decimal", "meteor/mongo-decimal/decimal.js");
+install("binary-heap", "meteor/binary-heap/binary-heap.js");
 install("mongo");
 install("blaze-html-templates");
 install("reactive-var");
@@ -116,11 +115,6 @@ install("standard-minifier-js");
 install("shell-server", "meteor/shell-server/main.js");
 install("accounts-base", "meteor/accounts-base/server_main.js");
 install("accounts-ui");
-install("npm-bcrypt", "meteor/npm-bcrypt/wrapper.js");
-install("sha");
-install("srp");
-install("email");
-install("accounts-password");
 install("reactive-dict", "meteor/reactive-dict/migration.js");
 install("kadira:flow-router");
 install("jquery");
@@ -136,23 +130,41 @@ install("kadira:blaze-layout");
 install("momentjs:moment");
 install("fourseven:scss");
 install("materialize:materialize");
+install("aldeed:simple-schema");
+install("raix:eventemitter");
+install("aldeed:collection2-core");
+install("aldeed:schema-index");
+install("aldeed:schema-deny");
+install("aldeed:collection2");
+install("practicalmeteor:faker");
+install("npm-bcrypt", "meteor/npm-bcrypt/wrapper.js");
+install("sha");
+install("srp");
+install("email");
+install("accounts-password");
+install("sakulstra:aggregate");
+install("ostrio:cookies", "meteor/ostrio:cookies/cookies.js");
+install("ostrio:files", "meteor/ostrio:files/server.js");
+install("url", "meteor/url/url_server.js");
+install("http", "meteor/http/httpcall_server.js");
 install("livedata");
 install("hot-code-push");
 install("launch-screen");
 install("ui");
-install("autoupdate");
+install("autoupdate", "meteor/autoupdate/autoupdate_server.js");
 install("service-configuration");
+install("mdg:validation-error");
 
-////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"process.js":function(require,exports,module){
 
-////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                    //
-// packages/modules/process.js                                                        //
-//                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////
-                                                                                      //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                               //
+// packages/modules/process.js                                                                   //
+//                                                                                               //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                 //
 if (! global.process) {
   try {
     // The application can run `npm install process` to provide its own
@@ -190,115 +202,152 @@ for (var key in meteorEnv) {
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"reify.js":function(require,exports,module){
 
-////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                    //
-// packages/modules/reify.js                                                          //
-//                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////
-                                                                                      //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                               //
+// packages/modules/reify.js                                                                     //
+//                                                                                               //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                 //
 require("reify/lib/runtime").enable(
   module.constructor.prototype
 );
 
-////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"node_modules":{"reify":{"lib":{"runtime":{"index.js":function(require,exports,module){
 
-////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                    //
-// node_modules/meteor/modules/node_modules/reify/lib/runtime/index.js                //
-//                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////
-                                                                                      //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                               //
+// node_modules/meteor/modules/node_modules/reify/lib/runtime/index.js                           //
+//                                                                                               //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                 //
 module.useNode();
-////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}}}}}},"aws-sdk":{"package.json":function(require,exports){
+}}}}}}}}},{
+  "extensions": [
+    ".js",
+    ".json"
+  ]
+});
+meteorInstall({"node_modules":{"aws-sdk":{"package.json":function(require,exports,module){
 
-////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                    //
-// node_modules/aws-sdk/package.json                                                  //
-//                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////
-                                                                                      //
-exports.name = "aws-sdk";
-exports.version = "2.247.1";
-exports.main = "lib/aws.js";
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                               //
+// node_modules/aws-sdk/package.json                                                             //
+//                                                                                               //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                 //
+module.exports = {
+  "name": "aws-sdk",
+  "version": "2.342.0",
+  "main": "lib/aws.js"
+};
 
-////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"lib":{"aws.js":function(require,exports,module){
 
-////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                    //
-// node_modules/aws-sdk/lib/aws.js                                                    //
-//                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////
-                                                                                      //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                               //
+// node_modules/aws-sdk/lib/aws.js                                                               //
+//                                                                                               //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                 //
 module.useNode();
-////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}},"@babel":{"runtime":{"package.json":function(require,exports,module){
+}}},"fibers":{"package.json":function(require,exports,module){
 
-////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                    //
-// node_modules/@babel/runtime/package.json                                           //
-//                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////
-                                                                                      //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                               //
+// node_modules/fibers/package.json                                                              //
+//                                                                                               //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                 //
+module.exports = {
+  "name": "fibers",
+  "version": "2.0.2",
+  "main": "fibers"
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"fibers.js":function(require,exports,module){
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                               //
+// node_modules/fibers/fibers.js                                                                 //
+//                                                                                               //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                 //
 module.useNode();
-////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-},"helpers":{"builtin":{"interopRequireDefault.js":function(require,exports,module){
+}},"@babel":{"runtime":{"package.json":function(require,exports,module){
 
-////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                    //
-// node_modules/@babel/runtime/helpers/builtin/interopRequireDefault.js               //
-//                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////
-                                                                                      //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                               //
+// node_modules/@babel/runtime/package.json                                                      //
+//                                                                                               //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                 //
 module.useNode();
-////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"helpers":{"interopRequireDefault.js":function(require,exports,module){
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                               //
+// node_modules/@babel/runtime/helpers/interopRequireDefault.js                                  //
+//                                                                                               //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                 //
+module.useNode();
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"objectSpread.js":function(require,exports,module){
 
-////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                    //
-// node_modules/@babel/runtime/helpers/builtin/objectSpread.js                        //
-//                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////
-                                                                                      //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                               //
+// node_modules/@babel/runtime/helpers/objectSpread.js                                           //
+//                                                                                               //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                 //
 module.useNode();
-////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}}}},"bcrypt":{"package.json":function(require,exports){
+}}}},"bcrypt":{"package.json":function(require,exports,module){
 
-////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                    //
-// node_modules/bcrypt/package.json                                                   //
-//                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////
-                                                                                      //
-exports.name = "bcrypt";
-exports.version = "1.0.3";
-exports.main = "./bcrypt";
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                               //
+// node_modules/bcrypt/package.json                                                              //
+//                                                                                               //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                 //
+module.exports = {
+  "name": "bcrypt",
+  "version": "3.0.2",
+  "main": "./bcrypt"
+};
 
-////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"bcrypt.js":function(require,exports,module){
 
-////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                    //
-// node_modules/bcrypt/bcrypt.js                                                      //
-//                                                                                    //
-////////////////////////////////////////////////////////////////////////////////////////
-                                                                                      //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                               //
+// node_modules/bcrypt/bcrypt.js                                                                 //
+//                                                                                               //
+///////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                 //
 module.useNode();
-////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 }}}},{
   "extensions": [
@@ -306,6 +355,7 @@ module.useNode();
     ".json"
   ]
 });
+
 var exports = require("/node_modules/meteor/modules/server.js");
 
 /* Exports */

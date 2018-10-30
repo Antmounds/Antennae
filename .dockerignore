@@ -1,5 +1,5 @@
 ## Git
-**/.git*
+build/**/.git*
 
 ## Build tools
 **/.editorconfig
@@ -9,11 +9,13 @@
 **/Makefile*
 
 ## Node & NPM
+**/npm-debug.log*
 **/.npmignore
 **/*.lock
 
 ## Documentation
 **/doc
+**/AUTHORS
 **/LICENCE
 **/LICENSE*
 **/Licence
@@ -26,7 +28,18 @@
 **/README*
 **/*.log*
 
+## Terraform
+*.tfstate*
+terraform.tfvars
+.terraform
+*.tf
+
+
 ## Vendor src files
-**/example
+**/example*
 **/examples
-**/test
+**/test*
+
+docker
+infrastructure
+src

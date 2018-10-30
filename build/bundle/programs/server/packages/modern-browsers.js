@@ -111,6 +111,12 @@ function getCaller(calleeName) {
 Object.assign(exports, {
   isModern,
   setMinimumBrowserVersions,
+  calculateHashOfMinimumVersions() {
+    const { createHash } = require("crypto");
+    return createHash("sha1").update(
+      JSON.stringify(minimumVersions)
+    ).digest("hex");
+  }
 });
 
 // For making defensive copies of [major, minor, ...] version arrays, so
@@ -208,6 +214,7 @@ setMinimumBrowserVersions({
     ".json"
   ]
 });
+
 var exports = require("/node_modules/meteor/modern-browsers/modern.js");
 
 /* Exports */
