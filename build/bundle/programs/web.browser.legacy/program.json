@@ -2,31 +2,34 @@
   "format": "web-program-pre1",
   "manifest": [
     {
-      "path": "2f9b01e11434d8b6be83c9f11365b1be38d45422.js",
+      "path": "608dfc2f46b1e2898f7de4dafd6caff9a9ca714c.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/2f9b01e11434d8b6be83c9f11365b1be38d45422.js?meteor_js_resource=true",
-      "size": 874987,
-      "hash": "2f9b01e11434d8b6be83c9f11365b1be38d45422"
+      "url": "/608dfc2f46b1e2898f7de4dafd6caff9a9ca714c.js?meteor_js_resource=true",
+      "size": 1866269,
+      "hash": "608dfc2f46b1e2898f7de4dafd6caff9a9ca714c",
+      "sri": "xMJa60vauYKoTUde/asp4CSVqLYAWZqjMk/hLVtKMOPp0qJf7uB4ykhaiPODBpmmpgXlZL+6BWG/p78KKDUqPQ=="
     },
     {
-      "path": "2f9b01e11434d8b6be83c9f11365b1be38d45422.stats.json",
+      "path": "608dfc2f46b1e2898f7de4dafd6caff9a9ca714c.stats.json",
       "where": "client",
       "type": "json",
       "cacheable": true,
-      "url": "/2f9b01e11434d8b6be83c9f11365b1be38d45422.stats.json?meteor_js_resource=true",
-      "size": 28292,
-      "hash": "6712430e1238f0ba001ff7f80621ba91be2df770"
+      "url": "/608dfc2f46b1e2898f7de4dafd6caff9a9ca714c.stats.json?meteor_js_resource=true",
+      "size": 29938,
+      "hash": "efa7f843fe3b6ad134e6b85c8c073f85aff46c1f",
+      "sri": "y4Dtv0nDc8b/77+s0WZfyswl6Ul2Q4lTkdbfTj1ptiHIqZbr/jrFd7czzGaiwFgpZ2f3HZiCLsZBojOjZ4CNpQ=="
     },
     {
-      "path": "603c52af6e844350b51d2b4fdabc91c35872239b.css",
+      "path": "e3ed4848caffb524d64080d21e24bb7b59d7b9a1.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/603c52af6e844350b51d2b4fdabc91c35872239b.css?meteor_css_resource=true",
-      "size": 133452,
-      "hash": "603c52af6e844350b51d2b4fdabc91c35872239b"
+      "url": "/e3ed4848caffb524d64080d21e24bb7b59d7b9a1.css?meteor_css_resource=true",
+      "size": 131934,
+      "hash": "e3ed4848caffb524d64080d21e24bb7b59d7b9a1",
+      "sri": "CugPc6c1kMmv1gjoXN4WG4FwtRcNuMu7BUBXLHRuiBHJlEuq6z2tb0s7gSH1y1A3Mvj78Qct/jtOFaLtGO9mVA=="
     },
     {
       "path": "packages/materialize_materialize/fonts/roboto/Roboto-Bold.woff",
@@ -35,7 +38,8 @@
       "cacheable": false,
       "url": "/packages/materialize_materialize/fonts/roboto/Roboto-Bold.woff",
       "size": 90308,
-      "hash": "eed94b8d8884307fe3087eff7b665c576f18e90c"
+      "hash": "8017e17a46bb9eca2a8c6cee8b62ca613023b1a6",
+      "sri": "HmylSEmsGTE4eApxcfwbg/T25YDQM+Mx9LWJc795PJ17OGtutLAO2Whu3yfwJsz2LkHH62C5SPPG/oH58fqrWw=="
     },
     {
       "path": "packages/materialize_materialize/fonts/roboto/Roboto-Bold.woff2",
@@ -44,7 +48,8 @@
       "cacheable": false,
       "url": "/packages/materialize_materialize/fonts/roboto/Roboto-Bold.woff2",
       "size": 64800,
-      "hash": "059450b042a85ef0c68b9ffd98310900302fe3cc"
+      "hash": "a56d37145b919f32cbe306f879cafafe8bb91ffe",
+      "sri": "XodvBquFOFlLKtulnnkvtEmxpdlsxoeJAwFp53cBeEQL5C/DwbEKJyZmVxtOYhMxLwyWNwK84iQPhKrL3yARTA=="
     },
     {
       "path": "packages/materialize_materialize/fonts/roboto/Roboto-Light.woff",
@@ -53,7 +58,8 @@
       "cacheable": false,
       "url": "/packages/materialize_materialize/fonts/roboto/Roboto-Light.woff",
       "size": 89672,
-      "hash": "a465123041d5f7933f9bcf04bd11ceca1972eb5b"
+      "hash": "96ded94243086da823fa1052278880eee7ff0500",
+      "sri": "ZlMB83uR87SE48ynCp0LevpAzaF7xf6mm7qoFrKoruyyI+YoH6mSyvpaMcn7vhid2nTk+5M+OGPOLpZ9Lt30Ig=="
     },
     {
       "path": "packages/materialize_materialize/fonts/roboto/Roboto-Light.woff2",
@@ -62,7 +68,8 @@
       "cacheable": false,
       "url": "/packages/materialize_materialize/fonts/roboto/Roboto-Light.woff2",
       "size": 64268,
-      "hash": "3fb746246073376d1722db4799a162fe09d1e8dd"
+      "hash": "0f2cf7498f4aae7ca51d7582f809a317e9c92afb",
+      "sri": "cQWERkqz6jex/hBYjRWA3VwqHhtvOJ3tyTv71VMjVwg12DLVoxqtIVuos+D0vN4DHQU+Wv+ItTqlKm1IFybAOg=="
     },
     {
       "path": "packages/materialize_materialize/fonts/roboto/Roboto-Medium.woff",
@@ -71,7 +78,8 @@
       "cacheable": false,
       "url": "/packages/materialize_materialize/fonts/roboto/Roboto-Medium.woff",
       "size": 90560,
-      "hash": "53bc5a6172c003df2d1c4e05807ef2f8277b6d8e"
+      "hash": "38f013ffc3e30eb3f882328427d8acbba783524a",
+      "sri": "XFCXURY2TjfU516SwAp0pbIyIiG1zrnhYiUROHUP4ctdWUPj2KvRnTLVwj1qkBUhuMNmuuM82452L78TIo0qog=="
     },
     {
       "path": "packages/materialize_materialize/fonts/roboto/Roboto-Medium.woff2",
@@ -80,7 +88,8 @@
       "cacheable": false,
       "url": "/packages/materialize_materialize/fonts/roboto/Roboto-Medium.woff2",
       "size": 65412,
-      "hash": "b61387c470b0154bc20412051fbbc321893fee58"
+      "hash": "0700fba105d6d2746b3960b184c241bc18c04b73",
+      "sri": "wpBDAMHBsS8UPLMA6E+9fIJb2/O5LTNV78Av11KqBcyaLR7HFKMf4+uHaj3eRj4DldPmgx4Eq3Kkk7Ji9rXthQ=="
     },
     {
       "path": "packages/materialize_materialize/fonts/roboto/Roboto-Regular.woff",
@@ -89,7 +98,8 @@
       "cacheable": false,
       "url": "/packages/materialize_materialize/fonts/roboto/Roboto-Regular.woff",
       "size": 89828,
-      "hash": "ba1ab888c63873e894a5915edf03d39266f03ecb"
+      "hash": "9b5bf47cf2befd6d9d5b07235adda59a95c25c03",
+      "sri": "uO8D/1c1OHrYxtbM66x1yIdDB6KK+DfZZtowelTakPR+YDxbdok2mDyyKQTOgnb4YAXQMZvaECaGtYIlK0yQ7Q=="
     },
     {
       "path": "packages/materialize_materialize/fonts/roboto/Roboto-Regular.woff2",
@@ -98,7 +108,8 @@
       "cacheable": false,
       "url": "/packages/materialize_materialize/fonts/roboto/Roboto-Regular.woff2",
       "size": 64832,
-      "hash": "ddffb8b8f764bcfaf0396f794dc2ebd1fc36b766"
+      "hash": "b030724ba987fa7f4275586c2210f192b855c02c",
+      "sri": "DC4Pb11pOMy9zdVvja56PmuEXWPTxhUsaTMXed6ocxPRADgKauLEpnK1u1NWnIL2Y9EbnG1lDgVza4+IO5faBg=="
     },
     {
       "path": "packages/materialize_materialize/fonts/roboto/Roboto-Thin.woff",
@@ -107,7 +118,8 @@
       "cacheable": false,
       "url": "/packages/materialize_materialize/fonts/roboto/Roboto-Thin.woff",
       "size": 88132,
-      "hash": "541e3cc5f153fad035af3ed70c0f37b88310d344"
+      "hash": "561f6c707c935a8a44be4e8eba7619bba937a73a",
+      "sri": "KyPz5M4bm+b8ExRblmulWHfT5Decdy1P3GhrBWPEc2dD3RP+UJGKQ/LJHTi/dY8hJ6Nrqtun9rnZ39KaNiVlRw=="
     },
     {
       "path": "packages/materialize_materialize/fonts/roboto/Roboto-Thin.woff2",
@@ -116,7 +128,368 @@
       "cacheable": false,
       "url": "/packages/materialize_materialize/fonts/roboto/Roboto-Thin.woff2",
       "size": 63056,
-      "hash": "e744747fce24d0dd3e20365d2505f7b6703c504b"
+      "hash": "48ffcce30805e7522356196610a71f6aad0eba4a",
+      "sri": "942PwJgMxoCZSaXxb2TJySHXC2XxnBHnF9ewKA3gyVkjsgsGIsbMg7MPqNfMxRX42mP0rx+NRZW2jNf3djqxbw=="
+    },
+    {
+      "path": "packages/ostrio_files/worker.min.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/ostrio_files/worker.min.js",
+      "size": 625,
+      "hash": "1bbed45a74d0fa4392c6af5f13db396c2a18df84",
+      "sri": "O3hA6j1YKRSa2Hpu+o1M2pAHe/g5J8gGjshPPW2SfHnx/9kJD4Za7FtEYnDQVfDJC/oLkvMcC4MsNKX6Nry49A=="
+    },
+    {
+      "path": "app/android-icon-144x144.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/android-icon-144x144.png",
+      "size": 11980,
+      "hash": "ebfce1dfd1980c9478502274e818e2f53ffe94d3",
+      "sri": "+xL06mnQlROKj23K46uS0GsllbSU65toXphi4ydRODM5MePq0rkcltLATD8z6YzNmd/XvDHJUpFgQqYeH4lMCA=="
+    },
+    {
+      "path": "app/android-icon-192x192.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/android-icon-192x192.png",
+      "size": 16809,
+      "hash": "fc3a48c3bb68d12d0f4980f07a51ec657dba5742",
+      "sri": "MQVqJ/sUzMOjaS4ZXFj++jceobPl7NF7RzkJ2tR5COYtKAHLexCRiqQCUDO6k/O+6j1ft5jAQ+ps6crKzzPPvg=="
+    },
+    {
+      "path": "app/android-icon-36x36.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/android-icon-36x36.png",
+      "size": 2179,
+      "hash": "042a75c90e1d6a972274b17368798899b0e56407",
+      "sri": "sqvGWiXP2TTKebl+qQGhNAdDBtnaU1RoKwKojk8HES8CRueMiR6F+XDPtRLlxcZJxY8mPtrfYS0gcEkFmzcYgA=="
+    },
+    {
+      "path": "app/android-icon-48x48.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/android-icon-48x48.png",
+      "size": 2983,
+      "hash": "fa6675e32fbcd7d1605a5f6765b6573115b39b3d",
+      "sri": "IckHnnWNmNhXK1jfH8ZUrMUk6q6nzfDwZR2pNurCmqNmAMCiWsAaj0dwoPICWmYg+NlgryXkyMQ0T4h2NkT2DA=="
+    },
+    {
+      "path": "app/android-icon-512x512.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/android-icon-512x512.png",
+      "size": 26808,
+      "hash": "61273f0475a7acc5fd3ba0fd00965959744aec6d",
+      "sri": "dBNphpq15ZW5G7iHcFrgsCEjrRVwPG8PhXmlyd3p/6vdVs7hwzgAHUYb01Ua4B64iQ5yDBy0ISsgCA+VHKwWqQ=="
+    },
+    {
+      "path": "app/android-icon-72x72.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/android-icon-72x72.png",
+      "size": 4677,
+      "hash": "0a8d40e4dcafa72d1d562e371a0783697bb1f63d",
+      "sri": "ABxHzKRiy3hRIgFs14Kz61fGVSjgyZOpbkeNETD/ZUHzmT6Zsk9tbOrVXACSXN6Xokbb7U8RC4L0HksIZ1KYtw=="
+    },
+    {
+      "path": "app/android-icon-96x96.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/android-icon-96x96.png",
+      "size": 7059,
+      "hash": "7e4fcbec63a80aa150f7fda6b2331b36a452561e",
+      "sri": "LjUyVLwfaW8B4SaTUI6XDJdWw0kr6c2lVw4VSQ2LwV3ZYUY5TFI5gl8z2hOrQ4u6vABLGvGvnGPHb30Uh4AJow=="
+    },
+    {
+      "path": "app/apple-icon-1024x1024.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/apple-icon-1024x1024.png",
+      "size": 70119,
+      "hash": "5656b5cb2357a8e4c0cbd04efb81fa9ab7fb6cfa",
+      "sri": "mqumDEiUDTjk9MilO0GlZ7MeH131YIaJZ4K1mB9s0VwcdV/tc8Me/w4Xn4NuF1Fwcx/IkdSZUCW6jc29Qqba7A=="
+    },
+    {
+      "path": "app/apple-icon-114x114.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/apple-icon-114x114.png",
+      "size": 8847,
+      "hash": "5acb81c1285eae90ec666b7d7ba48bda86fba46f",
+      "sri": "ak3f/LJVew0JO23hY90UMAf0ln0oaRO/1c3Svi+p5cFGbUI2BROVrGazxgMxbed6jGSQb7nFCDLe0EqDVN3ejA=="
+    },
+    {
+      "path": "app/apple-icon-120x120.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/apple-icon-120x120.png",
+      "size": 9147,
+      "hash": "111e57bfd362bb542b612eb14bfcf61ae6eadeda",
+      "sri": "SZtIPUvfX174YpGqwLIjONsLkxphRYQevVHRDtJzKvnIHmh4mWZyhS3DHO8zF4Rom4y0IxOlOsI+ywt2CBhJng=="
+    },
+    {
+      "path": "app/apple-icon-144x144.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/apple-icon-144x144.png",
+      "size": 11980,
+      "hash": "ebfce1dfd1980c9478502274e818e2f53ffe94d3",
+      "sri": "+xL06mnQlROKj23K46uS0GsllbSU65toXphi4ydRODM5MePq0rkcltLATD8z6YzNmd/XvDHJUpFgQqYeH4lMCA=="
+    },
+    {
+      "path": "app/apple-icon-152x152.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/apple-icon-152x152.png",
+      "size": 12949,
+      "hash": "b7ae71238e3d700a20ec014f733cb7559c2c613c",
+      "sri": "NjggtXGMuY3smJ59LQUVH5YbY2WM4DZ2fvh7beOQLiURSB2hTaYepDX3wAEeBG5JkaSSgS1nw90m28B26DLXSA=="
+    },
+    {
+      "path": "app/apple-icon-180x180.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/apple-icon-180x180.png",
+      "size": 16057,
+      "hash": "54eb8382f89bb6589e3bdfb8c7a53da6ddd89da4",
+      "sri": "ng2tBS616sOeAIGeRGdNjDvljlJAkHXTD/O+YZQGVgFF9lcKCXbI7HZOUr55JSv1abVgLliOpKwhBpe+5cBs2w=="
+    },
+    {
+      "path": "app/apple-icon-196x196.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/apple-icon-196x196.png",
+      "size": 9119,
+      "hash": "fc05eba2fb7fe1adea94dcb423bee941dc684ff2",
+      "sri": "1HUFTn1viIGGXS+0e6cTiSTxBtxJ8OrieOfDCSqe9iBJY+39PX1fVKi0sAfaCcGU5vP3oKB4rYA8LNcutWmQOQ=="
+    },
+    {
+      "path": "app/apple-icon-256x256.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/apple-icon-256x256.png",
+      "size": 11693,
+      "hash": "8ed36c114db9eb860f379a9d0bcb96dfab3ba0a9",
+      "sri": "r38zvaIFQUBP2Ioxaw6Wzmgv3G8OfJRvUPo4+Ji8VW+l7++j5XnkC4AjHykiRxCOwqhEAsXVfwKC5DnMQdpncw=="
+    },
+    {
+      "path": "app/apple-icon-512x512.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/apple-icon-512x512.png",
+      "size": 26808,
+      "hash": "61273f0475a7acc5fd3ba0fd00965959744aec6d",
+      "sri": "dBNphpq15ZW5G7iHcFrgsCEjrRVwPG8PhXmlyd3p/6vdVs7hwzgAHUYb01Ua4B64iQ5yDBy0ISsgCA+VHKwWqQ=="
+    },
+    {
+      "path": "app/apple-icon-57x57.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/apple-icon-57x57.png",
+      "size": 3562,
+      "hash": "be7d4ef5f6d9e4d8a3da3c8ac970d413afc05e96",
+      "sri": "AFUHpG8uE3g95j2rrCNW4oSji/cjgEtN/N+4sptgQ/6q1I6cTeVkRCVCHDWNPb1TUVpJMeNGkhqpqHiyKhg/QA=="
+    },
+    {
+      "path": "app/apple-icon-60x60.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/apple-icon-60x60.png",
+      "size": 3853,
+      "hash": "f29ea67d888fc3afea04a5ae5a19427e94c123c3",
+      "sri": "/tYVrHKQmi/2B2mgfAuH2i1QwXKvE4H1YEIVgvK0/XKOuNPFW0y8uXGPXsVMT5zF8szh75rYdmlFIRTfT9TSbg=="
+    },
+    {
+      "path": "app/apple-icon-72x72.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/apple-icon-72x72.png",
+      "size": 4677,
+      "hash": "0a8d40e4dcafa72d1d562e371a0783697bb1f63d",
+      "sri": "ABxHzKRiy3hRIgFs14Kz61fGVSjgyZOpbkeNETD/ZUHzmT6Zsk9tbOrVXACSXN6Xokbb7U8RC4L0HksIZ1KYtw=="
+    },
+    {
+      "path": "app/apple-icon-76x76.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/apple-icon-76x76.png",
+      "size": 5036,
+      "hash": "7400663c4589deb0395ebd50deec6886dbd9f652",
+      "sri": "kdgi980XhrCUD5+6bZEM91eBS8IDas/63yAkXO8oiQ751n3zA4+G4rJBrplMr2mRW+MPMK+9vyxflA7H8CumcA=="
+    },
+    {
+      "path": "app/apple-icon-precomposed.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/apple-icon-precomposed.png",
+      "size": 17383,
+      "hash": "326a70869fa94dfce5a81002e6d90312e16fd4fa",
+      "sri": "H3tuMRNUzAfCBnYPDmWl5NzDU6e2FOQSjafv2Y0Mg4Vii3o18p4BuzQxJscSgJqR1aPP+QHOUVwSrxLqX2nFQQ=="
+    },
+    {
+      "path": "app/apple-icon.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/apple-icon.png",
+      "size": 17383,
+      "hash": "326a70869fa94dfce5a81002e6d90312e16fd4fa",
+      "sri": "H3tuMRNUzAfCBnYPDmWl5NzDU6e2FOQSjafv2Y0Mg4Vii3o18p4BuzQxJscSgJqR1aPP+QHOUVwSrxLqX2nFQQ=="
+    },
+    {
+      "path": "app/browserconfig.xml",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/browserconfig.xml",
+      "size": 281,
+      "hash": "963e736c655930f027d9d1fb9f131121cf6e127c",
+      "sri": "DuFWB2vI+VKtwg/iGpGMyrd2zRjHV1EaT0FBuncEDIc7GPep563Kb+Kr3phL5zGvR5ADEUx1tobuxBhKsHDMgw=="
+    },
+    {
+      "path": "app/favicon-16x16.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicon-16x16.png",
+      "size": 1235,
+      "hash": "57f6bfbcb9b1182f09019d0cd2f5ee5f4b7a45fb",
+      "sri": "CmXr/+MvvXKJAkoGefuIBeXiYZ1MqyrVx1sqF5OaIvuuhp5U0T8xMDqo0KkjeuhQx5Ck8k6nOM0/pwhJc7xYiA=="
+    },
+    {
+      "path": "app/favicon-32x32.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicon-32x32.png",
+      "size": 1992,
+      "hash": "f8caf69a3f7655f4d5bac3057901f8a2c1afe015",
+      "sri": "iYh6uTezG0veBZ5NS7CLQML3UvouvIEXLnz2SjGA8gtM5Q0eaqqSk2Xd6DsQ7djZijkE8oJL17ExQei7hfwiZQ=="
+    },
+    {
+      "path": "app/favicon-96x96.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicon-96x96.png",
+      "size": 7059,
+      "hash": "7e4fcbec63a80aa150f7fda6b2331b36a452561e",
+      "sri": "LjUyVLwfaW8B4SaTUI6XDJdWw0kr6c2lVw4VSQ2LwV3ZYUY5TFI5gl8z2hOrQ4u6vABLGvGvnGPHb30Uh4AJow=="
+    },
+    {
+      "path": "app/favicon.ico",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/favicon.ico",
+      "size": 1150,
+      "hash": "6501ae46d8531f031854e3abd7b9ae2e9dee1cee",
+      "sri": "dD6x+GV+KN35AFMvBEoOLwVPPFXd4B7OlQyucnDUfINhQgL4JBokF/uVSaOUfBm48GKDeeY8AAYpNR0XLT88sQ=="
+    },
+    {
+      "path": "app/logo-white.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/logo-white.png",
+      "size": 33236,
+      "hash": "8799571ea20157c9cf8484997a48ca2121eab8cc",
+      "sri": "/qdjSSyL1Uhq4fQ9yxGwU6lJpVymlVkK9vLyfbLB+fifgP296grllHNpSVmqMfW0/JHv8/X/+AeX08YEAHmJRA=="
+    },
+    {
+      "path": "app/manifest.json",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/manifest.json",
+      "size": 1128,
+      "hash": "5ef63e4ec598a277a9b7018e9238a1ab27ca266f",
+      "sri": "NNkKV+gqtrDgDXT7q8vJ6v3HAvBoHC1603A4XSoNQybwjB/x4WZ92ks5Omhrv20oV89QdD8nSnR4Gb/v6dhTLw=="
+    },
+    {
+      "path": "app/ms-icon-144x144.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/ms-icon-144x144.png",
+      "size": 11980,
+      "hash": "ebfce1dfd1980c9478502274e818e2f53ffe94d3",
+      "sri": "+xL06mnQlROKj23K46uS0GsllbSU65toXphi4ydRODM5MePq0rkcltLATD8z6YzNmd/XvDHJUpFgQqYeH4lMCA=="
+    },
+    {
+      "path": "app/ms-icon-150x150.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/ms-icon-150x150.png",
+      "size": 12384,
+      "hash": "442e55bca90027d2cd507170f7c47e0e4e1301b1",
+      "sri": "zt0XqQg0zUsqJSCWoc2nBCZSwGWqQfqBfcPbGz3bPAMv0WCQVHzkiR2XRdScBQxhbkYzUKLci5kBgko7v/b+kg=="
+    },
+    {
+      "path": "app/ms-icon-310x150.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/ms-icon-310x150.png",
+      "size": 9100,
+      "hash": "1e407762fa8575f7f04227b11afb50ebfddbdbe6",
+      "sri": "7XRd6Dbu9ptPbAC469DDyRJsMjMI20bcljwueCta52Of9YNZZw+greqs0y2qmYahJgWvqONxpAOhLtmrPkRtog=="
+    },
+    {
+      "path": "app/ms-icon-310x310.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/ms-icon-310x310.png",
+      "size": 35174,
+      "hash": "e192aa29e9665462ff091011f5e6c9abbccfe3a3",
+      "sri": "O0YwUQo9PfqtAjdnDCPr1fM/vo3k1uEjwBz1Io2EDbKbQlSYebN+QSfUPTXwKNWuTqe4mw6NiVWPDI/0HukWzg=="
+    },
+    {
+      "path": "app/ms-icon-70x70.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/ms-icon-70x70.png",
+      "size": 4549,
+      "hash": "f802dc2b81a109a1cadc92191d8680a1f3375e50",
+      "sri": "9EaKvUdFusenAgFRgLH/4ZIghqtEklcobN3xSRimeOm2ZD1TN3I5T4aztKAzTNfkc5iR3hqC6auPY4yDdoabxA=="
+    },
+    {
+      "path": "app/sw.js",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/sw.js",
+      "size": 1685,
+      "hash": "1c20dad50e7300d637dcb5977af4f81a951d60b3",
+      "sri": "igv56TjL7Ljp9F4rPVLhzILfg022W2wSvoxrICaA1saSlMs6Fx8drfXHEBL8eo+emXv6HYnChAmvFfWHRA7a1g=="
     },
     {
       "path": "app/img/avatar5.png",
@@ -125,7 +498,18 @@
       "cacheable": false,
       "url": "/img/avatar5.png",
       "size": 8007,
-      "hash": "d435015a668c032c76c4e198b37c08d9536832e7"
+      "hash": "ca304ddd838e156139c6e656be3ed2159fded811",
+      "sri": "qvQ+CIKixGLfc+43sQ/T5LrX/4Hau6t/qku9/gsLUl/IjgxZt3HqR9ue3jL5lpTDp1qQCrSlSWBLJSIOCMPy6A=="
+    },
+    {
+      "path": "app/img/face-id-100.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/img/face-id-100.png",
+      "size": 1926,
+      "hash": "414905f03c8803962e2aafe68393609e2958f6a0",
+      "sri": "CW7CITTDZUTQNfXu2oN4k82AiAJfhScxAFdCrT6I91HILWAPmjVrybJfKRJpppxluK8W4786owl3MPzs90veQQ=="
     },
     {
       "path": "app/img/sample-1.jpg",
@@ -134,7 +518,8 @@
       "cacheable": false,
       "url": "/img/sample-1.jpg",
       "size": 179499,
-      "hash": "a8bfe4404bfb9987116934c938f5d361ba461dca"
+      "hash": "77405ce1c9723e8371bc865ff6a879a7d275095f",
+      "sri": "GQy7fZPlSq9qnYCVuOIRmpAsMaw5YZpnf65L4+8dwQO7DW97uSMvJo7RrbdBoBsSiL/uQWyuc+vIypViHlWFww=="
     },
     {
       "path": "app/img/yuna.jpg",
@@ -143,13 +528,14 @@
       "cacheable": false,
       "url": "/img/yuna.jpg",
       "size": 38739,
-      "hash": "d4f6c4a4f0bcf6b48a1aeb1ca6db000504bdd1bb"
+      "hash": "85da0575379b85c5c57cdffe4c3110030603f557",
+      "sri": "SF/gHsgzZ91Z+rb1aKmA5z7zZsPe/gcj3yB4hGUHtkDGr/njgYMg+N9jLXUlvKfB/veRWYLp7+N3efV7OKUzkg=="
     },
     {
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "ce7eec04da173cf560f06d099e476c1552751b69"
+      "hash": "3b3829053b486acd4944ef165003fbb980489de4"
     }
   ]
 }

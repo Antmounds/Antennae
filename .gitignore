@@ -1,8 +1,50 @@
 ## Node & NPM
-#**/node_modules #temporarily until i get the full docker buld file working
+# **/node_modules
+# **/npm
 **/npm-debug.log*
 **/*.lock
 **/package-lock.json
 
 ## Meteor
 **/.meteor/local
+
+## Terraform
+*.tfstate*
+terraform.tfvars
+.terraform
+
+## Ignore everything not mine
+## Git
+build/**/.git*
+
+## Build tools
+build/**/.editorconfig
+build/**/.eslint*
+build/**/.prettier*
+build/**/*travis.yml
+build/**/Makefile*
+
+## Node & NPM
+build/**/npm-debug.log*
+build/**/.npmignore
+build/**/*.lock
+
+## Documentation
+build/**/doc
+build/**/AUTHORS
+build/**/LICENCE
+build/**/LICENSE*
+build/**/Licence
+build/**/License
+build/**/licence
+build/**/license
+build/**/*.md
+build/**/*.txt
+build/**/*.markdown
+build/**/README*
+build/**/*.log*
+
+## Vendor src files
+build/**/example*
+build/**/examples
+build/**/test*

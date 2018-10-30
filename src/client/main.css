@@ -1,1 +1,11 @@
 /* CSS declarations go here */
+@font-face {
+	font-family: 'Roboto,sans-serif';
+	font-weight: 400;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Material Icons';
+	font-display: swap;
+}

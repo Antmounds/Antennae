@@ -1,64 +1,72 @@
 <template name="app_body">
-	<nav>
-		<div class="nav-wrapper brown">
-			<a href="#" class="brand-logo">Antennae</a>
-  			<a href="#" class="right"><i class="material-icons">person</i></a>
-			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a href="sass.html">Home</a></li>
-				<li><a href="badges.html">Profile</a></li>
-				<!-- <li><a href="collapsible.html">JavaScript</a></li> -->
-			</ul>
-		</div>
-	</nav>
-	<form id="newPost" class="newPost">
-		<div class="fixed-action-btn">
-			<a class="btn-floating btn-large red" onClick="selectPic.click()">
-				<i class="large material-icons">add_a_photo</i>
-				<input id="selectPic" type="file" accept="image/*" capture>
-		  	</a>
-		  <!-- <ul>
-		    <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-		    <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-		    <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-		    <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-		  </ul> -->
-		</div>
-	</form>
-	<div class="row">
-	{{#each moments}}
-		<div class="col s12 m6">
-		  <div class="card">
-		  	{{#if this.faceDetails}}
-	          <div class="valign-wrapper">
-	            <div class="col s2 m2">
-	            	<i class="medium material-icons">account_circle</i>
-	              <!-- <img src="img/avatar5.png" alt="" width="50px" height="50px" class="circle responsive-img"> --> <!-- notice the "circle" class -->
-	            </div>
-	            <div class="col s10 m10">
-	              <span class="black-text">
-	                {{faceDetails}}
-	              </span>
-	            </div>
-	          </div>
-		  	{{/if}}
-		    <div class="card-image">
-		      <img id="postImg" src="{{img}}" width="auto" height="auto" class="">
-		      <span class="card-title">{{#each tags}}<div class="chip" title="{{this.Confidence}}">{{this.Name}}</div> {{/each}}</span>
-		    </div>
-		    <!-- <div class="card-content">
-		      <p>I am a very simple card. I am good at containing small bits of information.
-		      I am convenient because I require little markup to use effectively.</p>
-		    </div> -->
-		    <!-- <div class="card-action">
-		      <a href="#">Like</a>
-		      <a href="#">Report</a>
-		    </div> -->
-		  </div>
-		</div>
-	{{/each}}
+	<div class="navbar-fixed">
+		<nav>
+			<div class="nav-wrapper brown">
+				<div class="container">
+					<!-- {{#if currentUser}} -->
+					<a href="#" data-activates="slide-out" class="button-collapse left"><i class="material-icons">menu</i></a>
+					<!-- {{/if}} -->
+					<a href="/" class="brand-logo">Antennae</a>
+					<!-- <a href="/" class="page-title center-align">Antennae</a> -->
+		  			<!-- <a href="profile" class="right"><i class="material-icons">person</i></a>
+					<ul id="nav-mobile" class="right hide-on-med-and-down">
+						<li><a href="home">Home</a></li>
+						<li><a href="profile">Profile</a></li>
+						<li><a href="collapsible.html">JavaScript</a></li>
+					</ul> -->
+				</div>
+			</div>
+		</nav>
 	</div>
-	<h1>Welcome to Antennae!</h1>
-	<p>Take or upload a picture and see an AI generated caption.</p>
+	<div class="container">
+		<ul id="slide-out" class="side-nav fixed">
+			<!-- <li>
+				<div class="user-view">
+				  <div class="background">
+				    <img src="images/office.jpg">
+				  </div>
+				  <a href="#user"><img class="circle" src="images/yuna.jpg"></a>
+				  <a href="#name"><span class="white-text name">John Doe</span></a>
+				  <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+				</div>
+			</li> -->
+			{{#if currentUser}}
+			<li><a href="/home">Dashboard</a></li>
+			<li><a href="/search">Search</a></li>
+			<!-- <li><a href="/checkin">Check-in</a></li> -->
+			<li><a href="/history">History</a></li>
+			<li><a href="/collections">Collections</a></li>
+			<li><div class="divider"></div></li>
+			<!-- <li><a class="subheader">About</a></li> -->
+			<li><a class="waves-effect" href="/settings">Settings</a></li>
+			<li><a id="logout" class="waves-effect" href="">Logout</a></li>
+			{{else}}
+			<li><a href="/login">Login</a></li>
+			{{/if}}
+			<!-- <footer class="page-footer">version 1.0.2 build 200</footer> -->
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<li><div class="divider"></div></li>
+			<li id="app_info"><a class="subheader" style="line-height:15px;overflow:visible;">{{app_info}}</a></li>
+		</ul>
+	</div>
+   
+	<div class="container">
+	
+
+		{{> Template.dynamic template=content}}
+	
+
+	</div>
+
 
 	<!-- {{> hello}}
 	{{> info}} -->
@@ -172,20 +180,4 @@
 	    </div>
 	  </div>
 	</div>
-</template>
-
-<template name="hello">
-  <button id="default">Click Me</button>
-  <button id="getData">Get Data</button>
-  <p>You've pressed the button {{counter}} times.</p>
-</template>
-
-<template name="info">
-  <h2>Learn Meteor!</h2>
-  <ul>
-    <li><a href="https://www.meteor.com/try" target="_blank">Do the Tutorial</a></li>
-    <li><a href="http://guide.meteor.com" target="_blank">Follow the Guide</a></li>
-    <li><a href="https://docs.meteor.com" target="_blank">Read the Docs</a></li>
-    <li><a href="https://forums.meteor.com" target="_blank">Discussions</a></li>
-  </ul>
 </template>

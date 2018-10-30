@@ -1,0 +1,120 @@
+<template name="history">
+	<h5 class="right green-text lighten-3">{{searches.count}}</h5>
+	<h4>History</h4>
+	{{#if searches.subsNotReady}}
+	<div class="valign-wrapper" style="display: flex;align-items: center;justify-content: center;height:400px;">
+		<div class="preloader-wrapper big active">
+	      <div class="spinner-layer spinner-blue">
+	        <div class="circle-clipper left">
+	          <div class="circle"></div>
+	        </div><div class="gap-patch">
+	          <div class="circle"></div>
+	        </div><div class="circle-clipper right">
+	          <div class="circle"></div>
+	        </div>
+	      </div>
+
+	      <div class="spinner-layer spinner-red">
+	        <div class="circle-clipper left">
+	          <div class="circle"></div>
+	        </div><div class="gap-patch">
+	          <div class="circle"></div>
+	        </div><div class="circle-clipper right">
+	          <div class="circle"></div>
+	        </div>
+	      </div>
+
+	      <div class="spinner-layer spinner-yellow">
+	        <div class="circle-clipper left">
+	          <div class="circle"></div>
+	        </div><div class="gap-patch">
+	          <div class="circle"></div>
+	        </div><div class="circle-clipper right">
+	          <div class="circle"></div>
+	        </div>
+	      </div>
+
+	      <div class="spinner-layer spinner-green">
+	        <div class="circle-clipper left">
+	          <div class="circle"></div>
+	        </div><div class="gap-patch">
+	          <div class="circle"></div>
+	        </div><div class="circle-clipper right">
+	          <div class="circle"></div>
+	        </div>
+	      </div>
+	    </div>
+	</div>
+	{{else}}
+		{{#if searches.count}}
+		<div class="row">
+			<div class="input-field col s12">
+				<label for="txtSearch"><h6>Search</h6></label>
+				<input class="validate" type="text" name="txtSearch">
+			</div>
+			{{#each searches}}
+			<div class="col s12 m6">
+				<div id="{{_id}}" class="card horizontal">
+					<div class="card-image">
+					<img class="responsive-img" src="{{this.search_image}}" width="100px" style="max-width: 100px;" alt="search image">
+					<!-- <img class="responsive-img" src="{{this.search_image}}" width="100px" style="max-width: 100px;" alt="search image"> -->
+					</div>
+					<div class="card-stacked">
+						<div class="card-content">
+							<span class="right" title="{{this.created}}">{{timeAgo this.created}}</span>
+							<!-- <br /> -->
+							<p>
+								{{#if displayName this.search_results}}
+								<span class="green-text">{{displayName this.search_results}}</span>
+								{{else}}
+								<span class="red-text">UNKNOWN</span>
+								{{/if}}
+								<br />{{faceDetails this.search_results}}</p>
+							{{#each this.search_results.persons}}
+							<div class="chip tooltipped" title="{{this.similarity}}" data-position="top" data-tooltip="{{this.similarity}}">{{this.collection}}</div>
+							{{/each}}
+						</div>
+						<div class="card-action">
+							{{#if this.search_results.faceDetails}}
+							<a class="green-text" id="{{_id}}" name="btnSaveFace">Save face</a>
+							{{/if}}
+							<a class="red-text lighten-3" id="btnDeleteSearch" name="{{_id}}" href="#">delete</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+		{{else}}
+		<h5>No search history yet...</h5>
+		<p>Take or upload a picture to see history here.</p>
+		{{/if}}
+	{{/if}}
+
+	<!-- Modal Structure -->
+	<div id="modal1" class="modal">
+		<div class="modal-content">
+			<h4>New collection</h4>
+		  	<div class="row">
+		    	<form id="createCollectionForm" class="col s12">
+				    <div class="row">
+				        <div class="input-field col s12">
+				          <input placeholder="" id="collection_name" name="collection_name" type="text" class="validate">
+				          <label for="collection_name">Person Name</label>
+				        </div>
+				    </div>
+				    <div class="row">
+				        <div class="input-field col s12">
+				          <input placeholder="" id="collection_name" name="collection_name" type="text" class="validate">
+				          <label for="collection_name">Collection</label>
+				        </div>
+				    </div>
+				</form>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="submit" class="modal-close waves-effect waves-green btn-flat" form="createCollectionForm">Create</button>
+		  <!-- <a href="" class="modal-close waves-effect waves-green btn-flat">Create</a> -->
+		</div>
+	</div>
+</template>

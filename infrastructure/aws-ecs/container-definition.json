@@ -1,0 +1,29 @@
+[
+  {
+   "essential": true,
+    "image": "${image_url}",
+    "name": "${container_name}",
+    "cpu": 0,
+    "memoryReservation": 200,
+    "portMappings": [
+      {
+        "containerPort": 3000,
+        "protocol": "tcp"
+      }
+    ],
+    "environment": [
+      {
+        "name": "MONGO_URL",
+        "value": "mongodb://meteor:22GjhaFhg7TWpC9@ds163650.mlab.com:63650/antmounds"
+      }
+    ],
+    "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+            "awslogs-group": "${log_group_name}",
+            "awslogs-region": "${log_group_region}",
+            "awslogs-stream-prefix": "${log_stream_prefix}"
+        }
+    }
+  }
+]

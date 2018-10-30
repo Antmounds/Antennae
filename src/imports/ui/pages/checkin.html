@@ -1,0 +1,139 @@
+<template name="checkin">
+	<h5 id="header">Check-in</h5>
+	{{#unless isCheckingIn}}
+	<div class="valign-wrapper" style="display: flex;align-items: center;justify-content: center;height:400px;">
+		{{#if loading}}
+		<div class="preloader-wrapper big active">
+	      <div class="spinner-layer spinner-blue">
+	        <div class="circle-clipper left">
+	          <div class="circle"></div>
+	        </div><div class="gap-patch">
+	          <div class="circle"></div>
+	        </div><div class="circle-clipper right">
+	          <div class="circle"></div>
+	        </div>
+	      </div>
+
+	      <div class="spinner-layer spinner-red">
+	        <div class="circle-clipper left">
+	          <div class="circle"></div>
+	        </div><div class="gap-patch">
+	          <div class="circle"></div>
+	        </div><div class="circle-clipper right">
+	          <div class="circle"></div>
+	        </div>
+	      </div>
+
+	      <div class="spinner-layer spinner-yellow">
+	        <div class="circle-clipper left">
+	          <div class="circle"></div>
+	        </div><div class="gap-patch">
+	          <div class="circle"></div>
+	        </div><div class="circle-clipper right">
+	          <div class="circle"></div>
+	        </div>
+	      </div>
+
+	      <div class="spinner-layer spinner-green">
+	        <div class="circle-clipper left">
+	          <div class="circle"></div>
+	        </div><div class="gap-patch">
+	          <div class="circle"></div>
+	        </div><div class="circle-clipper right">
+	          <div class="circle"></div>
+	        </div>
+	      </div>
+	    </div>
+	    {{else}}
+		<a class="center-align waves-effect waves-light btn-large green" onClick="checkinPic.click()">
+			<i class="material-icons left">person_pin_circle</i>Check-in
+			<input id="checkinPic" type="file" accept="image/*" capture="user" style="display: none;">
+		</a>
+	    {{/if}}
+	</div>
+
+	{{else}}<!-- unless -->
+
+    <div class="container">
+    	<div class="row">
+    		<h3>Welcome back ROOT!</h3>
+			<div class="col s6 m2">
+			      <img id="imgCheckin" class="responsive-img" src="{{checkinPic}}" width="auto" height="auto" style="transform: rotate(90deg);" alt="search image">
+			  <div class="card">
+			  	{{#if search.faceDetails}}
+		          <div class="valign-wrapper">
+		            <div class="col s2 m2">
+		            	<i class="medium material-icons">account_circle</i>
+		              <!-- <img src="img/avatar5.png" alt="" width="50px" height="50px" class="circle responsive-img"> --> <!-- notice the "circle" class -->
+		            </div>
+		            <div class="col s10 m10">
+		              <span class="black-text">
+		                {{search.faceDetails}}
+		              </span>
+		            </div>
+		          </div>
+			  	{{/if}}
+			    <div class="card-image">
+			      <span class="card-title">{{#each search.tags}}<div class="chip tooltipped" title="{{this.Confidence}}" data-position="top" data-tooltip="{{this.Confidence}}">{{this.Name}}</div> {{/each}}</span>
+			    </div>
+			    <!-- <div class="card-content">
+			      <p>I am a very simple card. I am good at containing small bits of information.
+			      I am convenient because I require little markup to use effectively.</p>
+			    </div> -->
+			    <!-- <div class="card-action">
+			      <a href="#">Like</a>
+			      <a href="#">Report</a>
+			    </div> -->
+			  </div>
+			</div>
+			<div class="col s6 m2">
+			  <div class="card">
+			    <div class="card-image">
+			      <img id="imgPerson" src="img/avatar5.png" width="auto" height="auto" class="" alt="search image">
+			      <span class="card-title">{{#each search.tags}}<div class="chip tooltipped" title="{{this.Confidence}}" data-position="top" data-tooltip="{{this.Confidence}}">{{this.Name}}</div> {{/each}}</span>
+			    </div>
+			  </div>
+			</div>
+			<a class="left waves-effect waves-light btn btn-large blue"><i class="material-icons left">menu</i>Menu</a>
+			<a class="left waves-effect waves-light btn-large green">
+				<i class="material-icons right">add_shopping_cart</i>New Order
+			</a>
+			<a id="btnCancel" class="left waves-effect waves-light btn-large red lighten-2">
+				<i class="material-icons left">cancel</i>Done
+			</a>
+    	</div>
+    	<div class="row">
+    		<h5>Orders</h5>
+			<ul class="collection">
+				<!-- {{#each privateCollections}} -->
+				<li id="{{_id}}" class="collection-item avatar">
+					<a class="waves-effect waves-light btn btn-small blue accent-2 right">Pick-up</a>
+					<i class="material-icons circle">shopping_cart</i>
+					<a id="goToCollection" href="collection" class="title">{{collection_name}}</a>
+					<p>#24680 <br />
+					1x pre-roll, 2 keef colas 1oz blue dream
+					</p>
+				</li>
+				<!-- {{/each}} -->
+			</ul>
+    		<h5>Reservations</h5>
+			<ul class="collection">
+				<!-- {{#each privateCollections}} -->
+				<li id="{{_id}}" class="collection-item avatar">
+					<a class="waves-effect waves-light btn btn-small blue accent-2 right">Check-in</a>
+					<i class="material-icons circle">flight_takeoff</i>
+					<a id="goToCollection" href="collection" class="title">{{collection_name}}</a>
+					<p>UL987654 <br />
+					3:15 Austin to Denver - Frontier Airllines
+					</p>
+					<!-- <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a> -->
+				</li>
+				<!-- {{/each}} -->
+			</ul>
+    	</div>
+    </div>
+
+	{{/unless}}
+
+</template>
+

@@ -8,8 +8,8 @@
     "underscore": "1.5.2",
     "source-map-support": "https://github.com/meteor/node-source-map-support/tarball/1912478769d76e5df4c365e147f25896aee6375e",
     "semver": "5.4.1",
-    "node-gyp": "3.6.2",
-    "node-pre-gyp": "0.6.36"
+    "node-gyp": "3.7.0",
+    "node-pre-gyp": "0.10.3"
   },
   "devDependencies": {
     "split2": "2.1.1",
