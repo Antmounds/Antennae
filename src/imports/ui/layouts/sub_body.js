@@ -10,20 +10,7 @@ Template.app_sub_body.created = function(){
   var self = this;    
   self.isLoading = new ReactiveVar( false );
   self.analyzing = new ReactiveVar( true );
-  //self.curSearches = new ReactiveDict(null);
     console.log(self);
-  // this.app_info = new ReactiveVar("");
-  // Meteor.call('info', (error, result) => {
-  //   if(error){
-  //     let e = JSON.stringify(error, null, 4);
-  //     console.log(e);
-  //     alert(error.message);
-  //   }else{
-  //     console.log(result);
-  //     //this.app_info = new ReactiveVar(result);
-  //     this.app_info.set(result);
-  //   }
-  // });
 };
 
 Template.app_sub_body.rendered = function(){
