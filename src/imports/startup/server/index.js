@@ -27,7 +27,11 @@ server_mode = Meteor.isProduction ? "PRODUCTION" : "DEVELOPMENT";
 Meteor.methods({
 
 	info(){
-		return `release: ${process.env.VERSION || '0.X'}-lite - version: ${process.env.VERSION || '0.X'} - build: ${process.env.BUILD || 'dev'} - hostname: ${os.hostname()}`;
+		return `release: ${process.env.VERSION || '0.X'}-${process.env.RELEASE || 'free'} ~ version: ${process.env.VERSION || '0.X'} ~ build: ${process.env.BUILD || 'dev'} ~ hostname: ${os.hostname()}`;
+	},
+
+	getCode(){
+		return Meteor.settings.private.key;
 	},
 
 	async getData(){    

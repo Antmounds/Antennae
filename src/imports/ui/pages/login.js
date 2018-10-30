@@ -49,9 +49,9 @@ Template.login.rendered = function(){
 			Meteor.loginWithPassword(user.username, user.password, function(error){
 			    if(error){
 			        console.log(error.reason);
-					validator.showErrors({
-					    email: error.reason    
-					});
+					// validator.showErrors({
+					//     email: error.reason    
+					// });
 			    } else {
 			        var currentRoute = FlowRouter.getRouteName();
 			        if(currentRoute == "login"){

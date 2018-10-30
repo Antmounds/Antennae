@@ -55,6 +55,25 @@ Template.app_body.events({
     });
   },
 
+  'click #app_info'(event, instance) {
+    event.preventDefault();
+    if(FlowRouter.getRouteName()=='settings'){
+      Meteor.call('getCode', (error, result) => {
+        if(error){
+          let e = JSON.stringify(error, null, 4);
+          console.log(e);
+          alert(error.message);
+        }else{
+          console.log(`code: ${result}`);
+          //this.app_info = new ReactiveVar(result);
+        }
+      });
+    }else{
+      console.log(`code: ${Meteor.settings.public.key}`);
+    };
+    Materialize.toast('easter egg found!', 3000);
+  },
+
   //searches(){
     //let searches = Searches.find({}, { sort: { created: -1 } });
     // console.log(searches.fetch());
@@ -63,42 +82,9 @@ Template.app_body.events({
   //},
 });
 
-Template.hello.created = function(){
-  console.log(`${this.view.name} created`);
-  // counter starts at 0
-  this.counter = new ReactiveVar(0);
-};
-
-Template.hello.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  },
-});
-
-Template.hello.events({
-  'click #getData'(event, instance) {
-    Meteor.call('getData', (error, result) => {
-      if(error){
-        console.log(error);
-        alert(error);
-      }else{
-        console.log(result.data.data[0]);
-      }
-    });
-  },
-
-  'click #default'(event, instance) {
-    // increment the counter when button is clicked
-    instance.counter.set(instance.counter.get() + 1);
-  },
-});
-
-
-
 
 Template.post.created = function(){
 	console.log(`${this.view.name} created`);
-  this.tags = new ReactiveVar(["Mountain", "lake", "forest", "stream"]);
 };
 
 Template.post.rendered = function(){
@@ -107,9 +93,9 @@ Template.post.rendered = function(){
 };
 
 Template.post.helpers({
-  tags(){
-    let t = Template.instance().tags.get();
-    console.log(t);
-    return t;
-  }
+  // tags(){
+  //   let t = Template.instance().tags.get();
+  //   console.log(t);
+  //   return t;
+  // }
 });

@@ -1,0 +1,40 @@
+FROM node:alpine
+
+ARG BUILD
+ARG METEOR_SETTINGS
+ARG MONGO_URL=mongodb://mongo/antennae
+ARG VERSION=1.0
+
+ENV PORT=3000 ROOT_URL=http://localhost:$PORT MONGO_URL=$MONGO_URL NODE_ENV=production BUILD=$BUILD METEOR_SETTINGS=$METEOR_SETTINGS VERSION=$VERSION
+
+COPY Dockerfile mongod.conf /app/build/src/
+
+# --no-cache: download package index on-the-fly, no need to cleanup afterwards
+# --virtual: bundle packages, remove whole bundle at once, when done
+RUN apk add --no-cache --virtual \
+	    build-dependencies \
+	    build-base \
+	    curl \
+	    netcat-openbsd \
+	    gnupg \
+	    python \
+	    make \
+	    g++ \
+	    git \
+	    wget && \
+
+	apk del \
+	    build-dependencies \
+	    build-base \
+	    curl \
+	    netcat-openbsd \
+	    gnupg \
+	    python \
+	    make \
+	    g++ \
+	    git \
+	    wget
+
+USER guest
+
+CMD [ "node", "main.js" ]

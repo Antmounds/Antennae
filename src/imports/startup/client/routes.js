@@ -33,12 +33,7 @@ import '../../ui/pages/settings.js';
 
 // Global route triggers
 FlowRouter.triggers.enter(function(context){
-  // $("ul.tabs").tabs();
   $('body').addClass('grey lighten-2');
-  //console.log(Meteor.user());
-  //if(!Meteor.user()){
-    //FlowRouter.go('login');
-  //}
 });
 
 FlowRouter.route('/', {
