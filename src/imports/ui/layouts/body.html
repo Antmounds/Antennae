@@ -30,7 +30,7 @@
 				  <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
 				</div>
 			</li> -->
-			<!-- {{#if currentUser}} -->
+			{{#if currentUser}}
 			<li><a href="/home">Dashboard</a></li>
 			<li><a href="/search">Search</a></li>
 			<!-- <li><a href="/checkin">Check-in</a></li> -->
@@ -39,10 +39,10 @@
 			<li><div class="divider"></div></li>
 			<!-- <li><a class="subheader">About</a></li> -->
 			<li><a class="waves-effect" href="/settings">Settings</a></li>
-			<!-- <li><a id="logout" class="waves-effect" href="">Logout</a></li> -->
-			<!-- {{else}} -->
-			<!-- <li><a href="/login">Login</a></li> -->
-			<!-- {{/if}} -->
+			<li><a id="logout" class="waves-effect" href="">Logout</a></li>
+			{{else}}
+			<li><a href="/login">Login</a></li>
+			{{/if}}
 			<!-- <footer class="page-footer">version 1.0.2 build 200</footer> -->
 			<br />
 			<br />

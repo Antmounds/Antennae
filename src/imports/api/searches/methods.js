@@ -43,11 +43,11 @@ Meteor.methods({
 
 	async "search.face"(searchData){
 		//return 1;
-		// if(!Meteor.user){
-		// 	throw new Meteor.Error('not-logged-in','must be logged-in to perform search');
-		// 	return false;
-		// }
-		// let matchThreshold = matchThreshold;
+		console.log(Meteor.user());
+		if(!Meteor.user()){
+			throw new Meteor.Error('not-logged-in','must be logged-in to perform search');
+			return false;
+		};
 		check(searchData.matchThreshold, Number);
 		console.log("ANALYZING IMAGE...");
 		var t0 = new Date().getTime();
