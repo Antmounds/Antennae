@@ -47,7 +47,6 @@ build_app:
     docker tag $CI_REGISTRY_IMAGE/dev $CI_REGISTRY_IMAGE/dev:$DEV
     docker push $CI_REGISTRY_IMAGE/dev
   only:
-    - branches
     - master
     - develop
     - cloud
@@ -75,7 +74,6 @@ push_aws:
     docker tag $AWS_IMAGE_URI $AWS_IMAGE_URI:$CI_PIPELINE_IID
     docker push $AWS_IMAGE_URI
   only:
-    - branches
     - master
     - develop
     - cloud
@@ -96,7 +94,6 @@ push_gitlab:
     docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
     docker push $CI_REGISTRY_IMAGE
   only:
-    - branches
     - master
     - cloud
     - lite
@@ -118,7 +115,6 @@ push_dockerhub:
     - docker tag $DOCKERHUB_IMAGE_NAME $DOCKERHUB_IMAGE_NAME:$APP_RELEASE
     - docker push $DOCKERHUB_IMAGE_NAME
   only:
-    - branches
     - master
     - lite
 
@@ -141,7 +137,6 @@ push_quay:
     docker tag $QUAY_IMAGE_NAME $QUAY_IMAGE_NAME:$APP_RELEASE
     docker push $QUAY_IMAGE_NAME
   only:
-    - branches
     - master
     - lite
 
@@ -161,7 +156,6 @@ deploy_dev:
     terraform plan -input=false -lock=true -refresh=true
     terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_dev -var app_version_dev=${CI_PIPELINE_IID}
   only:
-    - branches
     - develop
 
 deploy_new:
@@ -180,7 +174,6 @@ deploy_new:
     terraform plan -input=false -lock=true -refresh=true
     terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_warm -var app_version_warm=${CI_PIPELINE_IID}
   only:
-    - branches
     - cloud
 
 deploy_app:
@@ -200,7 +193,6 @@ deploy_app:
     terraform apply -input=false -lock=true -refresh=true -auto-approve -target=aws_ecs_service.app_service_hot -var app_version_hot=${CI_PIPELINE_IID}
   when: manual
   only:
-    - branches
     - cloud
 
 deploy_infrastructure:
